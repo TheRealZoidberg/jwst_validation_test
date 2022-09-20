@@ -1677,7 +1677,7 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;TemporaryDirectory &#39;/tmp/tmpd5efw97h&#39;&gt;
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;TemporaryDirectory &#39;/tmp/tmpsck4iabj&#39;&gt;
 </pre></div>
 </div>
 </div>
@@ -1838,6 +1838,100 @@ title="Print to PDF"
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span> <span class="p">[</span><span class="mi">6</span><span class="p">],</span> <span class="n">line</span> <span class="mi">47</span>
+<span class="g g-Whitespace">     </span><span class="mi">27</span> <span class="c1"># Test with F770W data set</span>
+<span class="g g-Whitespace">     </span><span class="mi">28</span> 
+<span class="g g-Whitespace">     </span><span class="mi">29</span> <span class="c1">#file_urls = [&#39;https://stsci.box.com/shared/static/8573htf1p8mhk4e49z9b483dp975y3lz.fits&#39;,</span>
+   <span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">41</span> <span class="c1">#             &#39;input_sim_stars.cat&#39;,</span>
+<span class="g g-Whitespace">     </span><span class="mi">42</span> <span class="c1">#             &#39;input_sim_galaxies.cat&#39;]</span>
+<span class="g g-Whitespace">     </span><span class="mi">44</span> <span class="n">box_download_list</span> <span class="o">=</span> <span class="p">[(</span><span class="n">url</span><span class="p">,</span><span class="n">name</span><span class="p">)</span> <span class="k">for</span> <span class="n">url</span><span class="p">,</span><span class="n">name</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">file_urls</span><span class="p">,</span><span class="n">filenames</span><span class="p">)]</span>
+<span class="ne">---&gt; </span><span class="mi">47</span> <span class="n">get_box_files</span><span class="p">(</span><span class="n">box_download_list</span><span class="p">)</span>
+
+<span class="nn">Cell In [6], line 7,</span> in <span class="ni">get_box_files</span><span class="nt">(file_list)</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="k">if</span> <span class="s1">&#39;https&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">box_url</span><span class="p">:</span>
+<span class="g g-Whitespace">      </span><span class="mi">6</span>     <span class="n">box_url</span> <span class="o">=</span> <span class="s1">&#39;https://stsci.box.com/shared/static/&#39;</span> <span class="o">+</span> <span class="n">box_url</span>
+<span class="ne">----&gt; </span><span class="mi">7</span> <span class="n">downloaded_file</span> <span class="o">=</span> <span class="n">download_file</span><span class="p">(</span><span class="n">box_url</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">600</span><span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">8</span> <span class="k">if</span> <span class="n">Path</span><span class="p">(</span><span class="n">file_name</span><span class="p">)</span><span class="o">.</span><span class="n">suffix</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+<span class="g g-Whitespace">      </span><span class="mi">9</span>     <span class="n">ext</span> <span class="o">=</span> <span class="n">splitext</span><span class="p">(</span><span class="n">box_url</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="nn">File /usr/share/miniconda/lib/python3.9/site-packages/astropy/utils/data.py:1363,</span> in <span class="ni">download_file</span><span class="nt">(remote_url, cache, show_progress, timeout, sources, pkgname, http_headers, ssl_context, allow_insecure)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1361</span> <span class="k">for</span> <span class="n">source_url</span> <span class="ow">in</span> <span class="n">sources</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">1362</span>     <span class="k">try</span><span class="p">:</span>
+<span class="ne">-&gt; </span><span class="mi">1363</span>         <span class="n">f_name</span> <span class="o">=</span> <span class="n">_download_file_from_source</span><span class="p">(</span>
+<span class="g g-Whitespace">   </span><span class="mi">1364</span>                 <span class="n">source_url</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1365</span>                 <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1366</span>                 <span class="n">show_progress</span><span class="o">=</span><span class="n">show_progress</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1367</span>                 <span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1368</span>                 <span class="n">remote_url</span><span class="o">=</span><span class="n">remote_url</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1369</span>                 <span class="n">pkgname</span><span class="o">=</span><span class="n">pkgname</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1370</span>                 <span class="n">http_headers</span><span class="o">=</span><span class="n">http_headers</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1371</span>                 <span class="n">ssl_context</span><span class="o">=</span><span class="n">ssl_context</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1372</span>                 <span class="n">allow_insecure</span><span class="o">=</span><span class="n">allow_insecure</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1373</span>         <span class="c1"># Success!</span>
+<span class="g g-Whitespace">   </span><span class="mi">1374</span>         <span class="k">break</span>
+
+<span class="nn">File /usr/share/miniconda/lib/python3.9/site-packages/astropy/utils/data.py:1201,</span> in <span class="ni">_download_file_from_source</span><span class="nt">(source_url, show_progress, timeout, remote_url, cache, pkgname, http_headers, ftp_tls, ssl_context, allow_insecure)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1199</span> <span class="n">bytes_read</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">block</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1200</span> <span class="n">p</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">bytes_read</span><span class="p">)</span>
+<span class="ne">-&gt; </span><span class="mi">1201</span> <span class="n">block</span> <span class="o">=</span> <span class="n">remote</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">conf</span><span class="o">.</span><span class="n">download_block_size</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1202</span> <span class="k">if</span> <span class="n">size</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">bytes_read</span> <span class="o">&gt;</span> <span class="n">size</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">1203</span>     <span class="k">raise</span> <span class="n">urllib</span><span class="o">.</span><span class="n">error</span><span class="o">.</span><span class="n">URLError</span><span class="p">(</span>
+<span class="g g-Whitespace">   </span><span class="mi">1204</span>         <span class="sa">f</span><span class="s2">&quot;File was supposed to be </span><span class="si">{</span><span class="n">size</span><span class="si">}</span><span class="s2"> bytes but &quot;</span>
+<span class="g g-Whitespace">   </span><span class="mi">1205</span>         <span class="sa">f</span><span class="s2">&quot;server provides more, at least </span><span class="si">{</span><span class="n">bytes_read</span><span class="si">}</span><span class="s2"> &quot;</span>
+<span class="g g-Whitespace">   </span><span class="mi">1206</span>         <span class="sa">f</span><span class="s2">&quot;bytes. Download failed.&quot;</span><span class="p">)</span>
+
+<span class="nn">File /usr/share/miniconda/lib/python3.9/http/client.py:463,</span> in <span class="ni">HTTPResponse.read</span><span class="nt">(self, amt)</span>
+<span class="g g-Whitespace">    </span><span class="mi">460</span> <span class="k">if</span> <span class="n">amt</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">461</span>     <span class="c1"># Amount is given, implement using readinto</span>
+<span class="g g-Whitespace">    </span><span class="mi">462</span>     <span class="n">b</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">(</span><span class="n">amt</span><span class="p">)</span>
+<span class="ne">--&gt; </span><span class="mi">463</span>     <span class="n">n</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">readinto</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">464</span>     <span class="k">return</span> <span class="nb">memoryview</span><span class="p">(</span><span class="n">b</span><span class="p">)[:</span><span class="n">n</span><span class="p">]</span><span class="o">.</span><span class="n">tobytes</span><span class="p">()</span>
+<span class="g g-Whitespace">    </span><span class="mi">465</span> <span class="k">else</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">466</span>     <span class="c1"># Amount is not given (unbounded read) so we must check self.length</span>
+<span class="g g-Whitespace">    </span><span class="mi">467</span>     <span class="c1"># and self.chunked</span>
+
+<span class="nn">File /usr/share/miniconda/lib/python3.9/http/client.py:507,</span> in <span class="ni">HTTPResponse.readinto</span><span class="nt">(self, b)</span>
+<span class="g g-Whitespace">    </span><span class="mi">502</span>         <span class="n">b</span> <span class="o">=</span> <span class="nb">memoryview</span><span class="p">(</span><span class="n">b</span><span class="p">)[</span><span class="mi">0</span><span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="p">]</span>
+<span class="g g-Whitespace">    </span><span class="mi">504</span> <span class="c1"># we do not use _safe_read() here because this may be a .will_close</span>
+<span class="g g-Whitespace">    </span><span class="mi">505</span> <span class="c1"># connection, and the user is reading more bytes than will be provided</span>
+<span class="g g-Whitespace">    </span><span class="mi">506</span> <span class="c1"># (for example, reading in 1k chunks)</span>
+<span class="ne">--&gt; </span><span class="mi">507</span> <span class="n">n</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fp</span><span class="o">.</span><span class="n">readinto</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">508</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">n</span> <span class="ow">and</span> <span class="n">b</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">509</span>     <span class="c1"># Ideally, we would raise IncompleteRead if the content-length</span>
+<span class="g g-Whitespace">    </span><span class="mi">510</span>     <span class="c1"># wasn&#39;t satisfied, but it might break compatibility.</span>
+<span class="g g-Whitespace">    </span><span class="mi">511</span>     <span class="bp">self</span><span class="o">.</span><span class="n">_close_conn</span><span class="p">()</span>
+
+<span class="nn">File /usr/share/miniconda/lib/python3.9/socket.py:704,</span> in <span class="ni">SocketIO.readinto</span><span class="nt">(self, b)</span>
+<span class="g g-Whitespace">    </span><span class="mi">702</span> <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">703</span>     <span class="k">try</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">704</span>         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sock</span><span class="o">.</span><span class="n">recv_into</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">705</span>     <span class="k">except</span> <span class="n">timeout</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">706</span>         <span class="bp">self</span><span class="o">.</span><span class="n">_timeout_occurred</span> <span class="o">=</span> <span class="kc">True</span>
+
+<span class="nn">File /usr/share/miniconda/lib/python3.9/ssl.py:1241,</span> in <span class="ni">SSLSocket.recv_into</span><span class="nt">(self, buffer, nbytes, flags)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1237</span>     <span class="k">if</span> <span class="n">flags</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">1238</span>         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+<span class="g g-Whitespace">   </span><span class="mi">1239</span>           <span class="s2">&quot;non-zero flags not allowed in calls to recv_into() on </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span>
+<span class="g g-Whitespace">   </span><span class="mi">1240</span>           <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">)</span>
+<span class="ne">-&gt; </span><span class="mi">1241</span>     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">nbytes</span><span class="p">,</span> <span class="n">buffer</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1242</span> <span class="k">else</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">1243</span>     <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">recv_into</span><span class="p">(</span><span class="n">buffer</span><span class="p">,</span> <span class="n">nbytes</span><span class="p">,</span> <span class="n">flags</span><span class="p">)</span>
+
+<span class="nn">File /usr/share/miniconda/lib/python3.9/ssl.py:1099,</span> in <span class="ni">SSLSocket.read</span><span class="nt">(self, len, buffer)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1097</span> <span class="k">try</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">1098</span>     <span class="k">if</span> <span class="n">buffer</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+<span class="ne">-&gt; </span><span class="mi">1099</span>         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sslobj</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="nb">len</span><span class="p">,</span> <span class="n">buffer</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1100</span>     <span class="k">else</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">1101</span>         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sslobj</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="nb">len</span><span class="p">)</span>
+
+<span class="ne">KeyboardInterrupt</span>: 
+</pre></div>
+</div>
+</div>
 </div>
 <section id="run-rate-files-through-calwebb-image2-to-obtain-calibrated-images-for-further-testing">
 <h2>Run rate files through calwebb_image2 to obtain calibrated images for further testing<a class="headerlink" href="#run-rate-files-through-calwebb-image2-to-obtain-calibrated-images-for-further-testing" title="Permalink to this headline">#</a></h2>
@@ -1868,368 +1962,6 @@ title="Print to PDF"
     <span class="n">callist</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">calfile</span><span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="n">callist</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-09-20 17:20:29,541 - stpipe.Image2Pipeline - INFO - Image2Pipeline instance created.
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-09-20 17:20:29,542 - stpipe.Image2Pipeline.bkg_subtract - INFO - BackgroundStep instance created.
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-09-20 17:20:29,544 - stpipe.Image2Pipeline.assign_wcs - INFO - AssignWcsStep instance created.
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-09-20 17:20:29,546 - stpipe.Image2Pipeline.flat_field - INFO - FlatFieldStep instance created.
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-09-20 17:20:29,548 - stpipe.Image2Pipeline.photom - INFO - PhotomStep instance created.
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-09-20 17:20:29,550 - stpipe.Image2Pipeline.resample - INFO - ResampleStep instance created.
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>There are  4  images.
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-09-20 17:20:30,743 - stpipe.Image2Pipeline - INFO - Step Image2Pipeline running with args (&lt;ImageModel(1024, 1032) from det_image_seq4_MIRIMAGE_F560Wexp1_rate.fits&gt;,).
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-09-20 17:20:30,748 - stpipe.Image2Pipeline - INFO - Step Image2Pipeline parameters are: {&#39;pre_hooks&#39;: [], &#39;post_hooks&#39;: [], &#39;output_file&#39;: &#39;/tmp/tmpd5efw97h/det_image_seq4_MIRIMAGE_F560Wexp1_rate.fits_cal.fits&#39;, &#39;output_dir&#39;: None, &#39;output_ext&#39;: &#39;.fits&#39;, &#39;output_use_model&#39;: False, &#39;output_use_index&#39;: True, &#39;save_results&#39;: True, &#39;skip&#39;: False, &#39;suffix&#39;: None, &#39;search_output_file&#39;: True, &#39;input_dir&#39;: &#39;&#39;, &#39;save_bsub&#39;: False, &#39;steps&#39;: {&#39;bkg_subtract&#39;: {&#39;pre_hooks&#39;: [], &#39;post_hooks&#39;: [], &#39;output_file&#39;: None, &#39;output_dir&#39;: None, &#39;output_ext&#39;: &#39;.fits&#39;, &#39;output_use_model&#39;: False, &#39;output_use_index&#39;: True, &#39;save_results&#39;: False, &#39;skip&#39;: False, &#39;suffix&#39;: None, &#39;search_output_file&#39;: True, &#39;input_dir&#39;: &#39;&#39;, &#39;save_combined_background&#39;: False, &#39;sigma&#39;: 3.0, &#39;maxiters&#39;: None, &#39;wfss_mmag_extract&#39;: None}, &#39;assign_wcs&#39;: {&#39;pre_hooks&#39;: [], &#39;post_hooks&#39;: [], &#39;output_file&#39;: None, &#39;output_dir&#39;: None, &#39;output_ext&#39;: &#39;.fits&#39;, &#39;output_use_model&#39;: False, &#39;output_use_index&#39;: True, &#39;save_results&#39;: False, &#39;skip&#39;: False, &#39;suffix&#39;: None, &#39;search_output_file&#39;: True, &#39;input_dir&#39;: &#39;&#39;, &#39;sip_approx&#39;: True, &#39;sip_max_pix_error&#39;: 0.25, &#39;sip_degree&#39;: None, &#39;sip_max_inv_pix_error&#39;: 0.25, &#39;sip_inv_degree&#39;: None, &#39;sip_npoints&#39;: 32, &#39;slit_y_low&#39;: -0.55, &#39;slit_y_high&#39;: 0.55}, &#39;flat_field&#39;: {&#39;pre_hooks&#39;: [], &#39;post_hooks&#39;: [], &#39;output_file&#39;: None, &#39;output_dir&#39;: None, &#39;output_ext&#39;: &#39;.fits&#39;, &#39;output_use_model&#39;: False, &#39;output_use_index&#39;: True, &#39;save_results&#39;: False, &#39;skip&#39;: False, &#39;suffix&#39;: None, &#39;search_output_file&#39;: True, &#39;input_dir&#39;: &#39;&#39;, &#39;save_interpolated_flat&#39;: False, &#39;user_supplied_flat&#39;: None, &#39;inverse&#39;: False}, &#39;photom&#39;: {&#39;pre_hooks&#39;: [], &#39;post_hooks&#39;: [], &#39;output_file&#39;: None, &#39;output_dir&#39;: None, &#39;output_ext&#39;: &#39;.fits&#39;, &#39;output_use_model&#39;: False, &#39;output_use_index&#39;: True, &#39;save_results&#39;: False, &#39;skip&#39;: False, &#39;suffix&#39;: None, &#39;search_output_file&#39;: True, &#39;input_dir&#39;: &#39;&#39;, &#39;inverse&#39;: False, &#39;source_type&#39;: None}, &#39;resample&#39;: {&#39;pre_hooks&#39;: [], &#39;post_hooks&#39;: [], &#39;output_file&#39;: None, &#39;output_dir&#39;: None, &#39;output_ext&#39;: &#39;.fits&#39;, &#39;output_use_model&#39;: False, &#39;output_use_index&#39;: True, &#39;save_results&#39;: True, &#39;skip&#39;: False, &#39;suffix&#39;: None, &#39;search_output_file&#39;: True, &#39;input_dir&#39;: &#39;&#39;, &#39;pixfrac&#39;: 1.0, &#39;kernel&#39;: &#39;square&#39;, &#39;fillval&#39;: &#39;INDEF&#39;, &#39;weight_type&#39;: &#39;ivm&#39;, &#39;output_shape&#39;: None, &#39;crpix&#39;: None, &#39;crval&#39;: None, &#39;rotation&#39;: None, &#39;pixel_scale_ratio&#39;: 1.0, &#39;pixel_scale&#39;: None, &#39;single&#39;: False, &#39;blendheaders&#39;: True, &#39;allowed_memory&#39;: None, &#39;in_memory&#39;: True}}}
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-09-20 17:20:30,757 - stpipe.Image2Pipeline - INFO - Prefetching reference files for dataset: &#39;det_image_seq4_MIRIMAGE_F560Wexp1_rate.fits&#39; reftypes = [&#39;area&#39;, &#39;camera&#39;, &#39;collimator&#39;, &#39;dflat&#39;, &#39;disperser&#39;, &#39;distortion&#39;, &#39;drizpars&#39;, &#39;fflat&#39;, &#39;filteroffset&#39;, &#39;flat&#39;, &#39;fore&#39;, &#39;fpa&#39;, &#39;ifufore&#39;, &#39;ifupost&#39;, &#39;ifuslicer&#39;, &#39;msa&#39;, &#39;ote&#39;, &#39;photom&#39;, &#39;regions&#39;, &#39;sflat&#39;, &#39;specwcs&#39;, &#39;wavelengthrange&#39;, &#39;wfssbkg&#39;]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-09-20 17:20:30,759 - CRDS - ERROR -  (FATAL) CRDS server connection and cache load FAILED.  Cannot continue.
- See https://hst-crds.stsci.edu/docs/cmdline_bestrefs/ or https://jwst-crds.stsci.edu/docs/cmdline_bestrefs/
- for more information on configuring CRDS,  particularly CRDS_PATH and CRDS_SERVER_URL. : [Errno 2] No such file or directory: &#39;/grp/crds/cache/config/jwst/server_config&#39;
-</pre></div>
-</div>
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">ServiceError</span><span class="g g-Whitespace">                              </span>Traceback (most recent call last)
-<span class="nn">File /usr/share/miniconda/lib/python3.9/site-packages/crds/client/api.py:387,</span> in <span class="ni">_get_server_info</span><span class="nt">()</span>
-<span class="g g-Whitespace">    </span><span class="mi">386</span> <span class="n">config_uri</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;JSON RPC service at &#39;</span><span class="si">{</span><span class="n">get_crds_server</span><span class="p">()</span><span class="si">}</span><span class="s2">&#39;&quot;</span>
-<span class="ne">--&gt; </span><span class="mi">387</span> <span class="n">info</span> <span class="o">=</span> <span class="n">S</span><span class="o">.</span><span class="n">get_server_info</span><span class="p">()</span>
-<span class="g g-Whitespace">    </span><span class="mi">388</span> <span class="n">log</span><span class="o">.</span><span class="n">verbose</span><span class="p">(</span><span class="s2">&quot;Connected to server at&quot;</span><span class="p">,</span> <span class="n">srepr</span><span class="p">(</span><span class="n">get_crds_server</span><span class="p">()))</span>
-
-<span class="nn">File /usr/share/miniconda/lib/python3.9/site-packages/crds/client/proxy.py:157,</span> in <span class="ni">ServiceCallBinding.__call__</span><span class="nt">(self, *args, **kwargs)</span>
-<span class="g g-Whitespace">    </span><span class="mi">156</span> <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-<span class="ne">--&gt; </span><span class="mi">157</span>     <span class="n">jsonrpc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_call</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">158</span>     <span class="k">if</span> <span class="n">jsonrpc</span><span class="p">[</span><span class="s2">&quot;error&quot;</span><span class="p">]:</span>
-
-<span class="nn">File /usr/share/miniconda/lib/python3.9/site-packages/crds/client/proxy.py:121,</span> in <span class="ni">ServiceCallBinding._call</span><span class="nt">(self, *args, **kwargs)</span>
-<span class="g g-Whitespace">    </span><span class="mi">120</span> <span class="k">if</span> <span class="s2">&quot;serverless&quot;</span> <span class="ow">in</span> <span class="n">url</span> <span class="ow">or</span> <span class="s2">&quot;server-less&quot;</span> <span class="ow">in</span> <span class="n">url</span><span class="p">:</span>
-<span class="ne">--&gt; </span><span class="mi">121</span>     <span class="k">raise</span> <span class="n">exceptions</span><span class="o">.</span><span class="n">ServiceError</span><span class="p">(</span><span class="s2">&quot;Configured for server-less mode.  Skipping JSON RPC &quot;</span> <span class="o">+</span> <span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__service_name</span><span class="p">))</span>
-<span class="g g-Whitespace">    </span><span class="mi">123</span> <span class="k">if</span> <span class="n">log</span><span class="o">.</span><span class="n">get_verbose</span><span class="p">()</span> <span class="o">&lt;=</span> <span class="mi">50</span><span class="p">:</span>
-
-<span class="ne">ServiceError</span>: Configured for server-less mode.  Skipping JSON RPC &#39;get_server_info&#39;
-
-<span class="n">The</span> <span class="n">above</span> <span class="n">exception</span> <span class="n">was</span> <span class="n">the</span> <span class="n">direct</span> <span class="n">cause</span> <span class="n">of</span> <span class="n">the</span> <span class="n">following</span> <span class="n">exception</span><span class="p">:</span>
-
-<span class="ne">CrdsNetworkError</span><span class="g g-Whitespace">                          </span>Traceback (most recent call last)
-<span class="nn">File /usr/share/miniconda/lib/python3.9/site-packages/crds/core/heavy_client.py:513,</span> in <span class="ni">get_config_info</span><span class="nt">(observatory)</span>
-<span class="g g-Whitespace">    </span><span class="mi">512</span> <span class="k">try</span><span class="p">:</span>
-<span class="ne">--&gt; </span><span class="mi">513</span>     <span class="n">info</span> <span class="o">=</span> <span class="n">ConfigInfo</span><span class="p">(</span><span class="n">api</span><span class="o">.</span><span class="n">get_server_info</span><span class="p">())</span>
-<span class="g g-Whitespace">    </span><span class="mi">514</span>     <span class="k">if</span> <span class="n">info</span><span class="o">.</span><span class="n">effective_mode</span> <span class="o">!=</span> <span class="s2">&quot;remote&quot;</span><span class="p">:</span>
-
-<span class="nn">File /usr/share/miniconda/lib/python3.9/site-packages/crds/core/utils.py:306,</span> in <span class="ni">CachedFunction.__call__</span><span class="nt">(self, *args, **keys)</span>
-<span class="g g-Whitespace">    </span><span class="mi">303</span> <span class="sd">&quot;&quot;&quot;Compute or fetch func(*args, **keys).  Add the result to the cache.</span>
-<span class="g g-Whitespace">    </span><span class="mi">304</span><span class="sd"> return func(*args, **keys)</span>
-<span class="g g-Whitespace">    </span><span class="mi">305</span><span class="sd"> &quot;&quot;&quot;</span>
-<span class="ne">--&gt; </span><span class="mi">306</span> <span class="n">key</span><span class="p">,</span> <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_readonly</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">keys</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">307</span> <span class="bp">self</span><span class="o">.</span><span class="n">cache</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">result</span>
-
-<span class="nn">File /usr/share/miniconda/lib/python3.9/site-packages/crds/core/utils.py:293,</span> in <span class="ni">CachedFunction._readonly</span><span class="nt">(self, *args, **keys)</span>
-<span class="g g-Whitespace">    </span><span class="mi">292</span> <span class="n">log</span><span class="o">.</span><span class="n">verbose</span><span class="p">(</span><span class="s2">&quot;Uncached call&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">uncached</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">key</span><span class="p">),</span> <span class="n">verbosity</span><span class="o">=</span><span class="mi">80</span><span class="p">)</span>
-<span class="ne">--&gt; </span><span class="mi">293</span> <span class="k">return</span> <span class="n">key</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">uncached</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">keys</span><span class="p">)</span>
-
-<span class="nn">File /usr/share/miniconda/lib/python3.9/site-packages/crds/client/api.py:337,</span> in <span class="ni">get_server_info</span><span class="nt">()</span>
-<span class="g g-Whitespace">    </span><span class="mi">324</span> <span class="sd">&quot;&quot;&quot;Return a dictionary of critical parameters about the server such as:</span>
-<span class="g g-Whitespace">    </span><span class="mi">325</span><span class="sd"> </span>
-<span class="g g-Whitespace">    </span><span class="mi">326</span><span class="sd"> operational_context  - the context in use in the operational pipeline</span>
-<span class="sd">   (...)</span>
-<span class="g g-Whitespace">    </span><span class="mi">335</span><span class="sd"> what context, software, and network mode should be used for processing.</span>
-<span class="g g-Whitespace">    </span><span class="mi">336</span><span class="sd"> &quot;&quot;&quot;</span>
-<span class="ne">--&gt; </span><span class="mi">337</span> <span class="n">info</span> <span class="o">=</span> <span class="n">_get_server_info</span><span class="p">()</span>
-<span class="g g-Whitespace">    </span><span class="mi">338</span> <span class="n">info</span><span class="p">[</span><span class="s2">&quot;server&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">get_crds_server</span><span class="p">()</span>
-
-<span class="nn">File /usr/share/miniconda/lib/python3.9/site-packages/crds/client/api.py:392,</span> in <span class="ni">_get_server_info</span><span class="nt">()</span>
-<span class="g g-Whitespace">    </span><span class="mi">391</span> <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
-<span class="ne">--&gt; </span><span class="mi">392</span>     <span class="k">raise</span> <span class="n">CrdsNetworkError</span><span class="p">(</span>
-<span class="g g-Whitespace">    </span><span class="mi">393</span>         <span class="sa">f</span><span class="s2">&quot;Failed downloading cache config from: </span><span class="si">{</span><span class="n">config_uri</span><span class="si">}</span><span class="s2">:&quot;</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">394</span>         <span class="n">srepr</span><span class="p">(</span><span class="n">exc</span><span class="p">))</span> <span class="kn">from</span> <span class="nn">exc</span>
-<span class="g g-Whitespace">    </span><span class="mi">395</span> <span class="k">return</span> <span class="n">info</span>
-
-<span class="ne">CrdsNetworkError</span>: Failed downloading cache config from: JSON RPC service at &#39;https://crds-serverless-mode.stsci.edu&#39;: &quot;Configured for server-less mode.  Skipping JSON RPC &#39;get_server_info&#39;&quot;
-
-<span class="n">During</span> <span class="n">handling</span> <span class="n">of</span> <span class="n">the</span> <span class="n">above</span> <span class="n">exception</span><span class="p">,</span> <span class="n">another</span> <span class="n">exception</span> <span class="n">occurred</span><span class="p">:</span>
-
-<span class="ne">FileNotFoundError</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="nn">File /usr/share/miniconda/lib/python3.9/site-packages/crds/core/log.py:366,</span> in <span class="ni">exception_trap_logger.&lt;locals&gt;.func_on_exception</span><span class="nt">(*args, **keys)</span>
-<span class="g g-Whitespace">    </span><span class="mi">365</span> <span class="k">try</span><span class="p">:</span>
-<span class="ne">--&gt; </span><span class="mi">366</span>     <span class="k">yield</span>
-<span class="g g-Whitespace">    </span><span class="mi">367</span> <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
-
-<span class="nn">File /usr/share/miniconda/lib/python3.9/site-packages/crds/core/heavy_client.py:595,</span> in <span class="ni">load_server_info</span><span class="nt">(observatory)</span>
-<span class="g g-Whitespace">    </span><span class="mi">594</span>     <span class="n">server_config</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">locate_config</span><span class="p">(</span><span class="s2">&quot;server_config&quot;</span><span class="p">,</span> <span class="n">observatory</span><span class="p">)</span>
-<span class="ne">--&gt; </span><span class="mi">595</span> <span class="n">config_data</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">get_uri_content</span><span class="p">(</span><span class="n">server_config</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">596</span> <span class="n">info</span> <span class="o">=</span> <span class="n">ConfigInfo</span><span class="p">(</span><span class="n">ast</span><span class="o">.</span><span class="n">literal_eval</span><span class="p">(</span><span class="n">config_data</span><span class="p">))</span>
-
-<span class="nn">File /usr/share/miniconda/lib/python3.9/site-packages/crds/core/utils.py:737,</span> in <span class="ni">get_uri_content</span><span class="nt">(uri, mode)</span>
-<span class="g g-Whitespace">    </span><span class="mi">736</span> <span class="n">mode</span> <span class="o">=</span> <span class="s2">&quot;r&quot;</span> <span class="k">if</span> <span class="p">(</span><span class="n">mode</span><span class="o">==</span><span class="s2">&quot;text&quot;</span><span class="p">)</span> <span class="k">else</span> <span class="s2">&quot;rb&quot;</span>
-<span class="ne">--&gt; </span><span class="mi">737</span> <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">uri</span><span class="p">,</span> <span class="n">mode</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">738</span>     <span class="k">return</span> <span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
-
-<span class="ne">FileNotFoundError</span>: [Errno 2] No such file or directory: &#39;/grp/crds/cache/config/jwst/server_config&#39;
-
-<span class="n">During</span> <span class="n">handling</span> <span class="n">of</span> <span class="n">the</span> <span class="n">above</span> <span class="n">exception</span><span class="p">,</span> <span class="n">another</span> <span class="n">exception</span> <span class="n">occurred</span><span class="p">:</span>
-
-<span class="ne">SystemExit</span><span class="g g-Whitespace">                                </span>Traceback (most recent call last)
-    <span class="p">[</span><span class="o">...</span> <span class="n">skipping</span> <span class="n">hidden</span> <span class="mi">1</span> <span class="n">frame</span><span class="p">]</span>
-
-<span class="n">Cell</span> <span class="n">In</span> <span class="p">[</span><span class="mi">7</span><span class="p">],</span> <span class="n">line</span> <span class="mi">21</span>
-<span class="g g-Whitespace">     </span><span class="mi">19</span> <span class="n">pipe2</span><span class="o">.</span><span class="n">suffix</span> <span class="o">=</span> <span class="kc">None</span>
-<span class="ne">---&gt; </span><span class="mi">21</span> <span class="n">calfile</span> <span class="o">=</span> <span class="n">pipe2</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">rampfile</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">23</span> <span class="n">callist</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">calfile</span><span class="p">)</span>
-
-<span class="nn">File /usr/share/miniconda/lib/python3.9/site-packages/stpipe/step.py:481,</span> in <span class="ni">Step.run</span><span class="nt">(self, *args)</span>
-<span class="g g-Whitespace">    </span><span class="mi">480</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">prefetch_references</span><span class="p">:</span>
-<span class="ne">--&gt; </span><span class="mi">481</span>     <span class="bp">self</span><span class="o">.</span><span class="n">prefetch</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">482</span> <span class="k">try</span><span class="p">:</span>
-
-<span class="nn">File /usr/share/miniconda/lib/python3.9/site-packages/stpipe/step.py:598,</span> in <span class="ni">Step.prefetch</span><span class="nt">(self, *args)</span>
-<span class="g g-Whitespace">    </span><span class="mi">597</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">reference_file_types</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">skip</span><span class="p">:</span>
-<span class="ne">--&gt; </span><span class="mi">598</span>     <span class="bp">self</span><span class="o">.</span><span class="n">_precache_references</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-
-<span class="nn">File /usr/share/miniconda/lib/python3.9/site-packages/stpipe/pipeline.py:313,</span> in <span class="ni">Pipeline._precache_references</span><span class="nt">(self, input_file)</span>
-<span class="g g-Whitespace">    </span><span class="mi">311</span>     <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">open_model</span><span class="p">(</span><span class="n">input_file</span><span class="p">,</span> <span class="n">asn_n_members</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">312</span>                         <span class="n">asn_exptypes</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;science&quot;</span><span class="p">])</span> <span class="k">as</span> <span class="n">model</span><span class="p">:</span>
-<span class="ne">--&gt; </span><span class="mi">313</span>         <span class="bp">self</span><span class="o">.</span><span class="n">_precache_references_opened</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">314</span> <span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">,</span> <span class="ne">IOError</span><span class="p">):</span>
-
-<span class="nn">File /usr/share/miniconda/lib/python3.9/site-packages/stpipe/pipeline.py:336,</span> in <span class="ni">Pipeline._precache_references_opened</span><span class="nt">(self, model_or_container)</span>
-<span class="g g-Whitespace">    </span><span class="mi">334</span> <span class="k">else</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">335</span>     <span class="c1"># precache a single model object</span>
-<span class="ne">--&gt; </span><span class="mi">336</span>     <span class="bp">self</span><span class="o">.</span><span class="n">_precache_references_impl</span><span class="p">(</span><span class="n">model_or_container</span><span class="p">)</span>
-
-<span class="nn">File /usr/share/miniconda/lib/python3.9/site-packages/stpipe/pipeline.py:360,</span> in <span class="ni">Pipeline._precache_references_impl</span><span class="nt">(self, model)</span>
-<span class="g g-Whitespace">    </span><span class="mi">358</span> <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Prefetching reference files for dataset: &quot;</span> <span class="o">+</span> <span class="nb">repr</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">filename</span><span class="p">)</span> <span class="o">+</span>
-<span class="g g-Whitespace">    </span><span class="mi">359</span>               <span class="s2">&quot; reftypes = &quot;</span> <span class="o">+</span> <span class="nb">repr</span><span class="p">(</span><span class="n">fetch_types</span><span class="p">))</span>
-<span class="ne">--&gt; </span><span class="mi">360</span> <span class="n">crds_refs</span> <span class="o">=</span> <span class="n">crds_client</span><span class="o">.</span><span class="n">get_multiple_reference_paths</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">get_crds_parameters</span><span class="p">(),</span> <span class="n">fetch_types</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">crds_observatory</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">362</span> <span class="n">ref_path_map</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">crds_refs</span><span class="o">.</span><span class="n">items</span><span class="p">())</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="n">ovr_refs</span><span class="o">.</span><span class="n">items</span><span class="p">()))</span>
-
-<span class="nn">File /usr/share/miniconda/lib/python3.9/site-packages/stpipe/crds_client.py:55,</span> in <span class="ni">get_multiple_reference_paths</span><span class="nt">(parameters, reference_file_types, observatory)</span>
-<span class="g g-Whitespace">     </span><span class="mi">54</span> <span class="n">log</span><span class="o">.</span><span class="n">set_log_time</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
-<span class="ne">---&gt; </span><span class="mi">55</span> <span class="n">refpaths</span> <span class="o">=</span> <span class="n">_get_refpaths</span><span class="p">(</span><span class="n">parameters</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">reference_file_types</span><span class="p">),</span> <span class="n">observatory</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">56</span> <span class="k">return</span> <span class="n">refpaths</span>
-
-<span class="nn">File /usr/share/miniconda/lib/python3.9/site-packages/stpipe/crds_client.py:68,</span> in <span class="ni">_get_refpaths</span><span class="nt">(data_dict, reference_file_types, observatory)</span>
-<span class="g g-Whitespace">     </span><span class="mi">67</span> <span class="k">with</span> <span class="n">crds_cache_locking</span><span class="o">.</span><span class="n">get_cache_lock</span><span class="p">():</span>
-<span class="ne">---&gt; </span><span class="mi">68</span>     <span class="n">bestrefs</span> <span class="o">=</span> <span class="n">crds</span><span class="o">.</span><span class="n">getreferences</span><span class="p">(</span>
-<span class="g g-Whitespace">     </span><span class="mi">69</span>         <span class="n">data_dict</span><span class="p">,</span> <span class="n">reftypes</span><span class="o">=</span><span class="n">reference_file_types</span><span class="p">,</span> <span class="n">observatory</span><span class="o">=</span><span class="n">observatory</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">70</span> <span class="n">refpaths</span> <span class="o">=</span> <span class="p">{</span><span class="n">filetype</span><span class="p">:</span> <span class="n">filepath</span> <span class="k">if</span> <span class="s2">&quot;N/A&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">filepath</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="k">else</span> <span class="s2">&quot;N/A&quot;</span>
-<span class="g g-Whitespace">     </span><span class="mi">71</span>             <span class="k">for</span> <span class="p">(</span><span class="n">filetype</span><span class="p">,</span> <span class="n">filepath</span><span class="p">)</span> <span class="ow">in</span> <span class="n">bestrefs</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
-
-<span class="nn">File /usr/share/miniconda/lib/python3.9/site-packages/crds/core/heavy_client.py:122,</span> in <span class="ni">getreferences</span><span class="nt">(parameters, reftypes, context, ignore_cache, observatory, fast)</span>
-<span class="g g-Whitespace">     </span><span class="mi">83</span> <span class="sd">&quot;&quot;&quot;</span>
-<span class="g g-Whitespace">     </span><span class="mi">84</span><span class="sd"> This is the top-level get reference call for all of CRDS.  Based on</span>
-<span class="g g-Whitespace">     </span><span class="mi">85</span><span class="sd"> `parameters`, getreferences() will download/cache the corresponding best</span>
-<span class="sd">   (...)</span>
-<span class="g g-Whitespace">    </span><span class="mi">120</span><span class="sd">   cached reference file.</span>
-<span class="g g-Whitespace">    </span><span class="mi">121</span><span class="sd"> &quot;&quot;&quot;</span>
-<span class="ne">--&gt; </span><span class="mi">122</span> <span class="n">final_context</span><span class="p">,</span> <span class="n">bestrefs</span> <span class="o">=</span> <span class="n">_initial_recommendations</span><span class="p">(</span><span class="s2">&quot;getreferences&quot;</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">123</span>     <span class="n">parameters</span><span class="p">,</span> <span class="n">reftypes</span><span class="p">,</span> <span class="n">context</span><span class="p">,</span> <span class="n">ignore_cache</span><span class="p">,</span> <span class="n">observatory</span><span class="p">,</span> <span class="n">fast</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">125</span> <span class="c1"># Attempt to cache the recommended references,  which unlike dump_mappings</span>
-<span class="g g-Whitespace">    </span><span class="mi">126</span> <span class="c1"># should work without network access if files are already cached.</span>
-
-<span class="nn">File /usr/share/miniconda/lib/python3.9/site-packages/crds/core/heavy_client.py:203,</span> in <span class="ni">_initial_recommendations</span><span class="nt">(name, parameters, reftypes, context, ignore_cache, observatory, fast)</span>
-<span class="g g-Whitespace">    </span><span class="mi">201</span>     <span class="n">check_context</span><span class="p">(</span><span class="n">context</span><span class="p">)</span>
-<span class="ne">--&gt; </span><span class="mi">203</span> <span class="n">mode</span><span class="p">,</span> <span class="n">final_context</span> <span class="o">=</span> <span class="n">get_processing_mode</span><span class="p">(</span><span class="n">observatory</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">205</span> <span class="n">log</span><span class="o">.</span><span class="n">verbose</span><span class="p">(</span><span class="s2">&quot;Final effective context is&quot;</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">final_context</span><span class="p">))</span>
-
-<span class="nn">File /usr/share/miniconda/lib/python3.9/site-packages/crds/core/utils.py:306,</span> in <span class="ni">CachedFunction.__call__</span><span class="nt">(self, *args, **keys)</span>
-<span class="g g-Whitespace">    </span><span class="mi">303</span> <span class="sd">&quot;&quot;&quot;Compute or fetch func(*args, **keys).  Add the result to the cache.</span>
-<span class="g g-Whitespace">    </span><span class="mi">304</span><span class="sd"> return func(*args, **keys)</span>
-<span class="g g-Whitespace">    </span><span class="mi">305</span><span class="sd"> &quot;&quot;&quot;</span>
-<span class="ne">--&gt; </span><span class="mi">306</span> <span class="n">key</span><span class="p">,</span> <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_readonly</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">keys</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">307</span> <span class="bp">self</span><span class="o">.</span><span class="n">cache</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">result</span>
-
-<span class="nn">File /usr/share/miniconda/lib/python3.9/site-packages/crds/core/utils.py:293,</span> in <span class="ni">CachedFunction._readonly</span><span class="nt">(self, *args, **keys)</span>
-<span class="g g-Whitespace">    </span><span class="mi">292</span> <span class="n">log</span><span class="o">.</span><span class="n">verbose</span><span class="p">(</span><span class="s2">&quot;Uncached call&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">uncached</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">key</span><span class="p">),</span> <span class="n">verbosity</span><span class="o">=</span><span class="mi">80</span><span class="p">)</span>
-<span class="ne">--&gt; </span><span class="mi">293</span> <span class="k">return</span> <span class="n">key</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">uncached</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">keys</span><span class="p">)</span>
-
-<span class="nn">File /usr/share/miniconda/lib/python3.9/site-packages/crds/core/heavy_client.py:390,</span> in <span class="ni">get_processing_mode</span><span class="nt">(observatory, context)</span>
-<span class="g g-Whitespace">    </span><span class="mi">387</span> <span class="sd">&quot;&quot;&quot;Return the processing mode (local, remote) and the .pmap name to be used</span>
-<span class="g g-Whitespace">    </span><span class="mi">388</span><span class="sd"> for best references selections.</span>
-<span class="g g-Whitespace">    </span><span class="mi">389</span><span class="sd"> &quot;&quot;&quot;</span>
-<span class="ne">--&gt; </span><span class="mi">390</span> <span class="n">info</span> <span class="o">=</span> <span class="n">get_config_info</span><span class="p">(</span><span class="n">observatory</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">392</span> <span class="n">final_context</span> <span class="o">=</span> <span class="n">get_final_context</span><span class="p">(</span><span class="n">info</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span>
-
-<span class="nn">File /usr/share/miniconda/lib/python3.9/site-packages/crds/core/utils.py:306,</span> in <span class="ni">CachedFunction.__call__</span><span class="nt">(self, *args, **keys)</span>
-<span class="g g-Whitespace">    </span><span class="mi">303</span> <span class="sd">&quot;&quot;&quot;Compute or fetch func(*args, **keys).  Add the result to the cache.</span>
-<span class="g g-Whitespace">    </span><span class="mi">304</span><span class="sd"> return func(*args, **keys)</span>
-<span class="g g-Whitespace">    </span><span class="mi">305</span><span class="sd"> &quot;&quot;&quot;</span>
-<span class="ne">--&gt; </span><span class="mi">306</span> <span class="n">key</span><span class="p">,</span> <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_readonly</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">keys</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">307</span> <span class="bp">self</span><span class="o">.</span><span class="n">cache</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">result</span>
-
-<span class="nn">File /usr/share/miniconda/lib/python3.9/site-packages/crds/core/utils.py:293,</span> in <span class="ni">CachedFunction._readonly</span><span class="nt">(self, *args, **keys)</span>
-<span class="g g-Whitespace">    </span><span class="mi">292</span> <span class="n">log</span><span class="o">.</span><span class="n">verbose</span><span class="p">(</span><span class="s2">&quot;Uncached call&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">uncached</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">key</span><span class="p">),</span> <span class="n">verbosity</span><span class="o">=</span><span class="mi">80</span><span class="p">)</span>
-<span class="ne">--&gt; </span><span class="mi">293</span> <span class="k">return</span> <span class="n">key</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">uncached</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">keys</span><span class="p">)</span>
-
-<span class="nn">File /usr/share/miniconda/lib/python3.9/site-packages/crds/core/heavy_client.py:523,</span> in <span class="ni">get_config_info</span><span class="nt">(observatory)</span>
-<span class="g g-Whitespace">    </span><span class="mi">522</span>     <span class="n">log</span><span class="o">.</span><span class="n">verbose_warning</span><span class="p">(</span><span class="s2">&quot;Couldn&#39;t contact CRDS server:&quot;</span><span class="p">,</span> <span class="n">srepr</span><span class="p">(</span><span class="n">api</span><span class="o">.</span><span class="n">get_crds_server</span><span class="p">()),</span> <span class="s2">&quot;:&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">exc</span><span class="p">))</span>
-<span class="ne">--&gt; </span><span class="mi">523</span> <span class="n">info</span> <span class="o">=</span> <span class="n">load_server_info</span><span class="p">(</span><span class="n">observatory</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">524</span> <span class="n">info</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="s2">&quot;cache&quot;</span>
-
-<span class="nn">File /usr/share/miniconda/lib/python3.9/site-packages/crds/core/heavy_client.py:598,</span> in <span class="ni">load_server_info</span><span class="nt">(observatory)</span>
-<span class="g g-Whitespace">    </span><span class="mi">597</span> <span class="n">info</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="s2">&quot;cache&quot;</span>
-<span class="ne">--&gt; </span><span class="mi">598</span> <span class="k">return</span> <span class="n">info</span>
-
-<span class="nn">File /usr/share/miniconda/lib/python3.9/contextlib.py:137,</span> in <span class="ni">_GeneratorContextManager.__exit__</span><span class="nt">(self, typ, value, traceback)</span>
-<span class="g g-Whitespace">    </span><span class="mi">136</span> <span class="k">try</span><span class="p">:</span>
-<span class="ne">--&gt; </span><span class="mi">137</span>     <span class="bp">self</span><span class="o">.</span><span class="n">gen</span><span class="o">.</span><span class="n">throw</span><span class="p">(</span><span class="n">typ</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">traceback</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">138</span> <span class="k">except</span> <span class="ne">StopIteration</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">139</span>     <span class="c1"># Suppress StopIteration *unless* it&#39;s the same exception that</span>
-<span class="g g-Whitespace">    </span><span class="mi">140</span>     <span class="c1"># was passed to throw().  This prevents a StopIteration</span>
-<span class="g g-Whitespace">    </span><span class="mi">141</span>     <span class="c1"># raised inside the &quot;with&quot; statement from being suppressed.</span>
-
-<span class="nn">File /usr/share/miniconda/lib/python3.9/site-packages/crds/core/log.py:368,</span> in <span class="ni">exception_trap_logger.&lt;locals&gt;.func_on_exception</span><span class="nt">(*args, **keys)</span>
-<span class="g g-Whitespace">    </span><span class="mi">367</span> <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
-<span class="ne">--&gt; </span><span class="mi">368</span>     <span class="n">reraise</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span> <span class="o">+</span> <span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">exc</span><span class="p">)),</span> <span class="o">**</span><span class="n">keys</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">369</span>     <span class="k">if</span> <span class="ow">not</span> <span class="n">CRDS_EXCEPTION_TRAP</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">370</span>         <span class="c1"># In python-2, distinction between raise and &quot;raise something&quot;.  raise doesn&#39;t</span>
-<span class="g g-Whitespace">    </span><span class="mi">371</span>         <span class="c1"># wreck the traceback,  raising a new improved exception does.</span>
-
-<span class="nn">File /usr/share/miniconda/lib/python3.9/site-packages/crds/core/log.py:261,</span> in <span class="ni">CrdsLogger.fatal_error</span><span class="nt">(self, *args, **keys)</span>
-<span class="g g-Whitespace">    </span><span class="mi">260</span> <span class="n">error</span><span class="p">(</span><span class="s2">&quot;(FATAL)&quot;</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">keys</span><span class="p">)</span>
-<span class="ne">--&gt; </span><span class="mi">261</span> <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
-
-<span class="ne">SystemExit</span>: -1
-
-<span class="n">During</span> <span class="n">handling</span> <span class="n">of</span> <span class="n">the</span> <span class="n">above</span> <span class="n">exception</span><span class="p">,</span> <span class="n">another</span> <span class="n">exception</span> <span class="n">occurred</span><span class="p">:</span>
-
-<span class="ne">AssertionError</span><span class="g g-Whitespace">                            </span>Traceback (most recent call last)
-    <span class="p">[</span><span class="o">...</span> <span class="n">skipping</span> <span class="n">hidden</span> <span class="mi">1</span> <span class="n">frame</span><span class="p">]</span>
-
-<span class="nn">File /usr/share/miniconda/lib/python3.9/site-packages/IPython/core/interactiveshell.py:1987,</span> in <span class="ni">InteractiveShell.showtraceback</span><span class="nt">(self, exc_tuple, filename, tb_offset, exception_only, running_compiled_code)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1984</span> <span class="k">if</span> <span class="n">exception_only</span><span class="p">:</span>
-<span class="g g-Whitespace">   </span><span class="mi">1985</span>     <span class="n">stb</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;An exception has occurred, use %tb to see &#39;</span>
-<span class="g g-Whitespace">   </span><span class="mi">1986</span>            <span class="s1">&#39;the full traceback.</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">]</span>
-<span class="ne">-&gt; </span><span class="mi">1987</span>     <span class="n">stb</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">InteractiveTB</span><span class="o">.</span><span class="n">get_exception_only</span><span class="p">(</span><span class="n">etype</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">1988</span>                                                      <span class="n">value</span><span class="p">))</span>
-<span class="g g-Whitespace">   </span><span class="mi">1989</span> <span class="k">else</span><span class="p">:</span>
-<span class="g g-Whitespace">   </span><span class="mi">1990</span>     <span class="k">try</span><span class="p">:</span>
-<span class="g g-Whitespace">   </span><span class="mi">1991</span>         <span class="c1"># Exception classes can customise their traceback - we</span>
-<span class="g g-Whitespace">   </span><span class="mi">1992</span>         <span class="c1"># use this in IPython.parallel for exceptions occurring</span>
-<span class="g g-Whitespace">   </span><span class="mi">1993</span>         <span class="c1"># in the engines. This should return a list of strings.</span>
-
-<span class="nn">File /usr/share/miniconda/lib/python3.9/site-packages/IPython/core/ultratb.py:579,</span> in <span class="ni">ListTB.get_exception_only</span><span class="nt">(self, etype, value)</span>
-<span class="g g-Whitespace">    </span><span class="mi">571</span> <span class="k">def</span> <span class="nf">get_exception_only</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">etype</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-<span class="g g-Whitespace">    </span><span class="mi">572</span>     <span class="sd">&quot;&quot;&quot;Only print the exception type and message, without a traceback.</span>
-<span class="g g-Whitespace">    </span><span class="mi">573</span><span class="sd"> </span>
-<span class="g g-Whitespace">    </span><span class="mi">574</span><span class="sd">     Parameters</span>
-<span class="sd">   (...)</span>
-<span class="g g-Whitespace">    </span><span class="mi">577</span><span class="sd">     value : exception value</span>
-<span class="g g-Whitespace">    </span><span class="mi">578</span><span class="sd">     &quot;&quot;&quot;</span>
-<span class="ne">--&gt; </span><span class="mi">579</span>     <span class="k">return</span> <span class="n">ListTB</span><span class="o">.</span><span class="n">structured_traceback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">etype</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
-
-<span class="nn">File /usr/share/miniconda/lib/python3.9/site-packages/IPython/core/ultratb.py:446,</span> in <span class="ni">ListTB.structured_traceback</span><span class="nt">(self, etype, evalue, etb, tb_offset, context)</span>
-<span class="g g-Whitespace">    </span><span class="mi">443</span>     <span class="n">chained_exc_ids</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="n">exception</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
-<span class="g g-Whitespace">    </span><span class="mi">444</span>     <span class="n">chained_exceptions_tb_offset</span> <span class="o">=</span> <span class="mi">0</span>
-<span class="g g-Whitespace">    </span><span class="mi">445</span>     <span class="n">out_list</span> <span class="o">=</span> <span class="p">(</span>
-<span class="ne">--&gt; </span><span class="mi">446</span>         <span class="bp">self</span><span class="o">.</span><span class="n">structured_traceback</span><span class="p">(</span>
-<span class="g g-Whitespace">    </span><span class="mi">447</span>             <span class="n">etype</span><span class="p">,</span> <span class="n">evalue</span><span class="p">,</span> <span class="p">(</span><span class="n">etb</span><span class="p">,</span> <span class="n">chained_exc_ids</span><span class="p">),</span>
-<span class="g g-Whitespace">    </span><span class="mi">448</span>             <span class="n">chained_exceptions_tb_offset</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">449</span>         <span class="o">+</span> <span class="n">chained_exception_message</span>
-<span class="g g-Whitespace">    </span><span class="mi">450</span>         <span class="o">+</span> <span class="n">out_list</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">452</span> <span class="k">return</span> <span class="n">out_list</span>
-
-<span class="nn">File /usr/share/miniconda/lib/python3.9/site-packages/IPython/core/ultratb.py:1112,</span> in <span class="ni">AutoFormattedTB.structured_traceback</span><span class="nt">(self, etype, value, tb, tb_offset, number_of_lines_of_context)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1110</span> <span class="k">else</span><span class="p">:</span>
-<span class="g g-Whitespace">   </span><span class="mi">1111</span>     <span class="bp">self</span><span class="o">.</span><span class="n">tb</span> <span class="o">=</span> <span class="n">tb</span>
-<span class="ne">-&gt; </span><span class="mi">1112</span> <span class="k">return</span> <span class="n">FormattedTB</span><span class="o">.</span><span class="n">structured_traceback</span><span class="p">(</span>
-<span class="g g-Whitespace">   </span><span class="mi">1113</span>     <span class="bp">self</span><span class="p">,</span> <span class="n">etype</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">tb</span><span class="p">,</span> <span class="n">tb_offset</span><span class="p">,</span> <span class="n">number_of_lines_of_context</span><span class="p">)</span>
-
-<span class="nn">File /usr/share/miniconda/lib/python3.9/site-packages/IPython/core/ultratb.py:1006,</span> in <span class="ni">FormattedTB.structured_traceback</span><span class="nt">(self, etype, value, tb, tb_offset, number_of_lines_of_context)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1003</span> <span class="n">mode</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span>
-<span class="g g-Whitespace">   </span><span class="mi">1004</span> <span class="k">if</span> <span class="n">mode</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose_modes</span><span class="p">:</span>
-<span class="g g-Whitespace">   </span><span class="mi">1005</span>     <span class="c1"># Verbose modes need a full traceback</span>
-<span class="ne">-&gt; </span><span class="mi">1006</span>     <span class="k">return</span> <span class="n">VerboseTB</span><span class="o">.</span><span class="n">structured_traceback</span><span class="p">(</span>
-<span class="g g-Whitespace">   </span><span class="mi">1007</span>         <span class="bp">self</span><span class="p">,</span> <span class="n">etype</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">tb</span><span class="p">,</span> <span class="n">tb_offset</span><span class="p">,</span> <span class="n">number_of_lines_of_context</span>
-<span class="g g-Whitespace">   </span><span class="mi">1008</span>     <span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1009</span> <span class="k">elif</span> <span class="n">mode</span> <span class="o">==</span> <span class="s1">&#39;Minimal&#39;</span><span class="p">:</span>
-<span class="g g-Whitespace">   </span><span class="mi">1010</span>     <span class="k">return</span> <span class="n">ListTB</span><span class="o">.</span><span class="n">get_exception_only</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">etype</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
-
-<span class="nn">File /usr/share/miniconda/lib/python3.9/site-packages/IPython/core/ultratb.py:859,</span> in <span class="ni">VerboseTB.structured_traceback</span><span class="nt">(self, etype, evalue, etb, tb_offset, number_of_lines_of_context)</span>
-<span class="g g-Whitespace">    </span><span class="mi">850</span> <span class="k">def</span> <span class="nf">structured_traceback</span><span class="p">(</span>
-<span class="g g-Whitespace">    </span><span class="mi">851</span>     <span class="bp">self</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">852</span>     <span class="n">etype</span><span class="p">:</span> <span class="nb">type</span><span class="p">,</span>
-   <span class="p">(</span><span class="o">...</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">856</span>     <span class="n">number_of_lines_of_context</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">857</span> <span class="p">):</span>
-<span class="g g-Whitespace">    </span><span class="mi">858</span>     <span class="sd">&quot;&quot;&quot;Return a nice text document describing the traceback.&quot;&quot;&quot;</span>
-<span class="ne">--&gt; </span><span class="mi">859</span>     <span class="n">formatted_exception</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">format_exception_as_a_whole</span><span class="p">(</span><span class="n">etype</span><span class="p">,</span> <span class="n">evalue</span><span class="p">,</span> <span class="n">etb</span><span class="p">,</span> <span class="n">number_of_lines_of_context</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">860</span>                                                            <span class="n">tb_offset</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">862</span>     <span class="n">colors</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Colors</span>  <span class="c1"># just a shorthand + quicker name lookup</span>
-<span class="g g-Whitespace">    </span><span class="mi">863</span>     <span class="n">colorsnormal</span> <span class="o">=</span> <span class="n">colors</span><span class="o">.</span><span class="n">Normal</span>  <span class="c1"># used a lot</span>
-
-<span class="nn">File /usr/share/miniconda/lib/python3.9/site-packages/IPython/core/ultratb.py:793,</span> in <span class="ni">VerboseTB.format_exception_as_a_whole</span><span class="nt">(self, etype, evalue, etb, number_of_lines_of_context, tb_offset)</span>
-<span class="g g-Whitespace">    </span><span class="mi">790</span> <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tb_offset</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">791</span> <span class="n">head</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">prepare_header</span><span class="p">(</span><span class="n">etype</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">long_header</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">792</span> <span class="n">records</span> <span class="o">=</span> <span class="p">(</span>
-<span class="ne">--&gt; </span><span class="mi">793</span>     <span class="bp">self</span><span class="o">.</span><span class="n">get_records</span><span class="p">(</span><span class="n">etb</span><span class="p">,</span> <span class="n">number_of_lines_of_context</span><span class="p">,</span> <span class="n">tb_offset</span><span class="p">)</span> <span class="k">if</span> <span class="n">etb</span> <span class="k">else</span> <span class="p">[]</span>
-<span class="g g-Whitespace">    </span><span class="mi">794</span> <span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">796</span> <span class="n">frames</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="g g-Whitespace">    </span><span class="mi">797</span> <span class="n">skipped</span> <span class="o">=</span> <span class="mi">0</span>
-
-<span class="nn">File /usr/share/miniconda/lib/python3.9/site-packages/IPython/core/ultratb.py:848,</span> in <span class="ni">VerboseTB.get_records</span><span class="nt">(self, etb, number_of_lines_of_context, tb_offset)</span>
-<span class="g g-Whitespace">    </span><span class="mi">842</span>     <span class="n">formatter</span> <span class="o">=</span> <span class="kc">None</span>
-<span class="g g-Whitespace">    </span><span class="mi">843</span> <span class="n">options</span> <span class="o">=</span> <span class="n">stack_data</span><span class="o">.</span><span class="n">Options</span><span class="p">(</span>
-<span class="g g-Whitespace">    </span><span class="mi">844</span>     <span class="n">before</span><span class="o">=</span><span class="n">before</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">845</span>     <span class="n">after</span><span class="o">=</span><span class="n">after</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">846</span>     <span class="n">pygments_formatter</span><span class="o">=</span><span class="n">formatter</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">847</span> <span class="p">)</span>
-<span class="ne">--&gt; </span><span class="mi">848</span> <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">stack_data</span><span class="o">.</span><span class="n">FrameInfo</span><span class="o">.</span><span class="n">stack_data</span><span class="p">(</span><span class="n">etb</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="n">options</span><span class="p">))[</span><span class="n">tb_offset</span><span class="p">:]</span>
-
-<span class="nn">File /usr/share/miniconda/lib/python3.9/site-packages/stack_data/core.py:578,</span> in <span class="ni">FrameInfo.stack_data</span><span class="nt">(cls, frame_or_tb, options, collapse_repeated_frames)</span>
-<span class="g g-Whitespace">    </span><span class="mi">562</span> <span class="nd">@classmethod</span>
-<span class="g g-Whitespace">    </span><span class="mi">563</span> <span class="k">def</span> <span class="nf">stack_data</span><span class="p">(</span>
-<span class="g g-Whitespace">    </span><span class="mi">564</span>         <span class="bp">cls</span><span class="p">,</span>
-   <span class="p">(</span><span class="o">...</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">568</span>         <span class="n">collapse_repeated_frames</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
-<span class="g g-Whitespace">    </span><span class="mi">569</span> <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="s1">&#39;FrameInfo&#39;</span><span class="p">,</span> <span class="n">RepeatedFrames</span><span class="p">]]:</span>
-<span class="g g-Whitespace">    </span><span class="mi">570</span>     <span class="sd">&quot;&quot;&quot;</span>
-<span class="g g-Whitespace">    </span><span class="mi">571</span><span class="sd">     An iterator of FrameInfo and RepeatedFrames objects representing</span>
-<span class="g g-Whitespace">    </span><span class="mi">572</span><span class="sd">     a full traceback or stack. Similar consecutive frames are collapsed into RepeatedFrames</span>
-<span class="sd">   (...)</span>
-<span class="g g-Whitespace">    </span><span class="mi">576</span><span class="sd">     and optionally an Options object to configure.</span>
-<span class="g g-Whitespace">    </span><span class="mi">577</span><span class="sd">     &quot;&quot;&quot;</span>
-<span class="ne">--&gt; </span><span class="mi">578</span>     <span class="n">stack</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">iter_stack</span><span class="p">(</span><span class="n">frame_or_tb</span><span class="p">))</span>
-<span class="g g-Whitespace">    </span><span class="mi">580</span>     <span class="c1"># Reverse the stack from a frame so that it&#39;s in the same order</span>
-<span class="g g-Whitespace">    </span><span class="mi">581</span>     <span class="c1"># as the order from a traceback, which is the order of a printed</span>
-<span class="g g-Whitespace">    </span><span class="mi">582</span>     <span class="c1"># traceback when read top to bottom (most recent call last)</span>
-<span class="g g-Whitespace">    </span><span class="mi">583</span>     <span class="k">if</span> <span class="n">is_frame</span><span class="p">(</span><span class="n">frame_or_tb</span><span class="p">):</span>
-
-<span class="nn">File /usr/share/miniconda/lib/python3.9/site-packages/stack_data/utils.py:98,</span> in <span class="ni">iter_stack</span><span class="nt">(frame_or_tb)</span>
-<span class="g g-Whitespace">     </span><span class="mi">96</span> <span class="k">while</span> <span class="n">frame_or_tb</span><span class="p">:</span>
-<span class="g g-Whitespace">     </span><span class="mi">97</span>     <span class="k">yield</span> <span class="n">frame_or_tb</span>
-<span class="ne">---&gt; </span><span class="mi">98</span>     <span class="k">if</span> <span class="n">is_frame</span><span class="p">(</span><span class="n">frame_or_tb</span><span class="p">):</span>
-<span class="g g-Whitespace">     </span><span class="mi">99</span>         <span class="n">frame_or_tb</span> <span class="o">=</span> <span class="n">frame_or_tb</span><span class="o">.</span><span class="n">f_back</span>
-<span class="g g-Whitespace">    </span><span class="mi">100</span>     <span class="k">else</span><span class="p">:</span>
-
-<span class="nn">File /usr/share/miniconda/lib/python3.9/site-packages/stack_data/utils.py:91,</span> in <span class="ni">is_frame</span><span class="nt">(frame_or_tb)</span>
-<span class="g g-Whitespace">     </span><span class="mi">90</span> <span class="k">def</span> <span class="nf">is_frame</span><span class="p">(</span><span class="n">frame_or_tb</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">FrameType</span><span class="p">,</span> <span class="n">TracebackType</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-<span class="ne">---&gt; </span><span class="mi">91</span>     <span class="n">assert_</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">frame_or_tb</span><span class="p">,</span> <span class="p">(</span><span class="n">types</span><span class="o">.</span><span class="n">FrameType</span><span class="p">,</span> <span class="n">types</span><span class="o">.</span><span class="n">TracebackType</span><span class="p">)))</span>
-<span class="g g-Whitespace">     </span><span class="mi">92</span>     <span class="k">return</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">frame_or_tb</span><span class="p">,</span> <span class="p">(</span><span class="n">types</span><span class="o">.</span><span class="n">FrameType</span><span class="p">,))</span>
-
-<span class="nn">File /usr/share/miniconda/lib/python3.9/site-packages/stack_data/utils.py:172,</span> in <span class="ni">assert_</span><span class="nt">(condition, error)</span>
-<span class="g g-Whitespace">    </span><span class="mi">170</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">error</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-<span class="g g-Whitespace">    </span><span class="mi">171</span>     <span class="n">error</span> <span class="o">=</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
-<span class="ne">--&gt; </span><span class="mi">172</span> <span class="k">raise</span> <span class="n">error</span>
-
-<span class="ne">AssertionError</span>: 
 </pre></div>
 </div>
 </div>
