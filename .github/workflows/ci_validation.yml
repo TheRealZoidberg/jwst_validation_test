@@ -9,6 +9,7 @@ on:
 env: 
   WEBBPSF_PATH: $PWD/data/webbpsf-data
   PYSYN_CDBS: $PWD/grp/redcat/trds/
+  CRDS_CACHE_TYPE: 'local'
 
 jobs:
   build-linux:
