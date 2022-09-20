@@ -1,0 +1,2582 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>JWST Pipeline Validation Testing Notebook: Calwebb_Detector1 for MIRI TSO imaging &#8212; Notebook repository template</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/main.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/clipboard.min.js"></script>
+    <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../../_static/sphinx-thebe.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.1/dist/embed-amd.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="JWST Pipeline Validation Testing Notebook: Calwebb_Detector1 for MIRI TSO imaging" href="jwst_detector1_miri_imtso_testing.html" />
+    <link rel="prev" title="JWST Pipeline Validation Notebook: calwebb_detector1, NIRCam imaging" href="../jwst_detector1_nircam_test/exec_jwst_detector1_nircam_test.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../../../_static/logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Notebook repository template</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../index.html">
+                    <no title>
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../background/jwst_background_miri_test/jwst_background_subtraction_miri_imaging_testing.html">
+   JWST Pipeline Validation Notebook: calwebb_image2, background subtraction for MIRI imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../background/jwst_background_miri_test/exec_jwst_background_subtraction_miri_imaging_testing.html">
+   JWST Pipeline Validation Notebook: calwebb_image2, background subtraction for MIRI imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../background/jwst_background_miri_test/exec_background_sub-miri-lrs-slit.html">
+   JWST Pipeline Validation Testing Notebook: Background_subtract() for MIRI LRS SLIT
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../background/jwst_background_miri_test/background_sub-miri-lrs-slit.html">
+   JWST Pipeline Validation Testing Notebook: Background_subtract() for MIRI LRS SLIT
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../pathloss/jwst_pathloss_nirspec_test/exec_jwst_pathloss_nirspec_test.html">
+   JWST Pipeline Validation Testing Notebook: spec2, pathloss step
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../pathloss/jwst_pathloss_nirspec_test/jwst_pathloss_nirspec_test.html">
+   JWST Pipeline Validation Testing Notebook: spec2, pathloss step
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../msaflagopen/jwst_msa_flagging_nirspec_test.html">
+   JWST Pipeline Validation Testing Notebook: spec2, msa_flagging step
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../msaflagopen/exec_jwst_msa_flagging_nirspec_test.html">
+   JWST Pipeline Validation Testing Notebook: spec2, msa_flagging step
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../resample/jwst_resample_miri_test/jwst_resample_miri_lrs_slit.html">
+   JWST Pipeline Validation Testing Notebook: Calwebb_Image3, Resample step
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../resample/jwst_resample_miri_test/exec_jwst_resample_miri_lrs_slit.html">
+   JWST Pipeline Validation Testing Notebook: Calwebb_Image3, Resample step
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../resample/jwst_resample_miri_test/jwst_resample_miri_testing.html">
+   JWST Pipeline Validation Testing Notebook: Calwebb_Image3, Resample step with MIRI imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../resample/jwst_resample_miri_test/exec_jwst_resample_miri_testing.html">
+   JWST Pipeline Validation Testing Notebook: Calwebb_Image3, Resample step with MIRI imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../example_notebook/example_notebook.html">
+   Draft: Notebook title
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../source_catalog/jwst_source_catalog_miri_test/exec_jwst_source_catalog_miri_test.html">
+   JWST Pipeline Validation Notebook: calwebb_image3: source_catalog with MIRI
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../source_catalog/jwst_source_catalog_miri_test/jwst_source_catalog_miri_test.html">
+   JWST Pipeline Validation Notebook: calwebb_image3: source_catalog with MIRI
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../source_catalog/jwst_source_catalog_nircam_test/jwst_nircam_imaging_source_catalog.html">
+   JWST Pipeline Validation Notebook: NIRCam, calwebb_image3, source_catalog
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../source_catalog/jwst_source_catalog_nircam_test/exec_jwst_nircam_imaging_source_catalog.html">
+   JWST Pipeline Validation Notebook: NIRCam, calwebb_image3, source_catalog
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../lastframe/exec_jwst_lastframe_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, lastframe unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../lastframe/jwst_lastframe_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, lastframe unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../photom/jwst_photom_miri_test/exec_photom_miri_lrs_slitless.html">
+   JWST Pipeline Validation Testing Notebook: MIRI LRS Slitless spectroscopy
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../photom/jwst_photom_miri_test/photom_miri_mrs_test.html">
+   JWST Pipeline Validation Testing Notebook: Spec2, photom, MIRI
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../photom/jwst_photom_miri_test/exec_photom_miri_lrs_slit.html">
+   JWST Pipeline Validation Testing Notebook: MIRI LRS Slit spectroscopy
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../photom/jwst_photom_miri_test/exec_photom_miri_mrs_test.html">
+   JWST Pipeline Validation Testing Notebook: Spec2, photom, MIRI
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../photom/jwst_photom_miri_test/photom_miri_lrs_slit.html">
+   JWST Pipeline Validation Testing Notebook: MIRI LRS Slit spectroscopy
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../photom/jwst_photom_miri_test/photom_miri_lrs_slitless.html">
+   JWST Pipeline Validation Testing Notebook: MIRI LRS Slitless spectroscopy
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../photom/jwst_photom_miri_test/exec_jwst_photom_miri_test.html">
+   JWST Pipeline Validation Notebook: photom with MIRI Imager
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../photom/jwst_photom_miri_test/jwst_photom_miri_test.html">
+   JWST Pipeline Validation Notebook: photom with MIRI Imager
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../ami3/run_ami_pipeline.html">
+   JWST Pipeline Validation Notebook:  AMI3, AMI3 Pipeline
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../ami3/exec_ami_analyze_verify.html">
+   JWST Pipeline Validation Notebook: AMI3, AmiAnalyze
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../ami3/exec_ami_average.html">
+   JWST Pipeline Validation Notebook:  calwebb_ami3, ami_average
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../ami3/exec_ami_normalize.html">
+   JWST Pipeline Validation Notebook: calwebb_ami3, ami_normalize
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../ami3/exec_run_ami_pipeline.html">
+   JWST Pipeline Validation Notebook:  AMI3, AMI3 Pipeline
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../ami3/ami_normalize.html">
+   JWST Pipeline Validation Notebook: calwebb_ami3, ami_normalize
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../ami3/ami_average.html">
+   JWST Pipeline Validation Notebook:  calwebb_ami3, ami_average
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../ami3/ami_analyze_verify.html">
+   JWST Pipeline Validation Notebook: AMI3, AmiAnalyze
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../assign_wcs/jwst_assign_wcs_nirspec_test/jwst_assign_wcs_nirspec_test.html">
+   JWST Pipeline Validation Testing Notebook: NIRSpec, spec2, assign_wcs step
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../assign_wcs/jwst_assign_wcs_nirspec_test/exec_jwst_assign_wcs_nirspec_test.html">
+   JWST Pipeline Validation Testing Notebook: NIRSpec, spec2, assign_wcs step
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../assign_wcs/jwst_assign_wcs_niriss_test/jwst_assign_wcs_niriss_image.html">
+   JWST Pipeline Validation Notebook: NIRISS, image2, assign_wcs
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../assign_wcs/jwst_assign_wcs_niriss_test/exec_jwst_assign_wcs_niriss_image.html">
+   JWST Pipeline Validation Notebook: NIRISS, image2, assign_wcs
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../assign_wcs/jwst_assign_wcs_miri_test/exec_assign_wcs-miri-mrs.html">
+   JWST Pipeline Validation Testing Notebook: MIRI MRS Spec2: Assign_wcs()
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../assign_wcs/jwst_assign_wcs_miri_test/exec_assign_wcs-miri-lrs-tso.html">
+   JWST Pipeline Validation Testing Notebook: MIRI LRS Time Series Observation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../assign_wcs/jwst_assign_wcs_miri_test/assign_wcs-miri-lrs-slit.html">
+   JWST Pipeline Validation Testing Notebook: MIRI LRS Slit
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../assign_wcs/jwst_assign_wcs_miri_test/assign_wcs-miri-mrs.html">
+   JWST Pipeline Validation Testing Notebook: MIRI MRS Spec2: Assign_wcs()
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../assign_wcs/jwst_assign_wcs_miri_test/assign_wcs-miri-lrs-tso.html">
+   JWST Pipeline Validation Testing Notebook: MIRI LRS Time Series Observation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../assign_wcs/jwst_assign_wcs_miri_test/exec_assign_wcs-miri-lrs-slit.html">
+   JWST Pipeline Validation Testing Notebook: MIRI LRS Slit
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../barshadow/jwst_barshadow_nirspec_test/jwst_barshadow_nirspec_test.html">
+   JWST Pipeline Validation Testing Notebook: spec2, barshadow step
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../barshadow/jwst_barshadow_nirspec_test/exec_jwst_barshadow_nirspec_test.html">
+   JWST Pipeline Validation Testing Notebook: spec2, barshadow step
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../reset/jwst_reset_miri_test/exec_jwst_reset_miri_testing.html">
+   JWST Pipeline Validation Testing Notebook: Calwebb_detector1, reset step for MIRI
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../reset/jwst_reset_miri_test/jwst_reset_miri_testing.html">
+   JWST Pipeline Validation Testing Notebook: Calwebb_detector1, reset step for MIRI
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../refpix/jwst_refpix_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, refpix unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../refpix/exec_jwst_refpix_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, refpix unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../flat_field/jwst_flat_field_nirspec_test/jwst_flat_field_nirspec_test.html">
+   JWST Pipeline Validation Testing Notebook: spec2, flat_field step
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../flat_field/jwst_flat_field_nirspec_test/exec_jwst_flat_field_nirspec_test.html">
+   JWST Pipeline Validation Testing Notebook: spec2, flat_field step
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../flat_field/jwst_flat_field_miri_test/exec_flatfield_analysis_slitless.html">
+   JWST Pipeline Validation Testing Notebook: MIRI LRS Slitless spectroscopy
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../flat_field/jwst_flat_field_miri_test/exec_jwst_flat_field_miri_test.html">
+   JWST Pipeline Validation Testing notebook: flat_field step with MIRI Imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../flat_field/jwst_flat_field_miri_test/exec_flat-miri-lrs-slit.html">
+   JWST Pipeline Validation Testing Notebook: MIRI LRS Slit spectroscopy
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../flat_field/jwst_flat_field_miri_test/flatfield_analysis_slitless.html">
+   JWST Pipeline Validation Testing Notebook: MIRI LRS Slitless spectroscopy
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../flat_field/jwst_flat_field_miri_test/exec_flat_miri_mrs_test.html">
+   JWST Pipeline Validation Testing Notebook: Spec2, flat_field, MIRI
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../flat_field/jwst_flat_field_miri_test/flat-miri-lrs-slit.html">
+   JWST Pipeline Validation Testing Notebook: MIRI LRS Slit spectroscopy
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../flat_field/jwst_flat_field_miri_test/jwst_flat_field_miri_test.html">
+   JWST Pipeline Validation Testing notebook: flat_field step with MIRI Imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../flat_field/jwst_flat_field_miri_test/flat_miri_mrs_test.html">
+   JWST Pipeline Validation Testing Notebook: Spec2, flat_field, MIRI
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../skymatch/jwst_skymatch_miri_test/jwst_skymatch_photom_miri_test.html">
+   JWST Pipeline Validation Notebook: skymatch and photometry with MIRI
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../skymatch/jwst_skymatch_miri_test/exec_jwst_skymatch_miri_test.html">
+   JWST Pipeline Validation Notebook: skymatch with MIRI
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../skymatch/jwst_skymatch_miri_test/exec_jwst_skymatch_photom_miri_test.html">
+   JWST Pipeline Validation Notebook: skymatch and photometry with MIRI
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../skymatch/jwst_skymatch_miri_test/jwst_skymatch_miri_test.html">
+   JWST Pipeline Validation Notebook: skymatch with MIRI
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../jump/jwst_jump_miri_test/jwst_jump_miri_testing.html">
+   JWST Pipeline Validation Testing Notebook: Calwebb_Detector1, Jump step
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../jump/jwst_jump_miri_test/exec_jwst_jump_miri_testing.html">
+   JWST Pipeline Validation Testing Notebook: Calwebb_Detector1, Jump step
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../jump/jwst_jump_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, jump unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../jump/exec_jwst_jump_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, jump unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../calwebb_image3/jwst_image3_nircam_test/jwst_image3_nircam_test.html">
+   JWST Pipeline Validation Notebook: calwebb_image3, NIRCam imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../calwebb_image3/jwst_image3_nircam_test/exec_jwst_image3_nircam_test.html">
+   JWST Pipeline Validation Notebook: calwebb_image3, NIRCam imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../calwebb_image3/jwst_image3_miri_test/exec_jwst_image3_miri_test.html">
+   JWST Pipeline Validation Notebook: calwebb_image3 with MIRI
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../calwebb_image3/jwst_image3_miri_test/jwst_image3_miri_test.html">
+   JWST Pipeline Validation Notebook: calwebb_image3 with MIRI
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../jwst_detector1_nircam_test/jwst_detector1_nircam_test.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, NIRCam imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../jwst_detector1_nircam_test/exec_jwst_detector1_nircam_test.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, NIRCam imaging
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   JWST Pipeline Validation Testing Notebook: Calwebb_Detector1 for MIRI TSO imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="jwst_detector1_miri_imtso_testing.html">
+   JWST Pipeline Validation Testing Notebook: Calwebb_Detector1 for MIRI TSO imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="exec_caldetector1-miri-lrs-tso.html">
+   JWST Pipeline Validation Testing Notebook: MIRI LRS Time Series Observation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="caldetector1-miri-lrs-tso.html">
+   JWST Pipeline Validation Testing Notebook: MIRI LRS Time Series Observation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../rscd/jwst_rscd_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, rscd unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../rscd/exec_jwst_rscd_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, rscd unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../rscd/jwst_rscd_miri_test/exec_jwst_miri_rscd_testing.html">
+   JWST Pipeline Validation Testing Notebook: Calwebb_Detector1, RSCD step
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../rscd/jwst_rscd_miri_test/jwst_miri_rscd_testing.html">
+   JWST Pipeline Validation Testing Notebook: Calwebb_Detector1, RSCD step
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../calwebb_image2/jwst_image2_nircam_test/jwst_image2_nircam_test.html">
+   JWST Pipeline Validation Notebook: calwebb_image2, NIRCam imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../calwebb_image2/jwst_image2_nircam_test/exec_jwst_image2_nircam_test.html">
+   JWST Pipeline Validation Notebook: calwebb_image2, NIRCam imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../ramp_fitting/exec_jwst_ramp_fitting_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, ramp_fitting unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../ramp_fitting/jwst_ramp_fitting_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, ramp_fitting unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../firstframe/exec_jwst_firstframe_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, firstframe unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../firstframe/jwst_firstframe_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, firstframe unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../dq_init/exec_jwst_dq_init_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, dq_init unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../dq_init/jwst_dq_init_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, dq_init unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../cube_build/jwst_cube_build_miri_test/test_cube_build_spec3.html">
+   JWST Pipeline Validation Testing Notebook: Cube Build with MIRISIM Data
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../cube_build/jwst_cube_build_miri_test/exec_testing_point_source_flux_conservation_modeshep_all.html">
+   JWST Pipeline Validation Testing Notebook: Point Source Flux Conservation Modeshep
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../cube_build/jwst_cube_build_miri_test/testing_point_source_flux_conservation_modeshep_all.html">
+   JWST Pipeline Validation Testing Notebook: Point Source Flux Conservation Modeshep
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../cube_build/jwst_cube_build_miri_test/exec_test_cube_build_spec3.html">
+   JWST Pipeline Validation Testing Notebook: Cube Build with MIRISIM Data
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../saturation/exec_jwst_saturation_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, saturation unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../saturation/jwst_saturation_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, saturation unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../extract_2d/jwst_extract_2d_nirspec_test/jwst_extract_2d_nirspec_test.html">
+   JWST Pipeline Validation Testing Notebook: spec2, extract_2d step
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../extract_2d/jwst_extract_2d_nirspec_test/exec_jwst_extract_2d_nirspec_test.html">
+   JWST Pipeline Validation Testing Notebook: spec2, extract_2d step
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../persistence/exec_jwst_persistence_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, persistence unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../persistence/jwst_persistence_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, persistence unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../extract_1d/jwst_extract_1d_miri_test/exec_extract_1d-spec2-miri-lrs-slit.html">
+   JWST Pipeline Validation Testing Notebook: MIRI LRS Slit
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../extract_1d/jwst_extract_1d_miri_test/extract_1d-spec2-miri-lrs-slitless.html">
+   JWST Pipeline Validation Testing Notebook: MIRI LRS Slitless
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../extract_1d/jwst_extract_1d_miri_test/extract_1d-spec2-miri-lrs-slit.html">
+   JWST Pipeline Validation Testing Notebook: MIRI LRS Slit
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../extract_1d/jwst_extract_1d_miri_test/exec_extract_1d-spec2-miri-lrs-slitless.html">
+   JWST Pipeline Validation Testing Notebook: MIRI LRS Slitless
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../dark_current/exec_jwst_dark_current_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, dark_current unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../dark_current/jwst_dark_current_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, dark_current unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../templates/jwst_validation_notebook_template.html">
+   JWST Pipeline Validation Notebook:
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../templates/exec_jwst_validation_notebook_template.html">
+   JWST Pipeline Validation Notebook:
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../templates/validation_test_template.html">
+   JWST Pipeline Validation Testing Notebook: Descriptive Name of Test You Are Performing
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../templates/exec_validation_test_template.html">
+   JWST Pipeline Validation Testing Notebook: Descriptive Name of Test You Are Performing
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../ipc/exec_jwst_ipc_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, ipc unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../ipc/jwst_ipc_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, ipc unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/background/exec_jwst_background_unit_tests.html">
+   JWST calwebb_image2, background unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/background/jwst_background_unit_tests.html">
+   JWST calwebb_image2, background unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/jwst_nirspec_regression_tests.html">
+   JWST NIRSpec regression tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/flatfield/exec_jwst_flatfield_unit_tests.html">
+   JWST calwebb_image2 and calwebb_spec2, flatfield unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/flatfield/jwst_flatfield_unit_tests.html">
+   JWST calwebb_image2 and calwebb_spec2, flatfield unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/jwst_nircam_regression_tests.html">
+   JWST NIRCam regression tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/resample/exec_jwst_resample_unit_tests.html">
+   JWST calwebb_image2 and calwebb_spec2, resample unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/resample/jwst_resample_unit_tests.html">
+   JWST calwebb_image2 and calwebb_spec2, resample unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/jwst_niriss_regression_tests.html">
+   JWST NIRISS regression tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/source_catalog/jwst_source_catalog_unit_tests.html">
+   JWST calwebb_image3, source_catalog unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/source_catalog/exec_jwst_source_catalog_unit_tests.html">
+   JWST calwebb_image3, source_catalog unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/exec_jwst_fgs_regression_tests.html">
+   JWST FGS regression tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/photom/jwst_photom_unit_tests.html">
+   JWST calwebb_image2 and calwebb_spec2, photom unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/photom/exec_jwst_photom_unit_tests.html">
+   JWST calwebb_image2 and calwebb_spec2, photom unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/assign_wcs/jwst_assign_wcs_unit_tests.html">
+   JWST calwebb_image2 and calwebb_spec2, assign_wcs unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/assign_wcs/exec_jwst_assign_wcs_unit_tests.html">
+   JWST calwebb_image2 and calwebb_spec2, assign_wcs unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/skymatch/jwst_skymatch_unit_tests.html">
+   JWST calwebb_image3, skymatch unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/skymatch/exec_jwst_skymatch_unit_tests.html">
+   JWST calwebb_image3, skymatch unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/exec_jwst_niriss_regression_tests.html">
+   JWST NIRISS regression tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/exec_jwst_nirspec_regression_tests.html">
+   JWST NIRSpec regression tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/exec_jwst_nircam_regression_tests.html">
+   JWST NIRCam regression tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/jwst_fgs_regression_tests.html">
+   JWST FGS regression tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/exec_jwst_miri_regression_tests.html">
+   JWST MIRI regression tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/jwst_miri_regression_tests.html">
+   JWST MIRI regression tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/tweakreg/exec_jwst_tweakreg_unit_tests.html">
+   JWST calwebb_image3, tweakreg unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/tweakreg/jwst_tweakreg_unit_tests.html">
+   JWST calwebb_image3, tweakreg unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/outlier_detection/jwst_outlier_detection_unit_tests.html">
+   JWST calwebb_image3, calwebb_spec3, calwebb_coron3, calwebb_tso3, outlier_detection unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/outlier_detection/exec_jwst_outlier_detection_unit_tests.html">
+   JWST calwebb_image3, calwebb_spec3, calwebb_coron3, calwebb_tso3, outlier_detection unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../tweakreg/jwst_tweakreg_miri_test/exec_jwst_tweakreg_miri_test.html">
+   JWST Pipeline Validation Testing Notebook: Calwebb_Image3, Tweakreg step with MIRI imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../tweakreg/jwst_tweakreg_miri_test/jwst_tweakreg_miri_test.html">
+   JWST Pipeline Validation Testing Notebook: Calwebb_Image3, Tweakreg step with MIRI imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../outlier_detection/jwst_outlier_detection_miri_test/exec_jwst_outlier_detection_miri_test.html">
+   JWST Pipeline Validation Notebook: outlier_detection with MIRI
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../outlier_detection/jwst_outlier_detection_miri_test/exec_jwst_outlier_detection_view_miri_test.html">
+   JWST Pipeline Validation Notebook: MIRI view outlier_detection
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../outlier_detection/jwst_outlier_detection_miri_test/exec_out_det_test2.html">
+   JWST Pipeline Validation Notebook: Outlier Detection for MIRI MRS
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../outlier_detection/jwst_outlier_detection_miri_test/out_det_test2.html">
+   JWST Pipeline Validation Notebook: Outlier Detection for MIRI MRS
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../outlier_detection/jwst_outlier_detection_miri_test/jwst_outlier_detection_miri_test.html">
+   JWST Pipeline Validation Notebook: outlier_detection with MIRI
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../outlier_detection/jwst_outlier_detection_miri_test/jwst_outlier_detection_view_miri_test.html">
+   JWST Pipeline Validation Notebook: MIRI view outlier_detection
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../superbias/exec_jwst_superbias_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, superbias unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../superbias/jwst_superbias_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, superbias unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../calwebb_coron3/exec_MIRI_shared_calcoron3_testing.html">
+   JWST Pipeline Validation Testing Notebook: Calwebb_Coron3 for MIRI Coronagraphic Imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../calwebb_coron3/jwst_calcoron3_nircam_test.html">
+   JWST Pipeline Validation Notebook: calwebb_coron3 with NIRCam
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../calwebb_coron3/exec_jwst_calcoron3_nircam_test.html">
+   JWST Pipeline Validation Notebook: calwebb_coron3 with NIRCam
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../calwebb_coron3/MIRI_shared_calcoron3_testing.html">
+   JWST Pipeline Validation Testing Notebook: Calwebb_Coron3 for MIRI Coronagraphic Imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../fringe/JWST_fringe_miri_test/exec_fringe_miri_mrs_test.html">
+   JWST Pipeline Validation Testing Notebook: Spec2, fringe, MIRI
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../fringe/JWST_fringe_miri_test/fringe_miri_mrs_test.html">
+   JWST Pipeline Validation Testing Notebook: Spec2, fringe, MIRI
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../image3/jwst_image3_miri_test/exec_jwst_image3_miri_test.html">
+   JWST Pipeline Validation Notebook: calwebb_image3 with MIRI
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../image3/jwst_image3_miri_test/jwst_image3_miri_test.html">
+   JWST Pipeline Validation Notebook: calwebb_image3 with MIRI
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../linearity/jwst_linearity_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, linearity unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../linearity/exec_jwst_linearity_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, linearity unit tests
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/TheRealZoidberg/jwst_validation_test/main?urlpath=tree/notebooks/calwebb_detector1/jwst_detector1_miri_test/exec_jwst_detector1_miri_imtso_testing.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../../../_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://colab.research.google.com/github/TheRealZoidberg/jwst_validation_test/blob/main/notebooks/calwebb_detector1/jwst_detector1_miri_test/exec_jwst_detector1_miri_imtso_testing.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Colab"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../../../_static/images/logo_colab.png">
+  </span>
+<span class="headerbtn__text-container">Colab</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="initThebeSBT()"
+  class="headerbtn headerbtn-launch-thebe"
+  data-toggle="tooltip"
+data-placement="left"
+title="Launch Thebe"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-play"></i>
+  </span>
+<span class="headerbtn__text-container">Live Code</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Source repositories">
+      <i class="fab fa-github"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://github.com/TheRealZoidberg/jwst_validation_test"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/TheRealZoidberg/jwst_validation_test/issues/new?title=Issue%20on%20page%20%2Fnotebooks/calwebb_detector1/jwst_detector1_miri_test/exec_jwst_detector1_miri_imtso_testing.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="headerbtn__text-container">open issue</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../../../_sources/notebooks/calwebb_detector1/jwst_detector1_miri_test/exec_jwst_detector1_miri_imtso_testing.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   JWST Pipeline Validation Testing Notebook: Calwebb_Detector1 for MIRI TSO imaging
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#table-of-contents">
+     Table of Contents
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#introduction">
+   Introduction
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#defining-terms">
+     Defining Terms
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#imports">
+     Imports
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#read-in-file-and-update-headers-to-have-needed-keywords-for-tso-mode">
+       Read in file and update headers to have needed keywords for TSO mode
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#run-jwst-pipeline">
+     Run JWST Pipeline
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#set-up-parameters-for-individual-steps-and-run-calwebb-detector1">
+       Set up parameters for individual steps and run calwebb_detector1
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#examine-input-and-output-data">
+     Examine input and output data
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#take-a-look-at-the-input-data">
+       Take a look at the input data
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#test-individual-output">
+     Test individual output
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#test-saturation-output">
+       Test Saturation output
+      </a>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#look-at-plots-of-output">
+       Look at plots of output
+      </a>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#test-output-of-jump-step-to-see-if-specified-pixels-and-their-neighbors-were-flagged">
+       Test output of jump step to see if specified pixels (and their neighbors) were flagged
+      </a>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#rscd-testing">
+       RSCD testing
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#about-this-notebook">
+     About this Notebook
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>JWST Pipeline Validation Testing Notebook: Calwebb_Detector1 for MIRI TSO imaging</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   JWST Pipeline Validation Testing Notebook: Calwebb_Detector1 for MIRI TSO imaging
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#table-of-contents">
+     Table of Contents
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#introduction">
+   Introduction
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#defining-terms">
+     Defining Terms
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#imports">
+     Imports
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#read-in-file-and-update-headers-to-have-needed-keywords-for-tso-mode">
+       Read in file and update headers to have needed keywords for TSO mode
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#run-jwst-pipeline">
+     Run JWST Pipeline
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#set-up-parameters-for-individual-steps-and-run-calwebb-detector1">
+       Set up parameters for individual steps and run calwebb_detector1
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#examine-input-and-output-data">
+     Examine input and output data
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#take-a-look-at-the-input-data">
+       Take a look at the input data
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#test-individual-output">
+     Test individual output
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#test-saturation-output">
+       Test Saturation output
+      </a>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#look-at-plots-of-output">
+       Look at plots of output
+      </a>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#test-output-of-jump-step-to-see-if-specified-pixels-and-their-neighbors-were-flagged">
+       Test output of jump step to see if specified pixels (and their neighbors) were flagged
+      </a>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#rscd-testing">
+       RSCD testing
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#about-this-notebook">
+     About this Notebook
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <p><a id="title_ID"></a></p>
+<section class="tex2jax_ignore mathjax_ignore" id="jwst-pipeline-validation-testing-notebook-calwebb-detector1-for-miri-tso-imaging">
+<h1>JWST Pipeline Validation Testing Notebook: Calwebb_Detector1 for MIRI TSO imaging<a class="headerlink" href="#jwst-pipeline-validation-testing-notebook-calwebb-detector1-for-miri-tso-imaging" title="Permalink to this headline">#</a></h1>
+<p><span style="color:red"> <strong>Instruments Affected</strong></span>: MIRI</p>
+<p>Tested on MIRI Simulated data</p>
+<section id="table-of-contents">
+<h2>Table of Contents<a class="headerlink" href="#table-of-contents" title="Permalink to this headline">#</a></h2>
+<div style="text-align: left"> 
+<p><br>  <a class="reference external" href="#intro_ID">Introduction</a> <br> <a class="reference external" href="#imports_ID">Imports</a> <br><a class="reference external" href="#pipeline_ID">Run JWST Pipeline</a> <br> <a class="reference external" href="#examine_data">Examine Input and Output Data</a>  <br> <a class="reference external" href="#about_ID">About This Notebook</a> <br></p>
+</div><p><a id="intro_ID"></a></p>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="introduction">
+<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">#</a></h1>
+<p>This notebook is meant to process a data set through the Detector1 pipeline for TSO imaging data (calwebb_tso1). The steps are as follow:</p>
+<ol class="simple">
+<li><p>Read in an uncalibrated TSO imaging file.</p></li>
+<li><p>Process through calwebb_detctor1 using parameters set in calwebb_tso1.cfg.</p></li>
+<li><p>Test various steps and outputs from the pipeline run.</p></li>
+</ol>
+<p>These steps are set up with an example simulated MIRI dataset.</p>
+<p>The pipeline documentation can be found here: <a class="reference external" href="https://jwst-pipeline.readthedocs.io/en/latest/">https://jwst-pipeline.readthedocs.io/en/latest/</a></p>
+<p>The pipeline code is available on GitHub: <a class="reference external" href="https://github.com/spacetelescope/jwst">https://github.com/spacetelescope/jwst</a></p>
+<section id="defining-terms">
+<h2>Defining Terms<a class="headerlink" href="#defining-terms" title="Permalink to this headline">#</a></h2>
+<p>Here is where you will define terms or acronymns that may not be known a general audience (ie a new employee to the institute or an external user). For example</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>JWST: James Webb Space Telescope
+MIRI: Mid-Infrared Instrument
+LRS: Low Resolution Spectrometer
+TSO: Time Series Observation
+</pre></div>
+</div>
+<p><a id="imports_ID"></a></p>
+</section>
+<section id="imports">
+<h2>Imports<a class="headerlink" href="#imports" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>jwst.datamodels for building model for JWST Pipeline</p></li>
+<li><p>jwst.pipeline is the pipeline being tested</p></li>
+<li><p>matplotlib.pyplot.plt to generate plot</p></li>
+<li><p>numpy for array calculations and manipulation</p></li>
+<li><p>pysiaf to get coordinates of MIRI apertures</p></li>
+<li><p><a class="reference external" href="http://astropy.io">astropy.io</a> and download_file allow downloading and accessing files</p></li>
+<li><p>ci_watson and get_bigdata allow accessing files stored in artifactory</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="k">if</span> <span class="s1">&#39;CRDS_CACHE_TYPE&#39;</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;CRDS_CACHE_TYPE&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;local&#39;</span><span class="p">:</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;CRDS_PATH&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;HOME&#39;</span><span class="p">],</span> <span class="s1">&#39;crds&#39;</span><span class="p">,</span> <span class="s1">&#39;cache&#39;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;CRDS_CACHE_TYPE&#39;</span><span class="p">]):</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;CRDS_PATH&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;CRDS_CACHE_TYPE&#39;</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;CRDS cache location: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;CRDS_PATH&#39;</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">KeyError</span><span class="g g-Whitespace">                                  </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span> <span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">7</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span>     <span class="k">elif</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;CRDS_CACHE_TYPE&#39;</span><span class="p">]):</span>
+<span class="g g-Whitespace">      </span><span class="mi">6</span>         <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;CRDS_PATH&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;CRDS_CACHE_TYPE&#39;</span><span class="p">]</span>
+<span class="ne">----&gt; </span><span class="mi">7</span> <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;CRDS cache location: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;CRDS_PATH&#39;</span><span class="p">]))</span>
+
+<span class="nn">File /usr/share/miniconda/lib/python3.9/os.py:679,</span> in <span class="ni">_Environ.__getitem__</span><span class="nt">(self, key)</span>
+<span class="g g-Whitespace">    </span><span class="mi">676</span>     <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">encodekey</span><span class="p">(</span><span class="n">key</span><span class="p">)]</span>
+<span class="g g-Whitespace">    </span><span class="mi">677</span> <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">678</span>     <span class="c1"># raise KeyError with the original key value</span>
+<span class="ne">--&gt; </span><span class="mi">679</span>     <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="kn">from</span> <span class="bp">None</span>
+<span class="g g-Whitespace">    </span><span class="mi">680</span> <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">decodevalue</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+<span class="ne">KeyError</span>: &#39;CRDS_PATH&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">astropy.io</span> <span class="kn">import</span> <span class="n">fits</span><span class="p">,</span> <span class="n">ascii</span>
+<span class="kn">from</span> <span class="nn">astropy.utils.data</span> <span class="kn">import</span> <span class="n">download_file</span>
+<span class="kn">from</span> <span class="nn">ci_watson.artifactory_helpers</span> <span class="kn">import</span> <span class="n">get_bigdata</span>
+<span class="kn">from</span> <span class="nn">jwst.datamodels</span> <span class="kn">import</span> <span class="n">RampModel</span><span class="p">,</span> <span class="n">ImageModel</span><span class="p">,</span> <span class="n">dqflags</span><span class="p">,</span> <span class="n">CubeModel</span>
+<span class="kn">from</span> <span class="nn">jwst.pipeline</span> <span class="kn">import</span> <span class="n">Detector1Pipeline</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">pysiaf</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>**WARNING**: LOCAL JWST PRD VERSION PRDOPSSOC-051 DOESN&#39;T MATCH THE CURRENT ONLINE VERSION PRDOPSSOC-055
+Please consider updating pysiaf, e.g. pip install --upgrade pysiaf or conda update pysiaf
+</pre></div>
+</div>
+</div>
+</div>
+<section id="read-in-file-and-update-headers-to-have-needed-keywords-for-tso-mode">
+<h3>Read in file and update headers to have needed keywords for TSO mode<a class="headerlink" href="#read-in-file-and-update-headers-to-have-needed-keywords-for-tso-mode" title="Permalink to this headline">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create a temporary directory to hold notebook output, and change the working directory to that directory.</span>
+<span class="kn">from</span> <span class="nn">tempfile</span> <span class="kn">import</span> <span class="n">TemporaryDirectory</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="n">data_dir</span> <span class="o">=</span> <span class="n">TemporaryDirectory</span><span class="p">()</span>
+<span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">data_dir</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">checkheaders</span><span class="p">(</span><span class="n">model</span><span class="p">):</span>
+    
+    <span class="c1"># check that header has keyword TSOVISIT set to true (all TSO data should have this set)</span>
+    
+    <span class="k">if</span> <span class="n">model</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">visit</span><span class="o">.</span><span class="n">tsovisit</span> <span class="o">!=</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">model</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">visit</span><span class="o">.</span><span class="n">tsovisit</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Setting TSOVISIT keyword&#39;</span><span class="p">)</span>
+        
+    <span class="c1"># check that CRPIX1 and CRPIX2 are set to the center of the siaf aperture for the array being used.</span>
+    <span class="c1"># Read in array being used</span>
+    <span class="n">array</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">subarray</span><span class="o">.</span><span class="n">name</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">array</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">array</span> <span class="o">==</span> <span class="s1">&#39;FULL&#39;</span><span class="p">:</span>
+        <span class="n">siaf</span> <span class="o">=</span> <span class="n">pysiaf</span><span class="o">.</span><span class="n">Siaf</span><span class="p">(</span><span class="s1">&#39;MIRI&#39;</span><span class="p">)</span> 
+        <span class="n">full</span> <span class="o">=</span> <span class="n">siaf</span><span class="p">[</span><span class="s1">&#39;MIRIM_FULL&#39;</span><span class="p">]</span>
+        <span class="n">model</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">wcsinfo</span><span class="o">.</span><span class="n">crpix1</span> <span class="o">=</span> <span class="n">full</span><span class="o">.</span><span class="n">XSciRef</span>
+        <span class="n">model</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">wcsinfo</span><span class="o">.</span><span class="n">crpix2</span> <span class="o">=</span> <span class="n">full</span><span class="o">.</span><span class="n">YSciRef</span>
+    <span class="k">if</span> <span class="n">array</span> <span class="o">==</span> <span class="s1">&#39;SUB64&#39;</span><span class="p">:</span>
+        <span class="c1"># subarray siaf values are not quite right in MIRISim. Need to centroid to find x and y</span>
+        <span class="c1"># start with siaf values</span>
+        <span class="n">siaf</span> <span class="o">=</span> <span class="n">pysiaf</span><span class="o">.</span><span class="n">Siaf</span><span class="p">(</span><span class="s1">&#39;MIRI&#39;</span><span class="p">)</span>
+        <span class="n">sub</span> <span class="o">=</span> <span class="n">siaf</span><span class="p">[</span><span class="s1">&#39;MIRIM_SUB64&#39;</span><span class="p">]</span>
+        <span class="n">x_initial</span> <span class="o">=</span> <span class="n">sub</span><span class="o">.</span><span class="n">XSciRef</span> <span class="o">-</span> <span class="mi">8</span> <span class="c1"># known 8 pixel shift in subarray source position fixed in latest MIRISim</span>
+        <span class="n">y_initial</span> <span class="o">=</span> <span class="n">sub</span><span class="o">.</span><span class="n">YSciRef</span>
+        
+        <span class="nb">print</span><span class="p">(</span><span class="n">x_initial</span><span class="p">,</span> <span class="n">y_initial</span><span class="p">)</span>
+        
+        <span class="c1"># Take initial estimate and centroid to find source</span>
+        <span class="n">center</span> <span class="o">=</span> <span class="n">centroids</span><span class="o">.</span><span class="n">centroid_sources</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,:,:],</span> <span class="n">x_initial</span><span class="p">,</span> <span class="n">y_initial</span><span class="p">,</span> <span class="n">box_size</span><span class="o">=</span><span class="mi">11</span><span class="p">)</span>
+        <span class="n">xcentroid</span> <span class="o">=</span> <span class="n">center</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">ycentroid</span> <span class="o">=</span> <span class="n">center</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+        
+        <span class="nb">print</span><span class="p">(</span><span class="n">center</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">center</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>   
+        <span class="n">model</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">wcsinfo</span><span class="o">.</span><span class="n">crpix1</span> <span class="o">=</span> <span class="n">xcentroid</span>
+        <span class="n">model</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">wcsinfo</span><span class="o">.</span><span class="n">crpix2</span> <span class="o">=</span> <span class="n">ycentroid</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><a id="pipeline_ID"></a></p>
+</section>
+</section>
+<section id="run-jwst-pipeline">
+<h2>Run JWST Pipeline<a class="headerlink" href="#run-jwst-pipeline" title="Permalink to this headline">#</a></h2>
+<section id="set-up-parameters-for-individual-steps-and-run-calwebb-detector1">
+<h3>Set up parameters for individual steps and run calwebb_detector1<a class="headerlink" href="#set-up-parameters-for-individual-steps-and-run-calwebb-detector1" title="Permalink to this headline">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># set up pipeline parameters and file names</span>
+<span class="c1"># Input file names</span>
+
+<span class="c1"># This section to download data from remote box directory and run local</span>
+<span class="n">mainurl</span> <span class="o">=</span><span class="s2">&quot;https://data.science.stsci.edu/redirect/JWST/TSO/pipeline_testing_miri_ima_tso/&quot;</span>
+<span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;pipetest_miri_imtso_FULL_10g10i_F770W.fits&#39;</span>
+<span class="n">file</span> <span class="o">=</span> <span class="n">download_file</span><span class="p">(</span><span class="n">mainurl</span><span class="o">+</span><span class="n">filename</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">600</span><span class="p">)</span>
+
+<span class="c1"># open file into correct format and write to local disk for processing</span>
+<span class="k">with</span> <span class="n">fits</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">file</span><span class="p">)</span> <span class="k">as</span> <span class="n">hdu</span><span class="p">:</span>
+    <span class="n">hdu</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+    <span class="n">hdu</span><span class="o">.</span><span class="n">writeto</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+
+<span class="n">satfile</span> <span class="o">=</span> <span class="n">get_bigdata</span><span class="p">(</span><span class="s1">&#39;jwst_validation_notebooks&#39;</span><span class="p">,</span>
+                     <span class="s1">&#39;validation_data&#39;</span><span class="p">,</span>
+                     <span class="s1">&#39;jump&#39;</span><span class="p">,</span>
+                     <span class="s1">&#39;jump_miri_test&#39;</span><span class="p">,</span> 
+                     <span class="s1">&#39;miri_sat_55k.fits&#39;</span><span class="p">)</span>
+
+<span class="n">readnoisefile</span> <span class="o">=</span> <span class="n">get_bigdata</span><span class="p">(</span><span class="s1">&#39;jwst_validation_notebooks&#39;</span><span class="p">,</span>
+                     <span class="s1">&#39;validation_data&#39;</span><span class="p">,</span>
+                     <span class="s1">&#39;jump&#39;</span><span class="p">,</span>
+                     <span class="s1">&#39;jump_miri_test&#39;</span><span class="p">,</span> 
+                     <span class="s1">&#39;jwst_mirisim_readnoise.fits&#39;</span><span class="p">)</span>
+
+<span class="n">tag</span><span class="o">=</span><span class="s1">&#39;_b75_tso&#39;</span>  <span class="c1"># string tag to distinguish different tests in output file name</span>
+
+<span class="c1"># Read in data file to model    </span>
+<span class="k">with</span> <span class="n">RampModel</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span> <span class="k">as</span> <span class="n">modelinput</span><span class="p">:</span>
+    <span class="c1"># raises exception if file is not the correct model</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">modelinput</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Filename: /internal/data1/jenkins/workspace/Notebooks/jwst_validation_notebooks_spacetelescope/tmp/astropy-download-544733-_qgq7pof
+No.    Name      Ver    Type      Cards   Dimensions   Format
+  0  PRIMARY       1 PrimaryHDU     108   ()      
+  1  SCI           1 ImageHDU        47   (1032, 1024, 10, 10)   float32   
+  2  PIXELDQ       1 ImageHDU        11   (1032, 1024)   int32 (rescales to uint32)   
+  3  GROUPDQ       1 ImageHDU        11   (1032, 1024, 10, 10)   uint8   
+  4  ERR           1 ImageHDU        11   (1032, 1024, 10, 10)   float32   
+  5  REFOUT        1 ImageHDU        11   (258, 1024, 10, 10)   float32   
+  6  ASDF          1 BinTableHDU     11   1R x 1C   [5247B]   
+</pre></div>
+</div>
+</div>
+</div>
+<p>In the next step we pick 7 pixel locations, and manually add in jumps that represent cosmic ray hits. The magnitude of the hit is different for each. The hit is added in frame 5 (zero-indexed), first integration. This will be used for testing the jump detection step.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Set up cosmic ray jump testing by adding in cosmic rays</span>
+<span class="c1"># set variables</span>
+
+<span class="c1"># Choose selected pixels to put cr hits of varying fluxes in</span>
+<span class="n">xpos</span> <span class="o">=</span> <span class="p">[</span><span class="mi">460</span><span class="p">,</span> <span class="mi">480</span><span class="p">,</span> <span class="mi">500</span><span class="p">,</span> <span class="mi">520</span><span class="p">,</span> <span class="mi">540</span><span class="p">,</span> <span class="mi">560</span><span class="p">,</span> <span class="mi">580</span><span class="p">]</span>
+<span class="n">ypos</span> <span class="o">=</span> <span class="p">[</span><span class="mi">150</span><span class="p">,</span> <span class="mi">150</span><span class="p">,</span> <span class="mi">150</span><span class="p">,</span> <span class="mi">150</span><span class="p">,</span> <span class="mi">150</span><span class="p">,</span> <span class="mi">150</span><span class="p">,</span> <span class="mi">150</span><span class="p">]</span>
+<span class="n">crmags</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">500</span><span class="p">,</span> <span class="mi">1000</span><span class="p">]</span>
+
+<span class="n">frame</span> <span class="o">=</span> <span class="mi">5</span>  <span class="c1"># frame to add cr</span>
+<span class="n">integration</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># integration to add crs</span>
+    
+<span class="c1"># loop through arrays of x, y and crmags to populate array with values</span>
+<span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">crmag</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">xpos</span><span class="p">,</span> <span class="n">ypos</span><span class="p">,</span> <span class="n">crmags</span><span class="p">):</span>
+    <span class="c1"># add cr to ramps from point of &#39;frame&#39; in ramp</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">integration</span><span class="p">,</span> <span class="n">frame</span><span class="p">:,</span> <span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">]</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">integration</span><span class="p">,</span> <span class="n">frame</span><span class="p">:,</span> <span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">]</span> <span class="o">+</span> <span class="n">crmag</span>    
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we run the Detector1 pipeline. The jump detection threshold is set manually; this is important again for jump step testing. A number of reference files are overridden with versions that are compatible with MIRISim simulated data.</p>
+<p>As we are not running with the tso1 config file, we have to ensure a few steps are skipped manually:</p>
+<ul class="simple">
+<li><p>ipc</p></li>
+<li><p>first frame correction</p></li>
+<li><p>last frame correction</p></li>
+<li><p>refpix</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Run detector1 pipeline</span>
+
+<span class="c1"># step parameters</span>
+<span class="n">rej_thresh</span><span class="o">=</span><span class="mf">8.0</span>  <span class="c1"># rejection threshold for jump step (higher for simulated data)</span>
+    
+<span class="c1"># set up pipeline parameters for input</span>
+<span class="n">pipe1</span> <span class="o">=</span> <span class="n">Detector1Pipeline</span><span class="p">()</span>
+<span class="n">pipe1</span><span class="o">.</span><span class="n">jump</span><span class="o">.</span><span class="n">rejection_threshold</span> <span class="o">=</span> <span class="n">rej_thresh</span>
+<span class="n">pipe1</span><span class="o">.</span><span class="n">saturation</span><span class="o">.</span><span class="n">override_saturation</span> <span class="o">=</span> <span class="n">satfile</span>
+<span class="n">pipe1</span><span class="o">.</span><span class="n">jump</span><span class="o">.</span><span class="n">override_readnoise</span> <span class="o">=</span> <span class="n">readnoisefile</span>
+<span class="n">pipe1</span><span class="o">.</span><span class="n">ramp_fit</span><span class="o">.</span><span class="n">override_readnoise</span> <span class="o">=</span> <span class="n">readnoisefile</span>
+
+<span class="c1"># skip steps to make it like &#39;tso1 config file&#39;</span>
+<span class="n">pipe1</span><span class="o">.</span><span class="n">ipc</span><span class="o">.</span><span class="n">skip</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="n">pipe1</span><span class="o">.</span><span class="n">firstframe</span><span class="o">.</span><span class="n">skip</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="n">pipe1</span><span class="o">.</span><span class="n">lastframe</span><span class="o">.</span><span class="n">skip</span> <span class="o">=</span> <span class="kc">True</span>
+    
+<span class="c1"># Until MIRISim is updated, best to skip refpix step for simulated data</span>
+<span class="n">pipe1</span><span class="o">.</span><span class="n">refpix</span><span class="o">.</span><span class="n">skip</span> <span class="o">=</span> <span class="kc">True</span>
+
+<span class="c1"># check that header has needed keywords set</span>
+        
+<span class="n">checkheaders</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+
+<span class="n">nints</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">exposure</span><span class="o">.</span><span class="n">nints</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;CRPIX1 = &#39;</span><span class="p">,</span><span class="n">model</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">wcsinfo</span><span class="o">.</span><span class="n">crpix1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;CRPIX2 = &#39;</span><span class="p">,</span><span class="n">model</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">wcsinfo</span><span class="o">.</span><span class="n">crpix2</span><span class="p">)</span>
+    
+<span class="c1"># set up output file name</span>
+<span class="n">base</span><span class="p">,</span> <span class="n">remainder</span> <span class="o">=</span> <span class="n">filename</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
+
+<span class="n">outname</span> <span class="o">=</span> <span class="n">base</span><span class="o">+</span><span class="n">tag</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">outname</span><span class="p">)</span>
+
+<span class="n">pipe1</span><span class="o">.</span><span class="n">saturation</span><span class="o">.</span><span class="n">output_file</span> <span class="o">=</span> <span class="n">outname</span><span class="o">+</span><span class="s1">&#39;.fits&#39;</span>
+<span class="n">pipe1</span><span class="o">.</span><span class="n">jump</span><span class="o">.</span><span class="n">output_file</span> <span class="o">=</span> <span class="n">outname</span><span class="o">+</span><span class="s1">&#39;.fits&#39;</span>    
+<span class="n">pipe1</span><span class="o">.</span><span class="n">ramp_fit</span><span class="o">.</span><span class="n">output_file</span> <span class="o">=</span> <span class="n">outname</span><span class="o">+</span><span class="s1">&#39;.fits&#39;</span>
+<span class="n">pipe1</span><span class="o">.</span><span class="n">output_file</span> <span class="o">=</span> <span class="n">outname</span><span class="o">+</span><span class="s1">&#39;.fits&#39;</span>
+            
+<span class="c1"># Run pipeline on each file</span>
+<span class="n">pipe1</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">model</span><span class="p">)</span> 
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Detector 1 steps completed.&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:16,213 - stpipe.Detector1Pipeline - INFO - Detector1Pipeline instance created.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:16,215 - stpipe.Detector1Pipeline.group_scale - INFO - GroupScaleStep instance created.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:16,216 - stpipe.Detector1Pipeline.dq_init - INFO - DQInitStep instance created.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:16,218 - stpipe.Detector1Pipeline.saturation - INFO - SaturationStep instance created.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:16,219 - stpipe.Detector1Pipeline.ipc - INFO - IPCStep instance created.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:16,220 - stpipe.Detector1Pipeline.superbias - INFO - SuperBiasStep instance created.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:16,222 - stpipe.Detector1Pipeline.refpix - INFO - RefPixStep instance created.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:16,223 - stpipe.Detector1Pipeline.rscd - INFO - RscdStep instance created.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:16,224 - stpipe.Detector1Pipeline.firstframe - INFO - FirstFrameStep instance created.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:16,226 - stpipe.Detector1Pipeline.lastframe - INFO - LastFrameStep instance created.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:16,227 - stpipe.Detector1Pipeline.linearity - INFO - LinearityStep instance created.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:16,229 - stpipe.Detector1Pipeline.dark_current - INFO - DarkCurrentStep instance created.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:16,230 - stpipe.Detector1Pipeline.reset - INFO - ResetStep instance created.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:16,231 - stpipe.Detector1Pipeline.persistence - INFO - PersistenceStep instance created.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:16,232 - stpipe.Detector1Pipeline.jump - INFO - JumpStep instance created.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:16,234 - stpipe.Detector1Pipeline.ramp_fit - INFO - RampFitStep instance created.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:16,235 - stpipe.Detector1Pipeline.gain_scale - INFO - GainScaleStep instance created.
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>FULL
+CRPIX1 =  693.5
+CRPIX2 =  512.5
+pipetest_miri_imtso_FULL_10g10i_F770W_b75_tso
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:16,491 - stpipe.Detector1Pipeline - INFO - Step Detector1Pipeline running with args (&lt;RampModel(10, 10, 1024, 1032) from pipetest_miri_imtso_FULL_10g10i_F770W.fits&gt;,).
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:16,501 - stpipe.Detector1Pipeline - INFO - Step Detector1Pipeline parameters are: {&#39;pre_hooks&#39;: [], &#39;post_hooks&#39;: [], &#39;output_file&#39;: &#39;/internal/data1/jenkins/workspace/Notebooks/jwst_validation_notebooks_spacetelescope/tmp/tmp8dfgl36a/pipetest_miri_imtso_FULL_10g10i_F770W_b75_tso.fits&#39;, &#39;output_dir&#39;: None, &#39;output_ext&#39;: &#39;.fits&#39;, &#39;output_use_model&#39;: False, &#39;output_use_index&#39;: True, &#39;save_results&#39;: False, &#39;skip&#39;: False, &#39;suffix&#39;: None, &#39;search_output_file&#39;: True, &#39;input_dir&#39;: &#39;&#39;, &#39;save_calibrated_ramp&#39;: False, &#39;steps&#39;: {&#39;group_scale&#39;: {&#39;pre_hooks&#39;: [], &#39;post_hooks&#39;: [], &#39;output_file&#39;: None, &#39;output_dir&#39;: None, &#39;output_ext&#39;: &#39;.fits&#39;, &#39;output_use_model&#39;: False, &#39;output_use_index&#39;: True, &#39;save_results&#39;: False, &#39;skip&#39;: False, &#39;suffix&#39;: None, &#39;search_output_file&#39;: True, &#39;input_dir&#39;: &#39;&#39;}, &#39;dq_init&#39;: {&#39;pre_hooks&#39;: [], &#39;post_hooks&#39;: [], &#39;output_file&#39;: None, &#39;output_dir&#39;: None, &#39;output_ext&#39;: &#39;.fits&#39;, &#39;output_use_model&#39;: False, &#39;output_use_index&#39;: True, &#39;save_results&#39;: False, &#39;skip&#39;: False, &#39;suffix&#39;: None, &#39;search_output_file&#39;: True, &#39;input_dir&#39;: &#39;&#39;}, &#39;saturation&#39;: {&#39;pre_hooks&#39;: [], &#39;post_hooks&#39;: [], &#39;output_file&#39;: &#39;/internal/data1/jenkins/workspace/Notebooks/jwst_validation_notebooks_spacetelescope/tmp/tmp8dfgl36a/pipetest_miri_imtso_FULL_10g10i_F770W_b75_tso.fits&#39;, &#39;output_dir&#39;: None, &#39;output_ext&#39;: &#39;.fits&#39;, &#39;output_use_model&#39;: False, &#39;output_use_index&#39;: True, &#39;save_results&#39;: False, &#39;skip&#39;: False, &#39;suffix&#39;: None, &#39;search_output_file&#39;: True, &#39;input_dir&#39;: &#39;&#39;, &#39;n_pix_grow_sat&#39;: 1}, &#39;ipc&#39;: {&#39;pre_hooks&#39;: [], &#39;post_hooks&#39;: [], &#39;output_file&#39;: None, &#39;output_dir&#39;: None, &#39;output_ext&#39;: &#39;.fits&#39;, &#39;output_use_model&#39;: False, &#39;output_use_index&#39;: True, &#39;save_results&#39;: False, &#39;skip&#39;: True, &#39;suffix&#39;: None, &#39;search_output_file&#39;: True, &#39;input_dir&#39;: &#39;&#39;}, &#39;superbias&#39;: {&#39;pre_hooks&#39;: [], &#39;post_hooks&#39;: [], &#39;output_file&#39;: None, &#39;output_dir&#39;: None, &#39;output_ext&#39;: &#39;.fits&#39;, &#39;output_use_model&#39;: False, &#39;output_use_index&#39;: True, &#39;save_results&#39;: False, &#39;skip&#39;: False, &#39;suffix&#39;: None, &#39;search_output_file&#39;: True, &#39;input_dir&#39;: &#39;&#39;}, &#39;refpix&#39;: {&#39;pre_hooks&#39;: [], &#39;post_hooks&#39;: [], &#39;output_file&#39;: None, &#39;output_dir&#39;: None, &#39;output_ext&#39;: &#39;.fits&#39;, &#39;output_use_model&#39;: False, &#39;output_use_index&#39;: True, &#39;save_results&#39;: False, &#39;skip&#39;: True, &#39;suffix&#39;: None, &#39;search_output_file&#39;: True, &#39;input_dir&#39;: &#39;&#39;, &#39;odd_even_columns&#39;: True, &#39;use_side_ref_pixels&#39;: True, &#39;side_smoothing_length&#39;: 11, &#39;side_gain&#39;: 1.0, &#39;odd_even_rows&#39;: True}, &#39;rscd&#39;: {&#39;pre_hooks&#39;: [], &#39;post_hooks&#39;: [], &#39;output_file&#39;: None, &#39;output_dir&#39;: None, &#39;output_ext&#39;: &#39;.fits&#39;, &#39;output_use_model&#39;: False, &#39;output_use_index&#39;: True, &#39;save_results&#39;: False, &#39;skip&#39;: False, &#39;suffix&#39;: None, &#39;search_output_file&#39;: True, &#39;input_dir&#39;: &#39;&#39;, &#39;type&#39;: &#39;baseline&#39;}, &#39;firstframe&#39;: {&#39;pre_hooks&#39;: [], &#39;post_hooks&#39;: [], &#39;output_file&#39;: None, &#39;output_dir&#39;: None, &#39;output_ext&#39;: &#39;.fits&#39;, &#39;output_use_model&#39;: False, &#39;output_use_index&#39;: True, &#39;save_results&#39;: False, &#39;skip&#39;: True, &#39;suffix&#39;: None, &#39;search_output_file&#39;: True, &#39;input_dir&#39;: &#39;&#39;}, &#39;lastframe&#39;: {&#39;pre_hooks&#39;: [], &#39;post_hooks&#39;: [], &#39;output_file&#39;: None, &#39;output_dir&#39;: None, &#39;output_ext&#39;: &#39;.fits&#39;, &#39;output_use_model&#39;: False, &#39;output_use_index&#39;: True, &#39;save_results&#39;: False, &#39;skip&#39;: True, &#39;suffix&#39;: None, &#39;search_output_file&#39;: True, &#39;input_dir&#39;: &#39;&#39;}, &#39;linearity&#39;: {&#39;pre_hooks&#39;: [], &#39;post_hooks&#39;: [], &#39;output_file&#39;: None, &#39;output_dir&#39;: None, &#39;output_ext&#39;: &#39;.fits&#39;, &#39;output_use_model&#39;: False, &#39;output_use_index&#39;: True, &#39;save_results&#39;: False, &#39;skip&#39;: False, &#39;suffix&#39;: None, &#39;search_output_file&#39;: True, &#39;input_dir&#39;: &#39;&#39;}, &#39;dark_current&#39;: {&#39;pre_hooks&#39;: [], &#39;post_hooks&#39;: [], &#39;output_file&#39;: None, &#39;output_dir&#39;: None, &#39;output_ext&#39;: &#39;.fits&#39;, &#39;output_use_model&#39;: False, &#39;output_use_index&#39;: True, &#39;save_results&#39;: False, &#39;skip&#39;: False, &#39;suffix&#39;: None, &#39;search_output_file&#39;: True, &#39;input_dir&#39;: &#39;&#39;, &#39;dark_output&#39;: None}, &#39;reset&#39;: {&#39;pre_hooks&#39;: [], &#39;post_hooks&#39;: [], &#39;output_file&#39;: None, &#39;output_dir&#39;: None, &#39;output_ext&#39;: &#39;.fits&#39;, &#39;output_use_model&#39;: False, &#39;output_use_index&#39;: True, &#39;save_results&#39;: False, &#39;skip&#39;: False, &#39;suffix&#39;: None, &#39;search_output_file&#39;: True, &#39;input_dir&#39;: &#39;&#39;}, &#39;persistence&#39;: {&#39;pre_hooks&#39;: [], &#39;post_hooks&#39;: [], &#39;output_file&#39;: None, &#39;output_dir&#39;: None, &#39;output_ext&#39;: &#39;.fits&#39;, &#39;output_use_model&#39;: False, &#39;output_use_index&#39;: True, &#39;save_results&#39;: False, &#39;skip&#39;: False, &#39;suffix&#39;: None, &#39;search_output_file&#39;: True, &#39;input_dir&#39;: &#39;&#39;, &#39;input_trapsfilled&#39;: &#39;&#39;, &#39;flag_pers_cutoff&#39;: 40.0, &#39;save_persistence&#39;: False, &#39;save_trapsfilled&#39;: True}, &#39;jump&#39;: {&#39;pre_hooks&#39;: [], &#39;post_hooks&#39;: [], &#39;output_file&#39;: &#39;/internal/data1/jenkins/workspace/Notebooks/jwst_validation_notebooks_spacetelescope/tmp/tmp8dfgl36a/pipetest_miri_imtso_FULL_10g10i_F770W_b75_tso.fits&#39;, &#39;output_dir&#39;: None, &#39;output_ext&#39;: &#39;.fits&#39;, &#39;output_use_model&#39;: False, &#39;output_use_index&#39;: True, &#39;save_results&#39;: False, &#39;skip&#39;: False, &#39;suffix&#39;: None, &#39;search_output_file&#39;: True, &#39;input_dir&#39;: &#39;&#39;, &#39;rejection_threshold&#39;: 8.0, &#39;three_group_rejection_threshold&#39;: 6.0, &#39;four_group_rejection_threshold&#39;: 5.0, &#39;maximum_cores&#39;: &#39;none&#39;, &#39;flag_4_neighbors&#39;: True, &#39;max_jump_to_flag_neighbors&#39;: 1000.0, &#39;min_jump_to_flag_neighbors&#39;: 10.0}, &#39;ramp_fit&#39;: {&#39;pre_hooks&#39;: [], &#39;post_hooks&#39;: [], &#39;output_file&#39;: &#39;/internal/data1/jenkins/workspace/Notebooks/jwst_validation_notebooks_spacetelescope/tmp/tmp8dfgl36a/pipetest_miri_imtso_FULL_10g10i_F770W_b75_tso.fits&#39;, &#39;output_dir&#39;: None, &#39;output_ext&#39;: &#39;.fits&#39;, &#39;output_use_model&#39;: False, &#39;output_use_index&#39;: True, &#39;save_results&#39;: False, &#39;skip&#39;: False, &#39;suffix&#39;: None, &#39;search_output_file&#39;: True, &#39;input_dir&#39;: &#39;&#39;, &#39;int_name&#39;: &#39;&#39;, &#39;save_opt&#39;: False, &#39;opt_name&#39;: &#39;&#39;, &#39;suppress_one_group&#39;: True, &#39;maximum_cores&#39;: &#39;none&#39;}, &#39;gain_scale&#39;: {&#39;pre_hooks&#39;: [], &#39;post_hooks&#39;: [], &#39;output_file&#39;: None, &#39;output_dir&#39;: None, &#39;output_ext&#39;: &#39;.fits&#39;, &#39;output_use_model&#39;: False, &#39;output_use_index&#39;: True, &#39;save_results&#39;: False, &#39;skip&#39;: False, &#39;suffix&#39;: None, &#39;search_output_file&#39;: True, &#39;input_dir&#39;: &#39;&#39;}}}
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:16,513 - stpipe.Detector1Pipeline - INFO - Prefetching reference files for dataset: &#39;pipetest_miri_imtso_FULL_10g10i_F770W.fits&#39; reftypes = [&#39;dark&#39;, &#39;gain&#39;, &#39;linearity&#39;, &#39;mask&#39;, &#39;persat&#39;, &#39;reset&#39;, &#39;rscd&#39;, &#39;superbias&#39;, &#39;trapdensity&#39;, &#39;trappars&#39;]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:16,809 - stpipe.Detector1Pipeline - INFO - Prefetch for DARK reference file is &#39;/grp/crds/cache/references/jwst/jwst_miri_dark_0058.fits&#39;.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:16,812 - stpipe.Detector1Pipeline - INFO - Prefetch for GAIN reference file is &#39;/grp/crds/cache/references/jwst/jwst_miri_gain_0008.fits&#39;.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:16,814 - stpipe.Detector1Pipeline - INFO - Prefetch for LINEARITY reference file is &#39;/grp/crds/cache/references/jwst/jwst_miri_linearity_0024.fits&#39;.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:16,816 - stpipe.Detector1Pipeline - INFO - Prefetch for MASK reference file is &#39;/grp/crds/cache/references/jwst/jwst_miri_mask_0028.fits&#39;.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:16,818 - stpipe.Detector1Pipeline - INFO - Prefetch for PERSAT reference file is &#39;N/A&#39;.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:16,819 - stpipe.Detector1Pipeline - INFO - Override for READNOISE reference file is &#39;/internal/data1/jenkins/workspace/Notebooks/jwst_validation_notebooks_spacetelescope/tmp/tmp8dfgl36a/jwst_mirisim_readnoise.fits&#39;.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:16,820 - stpipe.Detector1Pipeline - INFO - Prefetch for RESET reference file is &#39;/grp/crds/cache/references/jwst/jwst_miri_reset_0047.fits&#39;.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:16,822 - stpipe.Detector1Pipeline - INFO - Prefetch for RSCD reference file is &#39;/grp/crds/cache/references/jwst/jwst_miri_rscd_0014.fits&#39;.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:16,824 - stpipe.Detector1Pipeline - INFO - Override for SATURATION reference file is &#39;/internal/data1/jenkins/workspace/Notebooks/jwst_validation_notebooks_spacetelescope/tmp/tmp8dfgl36a/miri_sat_55k.fits&#39;.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:16,825 - stpipe.Detector1Pipeline - INFO - Prefetch for SUPERBIAS reference file is &#39;N/A&#39;.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:16,825 - stpipe.Detector1Pipeline - INFO - Prefetch for TRAPDENSITY reference file is &#39;N/A&#39;.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:16,826 - stpipe.Detector1Pipeline - INFO - Prefetch for TRAPPARS reference file is &#39;N/A&#39;.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:16,827 - stpipe.Detector1Pipeline - INFO - Starting calwebb_detector1 ...
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:16,966 - stpipe.Detector1Pipeline.group_scale - INFO - Step group_scale running with args (&lt;RampModel(10, 10, 1024, 1032) from pipetest_miri_imtso_FULL_10g10i_F770W.fits&gt;,).
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:16,968 - stpipe.Detector1Pipeline.group_scale - INFO - Step group_scale parameters are: {&#39;pre_hooks&#39;: [], &#39;post_hooks&#39;: [], &#39;output_file&#39;: None, &#39;output_dir&#39;: None, &#39;output_ext&#39;: &#39;.fits&#39;, &#39;output_use_model&#39;: False, &#39;output_use_index&#39;: True, &#39;save_results&#39;: False, &#39;skip&#39;: False, &#39;suffix&#39;: None, &#39;search_output_file&#39;: True, &#39;input_dir&#39;: &#39;&#39;}
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:17,445 - stpipe.Detector1Pipeline.group_scale - INFO - NFRAMES=1 is a power of 2; correction not needed
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:17,446 - stpipe.Detector1Pipeline.group_scale - INFO - Step will be skipped
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:17,449 - stpipe.Detector1Pipeline.group_scale - INFO - Step group_scale done
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:17,574 - stpipe.Detector1Pipeline.dq_init - INFO - Step dq_init running with args (&lt;RampModel(10, 10, 1024, 1032) from pipetest_miri_imtso_FULL_10g10i_F770W.fits&gt;,).
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:17,576 - stpipe.Detector1Pipeline.dq_init - INFO - Step dq_init parameters are: {&#39;pre_hooks&#39;: [], &#39;post_hooks&#39;: [], &#39;output_file&#39;: None, &#39;output_dir&#39;: None, &#39;output_ext&#39;: &#39;.fits&#39;, &#39;output_use_model&#39;: False, &#39;output_use_index&#39;: True, &#39;save_results&#39;: False, &#39;skip&#39;: False, &#39;suffix&#39;: None, &#39;search_output_file&#39;: True, &#39;input_dir&#39;: &#39;&#39;}
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:17,598 - stpipe.Detector1Pipeline.dq_init - INFO - Using MASK reference file /grp/crds/cache/references/jwst/jwst_miri_mask_0028.fits
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:18,204 - stpipe.Detector1Pipeline.dq_init - INFO - Step dq_init done
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:18,331 - stpipe.Detector1Pipeline.saturation - INFO - Step saturation running with args (&lt;RampModel(10, 10, 1024, 1032) from pipetest_miri_imtso_FULL_10g10i_F770W.fits&gt;,).
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:18,332 - stpipe.Detector1Pipeline.saturation - INFO - Step saturation parameters are: {&#39;pre_hooks&#39;: [], &#39;post_hooks&#39;: [], &#39;output_file&#39;: &#39;/internal/data1/jenkins/workspace/Notebooks/jwst_validation_notebooks_spacetelescope/tmp/tmp8dfgl36a/pipetest_miri_imtso_FULL_10g10i_F770W_b75_tso.fits&#39;, &#39;output_dir&#39;: None, &#39;output_ext&#39;: &#39;.fits&#39;, &#39;output_use_model&#39;: False, &#39;output_use_index&#39;: True, &#39;save_results&#39;: False, &#39;skip&#39;: False, &#39;suffix&#39;: None, &#39;search_output_file&#39;: True, &#39;input_dir&#39;: &#39;&#39;, &#39;n_pix_grow_sat&#39;: 1}
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:18,343 - stpipe.Detector1Pipeline.saturation - INFO - Using SATURATION reference file /internal/data1/jenkins/workspace/Notebooks/jwst_validation_notebooks_spacetelescope/tmp/tmp8dfgl36a/miri_sat_55k.fits
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:22,698 - stpipe.Detector1Pipeline.saturation - INFO - Detected 300 saturated pixels
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:22,767 - stpipe.Detector1Pipeline.saturation - INFO - Detected 0 A/D floor pixels
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:23,264 - stpipe.Detector1Pipeline.saturation - INFO - Saved model in pipetest_miri_imtso_FULL_10g10i_F770W_b75_tso_saturation.fits
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:23,265 - stpipe.Detector1Pipeline.saturation - INFO - Step saturation done
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:23,409 - stpipe.Detector1Pipeline.ipc - INFO - Step ipc running with args (&lt;RampModel(10, 10, 1024, 1032) from pipetest_miri_imtso_FULL_10g10i_F770W_b75_tso_saturation.fits&gt;,).
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:23,410 - stpipe.Detector1Pipeline.ipc - INFO - Step ipc parameters are: {&#39;pre_hooks&#39;: [], &#39;post_hooks&#39;: [], &#39;output_file&#39;: None, &#39;output_dir&#39;: None, &#39;output_ext&#39;: &#39;.fits&#39;, &#39;output_use_model&#39;: False, &#39;output_use_index&#39;: True, &#39;save_results&#39;: False, &#39;skip&#39;: True, &#39;suffix&#39;: None, &#39;search_output_file&#39;: True, &#39;input_dir&#39;: &#39;&#39;}
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:23,411 - stpipe.Detector1Pipeline.ipc - INFO - Step skipped.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:23,414 - stpipe.Detector1Pipeline.ipc - INFO - Step ipc done
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:23,531 - stpipe.Detector1Pipeline.firstframe - INFO - Step firstframe running with args (&lt;RampModel(10, 10, 1024, 1032) from pipetest_miri_imtso_FULL_10g10i_F770W_b75_tso_saturation.fits&gt;,).
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:23,533 - stpipe.Detector1Pipeline.firstframe - INFO - Step firstframe parameters are: {&#39;pre_hooks&#39;: [], &#39;post_hooks&#39;: [], &#39;output_file&#39;: None, &#39;output_dir&#39;: None, &#39;output_ext&#39;: &#39;.fits&#39;, &#39;output_use_model&#39;: False, &#39;output_use_index&#39;: True, &#39;save_results&#39;: False, &#39;skip&#39;: True, &#39;suffix&#39;: None, &#39;search_output_file&#39;: True, &#39;input_dir&#39;: &#39;&#39;}
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:23,534 - stpipe.Detector1Pipeline.firstframe - INFO - Step skipped.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:23,536 - stpipe.Detector1Pipeline.firstframe - INFO - Step firstframe done
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:23,653 - stpipe.Detector1Pipeline.lastframe - INFO - Step lastframe running with args (&lt;RampModel(10, 10, 1024, 1032) from pipetest_miri_imtso_FULL_10g10i_F770W_b75_tso_saturation.fits&gt;,).
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:23,655 - stpipe.Detector1Pipeline.lastframe - INFO - Step lastframe parameters are: {&#39;pre_hooks&#39;: [], &#39;post_hooks&#39;: [], &#39;output_file&#39;: None, &#39;output_dir&#39;: None, &#39;output_ext&#39;: &#39;.fits&#39;, &#39;output_use_model&#39;: False, &#39;output_use_index&#39;: True, &#39;save_results&#39;: False, &#39;skip&#39;: True, &#39;suffix&#39;: None, &#39;search_output_file&#39;: True, &#39;input_dir&#39;: &#39;&#39;}
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:23,656 - stpipe.Detector1Pipeline.lastframe - INFO - Step skipped.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:23,658 - stpipe.Detector1Pipeline.lastframe - INFO - Step lastframe done
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:23,775 - stpipe.Detector1Pipeline.reset - INFO - Step reset running with args (&lt;RampModel(10, 10, 1024, 1032) from pipetest_miri_imtso_FULL_10g10i_F770W_b75_tso_saturation.fits&gt;,).
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:23,778 - stpipe.Detector1Pipeline.reset - INFO - Step reset parameters are: {&#39;pre_hooks&#39;: [], &#39;post_hooks&#39;: [], &#39;output_file&#39;: None, &#39;output_dir&#39;: None, &#39;output_ext&#39;: &#39;.fits&#39;, &#39;output_use_model&#39;: False, &#39;output_use_index&#39;: True, &#39;save_results&#39;: False, &#39;skip&#39;: False, &#39;suffix&#39;: None, &#39;search_output_file&#39;: True, &#39;input_dir&#39;: &#39;&#39;}
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:23,803 - stpipe.Detector1Pipeline.reset - INFO - Using RESET reference file /grp/crds/cache/references/jwst/jwst_miri_reset_0047.fits
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:25,265 - stpipe.Detector1Pipeline.reset - INFO - Step reset done
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:25,390 - stpipe.Detector1Pipeline.linearity - INFO - Step linearity running with args (&lt;RampModel(10, 10, 1024, 1032) from pipetest_miri_imtso_FULL_10g10i_F770W_b75_tso_saturation.fits&gt;,).
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:25,392 - stpipe.Detector1Pipeline.linearity - INFO - Step linearity parameters are: {&#39;pre_hooks&#39;: [], &#39;post_hooks&#39;: [], &#39;output_file&#39;: None, &#39;output_dir&#39;: None, &#39;output_ext&#39;: &#39;.fits&#39;, &#39;output_use_model&#39;: False, &#39;output_use_index&#39;: True, &#39;save_results&#39;: False, &#39;skip&#39;: False, &#39;suffix&#39;: None, &#39;search_output_file&#39;: True, &#39;input_dir&#39;: &#39;&#39;}
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:25,417 - stpipe.Detector1Pipeline.linearity - INFO - Using Linearity reference file /grp/crds/cache/references/jwst/jwst_miri_linearity_0024.fits
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:26,994 - stpipe.Detector1Pipeline.linearity - INFO - Step linearity done
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:27,118 - stpipe.Detector1Pipeline.rscd - INFO - Step rscd running with args (&lt;RampModel(10, 10, 1024, 1032) from pipetest_miri_imtso_FULL_10g10i_F770W_b75_tso_saturation.fits&gt;,).
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:27,119 - stpipe.Detector1Pipeline.rscd - INFO - Step rscd parameters are: {&#39;pre_hooks&#39;: [], &#39;post_hooks&#39;: [], &#39;output_file&#39;: None, &#39;output_dir&#39;: None, &#39;output_ext&#39;: &#39;.fits&#39;, &#39;output_use_model&#39;: False, &#39;output_use_index&#39;: True, &#39;save_results&#39;: False, &#39;skip&#39;: False, &#39;suffix&#39;: None, &#39;search_output_file&#39;: True, &#39;input_dir&#39;: &#39;&#39;, &#39;type&#39;: &#39;baseline&#39;}
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:27,142 - stpipe.Detector1Pipeline.rscd - INFO - Using RSCD reference file /grp/crds/cache/references/jwst/jwst_miri_rscd_0014.fits
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:27,665 - stpipe.Detector1Pipeline.rscd - INFO - Step rscd done
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:27,794 - stpipe.Detector1Pipeline.dark_current - INFO - Step dark_current running with args (&lt;RampModel(10, 10, 1024, 1032) from pipetest_miri_imtso_FULL_10g10i_F770W_b75_tso_saturation.fits&gt;,).
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:27,796 - stpipe.Detector1Pipeline.dark_current - INFO - Step dark_current parameters are: {&#39;pre_hooks&#39;: [], &#39;post_hooks&#39;: [], &#39;output_file&#39;: None, &#39;output_dir&#39;: None, &#39;output_ext&#39;: &#39;.fits&#39;, &#39;output_use_model&#39;: False, &#39;output_use_index&#39;: True, &#39;save_results&#39;: False, &#39;skip&#39;: False, &#39;suffix&#39;: None, &#39;search_output_file&#39;: True, &#39;input_dir&#39;: &#39;&#39;, &#39;dark_output&#39;: None}
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:27,820 - stpipe.Detector1Pipeline.dark_current - INFO - Using DARK reference file /grp/crds/cache/references/jwst/jwst_miri_dark_0058.fits
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:41,739 - stpipe.Detector1Pipeline.dark_current - INFO - Science data nints=10, ngroups=10, nframes=1, groupgap=0
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:41,741 - stpipe.Detector1Pipeline.dark_current - INFO - Dark data nints=2, ngroups=200, nframes=1, groupgap=0
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:43,412 - stpipe.Detector1Pipeline.dark_current - INFO - Step dark_current done
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:43,561 - stpipe.Detector1Pipeline.refpix - INFO - Step refpix running with args (&lt;RampModel(10, 10, 1024, 1032) from pipetest_miri_imtso_FULL_10g10i_F770W_b75_tso_saturation.fits&gt;,).
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:43,562 - stpipe.Detector1Pipeline.refpix - INFO - Step refpix parameters are: {&#39;pre_hooks&#39;: [], &#39;post_hooks&#39;: [], &#39;output_file&#39;: None, &#39;output_dir&#39;: None, &#39;output_ext&#39;: &#39;.fits&#39;, &#39;output_use_model&#39;: False, &#39;output_use_index&#39;: True, &#39;save_results&#39;: False, &#39;skip&#39;: True, &#39;suffix&#39;: None, &#39;search_output_file&#39;: True, &#39;input_dir&#39;: &#39;&#39;, &#39;odd_even_columns&#39;: True, &#39;use_side_ref_pixels&#39;: True, &#39;side_smoothing_length&#39;: 11, &#39;side_gain&#39;: 1.0, &#39;odd_even_rows&#39;: True}
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:43,563 - stpipe.Detector1Pipeline.refpix - INFO - Step skipped.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:43,565 - stpipe.Detector1Pipeline.refpix - INFO - Step refpix done
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:43,695 - stpipe.Detector1Pipeline.jump - INFO - Step jump running with args (&lt;RampModel(10, 10, 1024, 1032) from pipetest_miri_imtso_FULL_10g10i_F770W_b75_tso_saturation.fits&gt;,).
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:43,697 - stpipe.Detector1Pipeline.jump - INFO - Step jump parameters are: {&#39;pre_hooks&#39;: [], &#39;post_hooks&#39;: [], &#39;output_file&#39;: &#39;/internal/data1/jenkins/workspace/Notebooks/jwst_validation_notebooks_spacetelescope/tmp/tmp8dfgl36a/pipetest_miri_imtso_FULL_10g10i_F770W_b75_tso.fits&#39;, &#39;output_dir&#39;: None, &#39;output_ext&#39;: &#39;.fits&#39;, &#39;output_use_model&#39;: False, &#39;output_use_index&#39;: True, &#39;save_results&#39;: False, &#39;skip&#39;: False, &#39;suffix&#39;: None, &#39;search_output_file&#39;: True, &#39;input_dir&#39;: &#39;&#39;, &#39;rejection_threshold&#39;: 8.0, &#39;three_group_rejection_threshold&#39;: 6.0, &#39;four_group_rejection_threshold&#39;: 5.0, &#39;maximum_cores&#39;: &#39;none&#39;, &#39;flag_4_neighbors&#39;: True, &#39;max_jump_to_flag_neighbors&#39;: 1000.0, &#39;min_jump_to_flag_neighbors&#39;: 10.0}
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:43,709 - stpipe.Detector1Pipeline.jump - INFO - CR rejection threshold = 8 sigma
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:43,724 - stpipe.Detector1Pipeline.jump - INFO - Using GAIN reference file: /grp/crds/cache/references/jwst/jwst_miri_gain_0008.fits
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:43,750 - stpipe.Detector1Pipeline.jump - INFO - Using READNOISE reference file: /internal/data1/jenkins/workspace/Notebooks/jwst_validation_notebooks_spacetelescope/tmp/tmp8dfgl36a/jwst_mirisim_readnoise.fits
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:44,612 - stpipe.Detector1Pipeline.jump - INFO - Executing two-point difference method
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:44,839 - stpipe.Detector1Pipeline.jump - INFO - Working on integration 1:
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:45,705 - stpipe.Detector1Pipeline.jump - WARNING - /internal/data1/jenkins/workspace/Notebooks/jwst_validation_notebooks_spacetelescope/miniconda3/envs/jwst_validation_notebooks/lib/python3.10/site-packages/stcal/jump/twopoint_difference.py:128: RuntimeWarning: All-NaN slice encountered
+  max_ratio = np.nanmax(ratio, axis=0)
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:45,745 - stpipe.Detector1Pipeline.jump - INFO - From highest outlier, two-point found 10534 pixels with at least one CR from five groups.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:45,747 - stpipe.Detector1Pipeline.jump - INFO - From highest outlier, two-point found 0 pixels with at least one CR from four groups.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:45,748 - stpipe.Detector1Pipeline.jump - INFO - From highest outlier, two-point found 0 pixels with at least one CR from three groups.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:47,619 - stpipe.Detector1Pipeline.jump - INFO - Working on integration 2:
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:48,596 - stpipe.Detector1Pipeline.jump - INFO - From highest outlier, two-point found 3590 pixels with at least one CR from five groups.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:48,597 - stpipe.Detector1Pipeline.jump - INFO - From highest outlier, two-point found 0 pixels with at least one CR from four groups.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:48,598 - stpipe.Detector1Pipeline.jump - INFO - From highest outlier, two-point found 0 pixels with at least one CR from three groups.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:49,276 - stpipe.Detector1Pipeline.jump - INFO - Working on integration 3:
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:50,236 - stpipe.Detector1Pipeline.jump - INFO - From highest outlier, two-point found 3692 pixels with at least one CR from five groups.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:50,238 - stpipe.Detector1Pipeline.jump - INFO - From highest outlier, two-point found 0 pixels with at least one CR from four groups.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:50,239 - stpipe.Detector1Pipeline.jump - INFO - From highest outlier, two-point found 0 pixels with at least one CR from three groups.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:50,936 - stpipe.Detector1Pipeline.jump - INFO - Working on integration 4:
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:51,909 - stpipe.Detector1Pipeline.jump - INFO - From highest outlier, two-point found 3696 pixels with at least one CR from five groups.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:51,911 - stpipe.Detector1Pipeline.jump - INFO - From highest outlier, two-point found 0 pixels with at least one CR from four groups.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:51,911 - stpipe.Detector1Pipeline.jump - INFO - From highest outlier, two-point found 0 pixels with at least one CR from three groups.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:52,613 - stpipe.Detector1Pipeline.jump - INFO - Working on integration 5:
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:53,571 - stpipe.Detector1Pipeline.jump - INFO - From highest outlier, two-point found 3693 pixels with at least one CR from five groups.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:53,573 - stpipe.Detector1Pipeline.jump - INFO - From highest outlier, two-point found 0 pixels with at least one CR from four groups.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:53,574 - stpipe.Detector1Pipeline.jump - INFO - From highest outlier, two-point found 0 pixels with at least one CR from three groups.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:54,281 - stpipe.Detector1Pipeline.jump - INFO - Working on integration 6:
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:55,259 - stpipe.Detector1Pipeline.jump - INFO - From highest outlier, two-point found 3552 pixels with at least one CR from five groups.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:55,261 - stpipe.Detector1Pipeline.jump - INFO - From highest outlier, two-point found 0 pixels with at least one CR from four groups.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:55,262 - stpipe.Detector1Pipeline.jump - INFO - From highest outlier, two-point found 0 pixels with at least one CR from three groups.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:55,948 - stpipe.Detector1Pipeline.jump - INFO - Working on integration 7:
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:56,920 - stpipe.Detector1Pipeline.jump - INFO - From highest outlier, two-point found 3641 pixels with at least one CR from five groups.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:56,922 - stpipe.Detector1Pipeline.jump - INFO - From highest outlier, two-point found 0 pixels with at least one CR from four groups.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:56,923 - stpipe.Detector1Pipeline.jump - INFO - From highest outlier, two-point found 0 pixels with at least one CR from three groups.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:57,626 - stpipe.Detector1Pipeline.jump - INFO - Working on integration 8:
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:58,597 - stpipe.Detector1Pipeline.jump - INFO - From highest outlier, two-point found 3687 pixels with at least one CR from five groups.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:58,598 - stpipe.Detector1Pipeline.jump - INFO - From highest outlier, two-point found 0 pixels with at least one CR from four groups.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:58,600 - stpipe.Detector1Pipeline.jump - INFO - From highest outlier, two-point found 0 pixels with at least one CR from three groups.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:38:59,322 - stpipe.Detector1Pipeline.jump - INFO - Working on integration 9:
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:39:00,351 - stpipe.Detector1Pipeline.jump - INFO - From highest outlier, two-point found 3579 pixels with at least one CR from five groups.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:39:00,353 - stpipe.Detector1Pipeline.jump - INFO - From highest outlier, two-point found 0 pixels with at least one CR from four groups.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:39:00,354 - stpipe.Detector1Pipeline.jump - INFO - From highest outlier, two-point found 0 pixels with at least one CR from three groups.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:39:01,053 - stpipe.Detector1Pipeline.jump - INFO - Working on integration 10:
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:39:02,070 - stpipe.Detector1Pipeline.jump - INFO - From highest outlier, two-point found 3532 pixels with at least one CR from five groups.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:39:02,071 - stpipe.Detector1Pipeline.jump - INFO - From highest outlier, two-point found 0 pixels with at least one CR from four groups.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:39:02,072 - stpipe.Detector1Pipeline.jump - INFO - From highest outlier, two-point found 0 pixels with at least one CR from three groups.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:39:03,071 - stpipe.Detector1Pipeline.jump - INFO - Total elapsed time = 18.4568 sec
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:39:03,074 - stpipe.Detector1Pipeline.jump - INFO - The execution time in seconds: 19.365849
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:39:03,611 - stpipe.Detector1Pipeline.jump - INFO - Saved model in pipetest_miri_imtso_FULL_10g10i_F770W_b75_tso_jump.fits
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:39:03,612 - stpipe.Detector1Pipeline.jump - INFO - Step jump done
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:39:03,753 - stpipe.Detector1Pipeline.ramp_fit - INFO - Step ramp_fit running with args (&lt;RampModel(10, 10, 1024, 1032) from pipetest_miri_imtso_FULL_10g10i_F770W_b75_tso_jump.fits&gt;,).
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:39:03,756 - stpipe.Detector1Pipeline.ramp_fit - INFO - Step ramp_fit parameters are: {&#39;pre_hooks&#39;: [], &#39;post_hooks&#39;: [], &#39;output_file&#39;: &#39;/internal/data1/jenkins/workspace/Notebooks/jwst_validation_notebooks_spacetelescope/tmp/tmp8dfgl36a/pipetest_miri_imtso_FULL_10g10i_F770W_b75_tso.fits&#39;, &#39;output_dir&#39;: None, &#39;output_ext&#39;: &#39;.fits&#39;, &#39;output_use_model&#39;: False, &#39;output_use_index&#39;: True, &#39;save_results&#39;: False, &#39;skip&#39;: False, &#39;suffix&#39;: None, &#39;search_output_file&#39;: True, &#39;input_dir&#39;: &#39;&#39;, &#39;int_name&#39;: &#39;&#39;, &#39;save_opt&#39;: False, &#39;opt_name&#39;: &#39;&#39;, &#39;suppress_one_group&#39;: True, &#39;maximum_cores&#39;: &#39;none&#39;}
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:39:03,779 - stpipe.Detector1Pipeline.ramp_fit - INFO - Using READNOISE reference file: /internal/data1/jenkins/workspace/Notebooks/jwst_validation_notebooks_spacetelescope/tmp/tmp8dfgl36a/jwst_mirisim_readnoise.fits
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:39:03,780 - stpipe.Detector1Pipeline.ramp_fit - INFO - Using GAIN reference file: /grp/crds/cache/references/jwst/jwst_miri_gain_0008.fits
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:39:03,832 - stpipe.Detector1Pipeline.ramp_fit - INFO - Using algorithm = ols
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:39:03,833 - stpipe.Detector1Pipeline.ramp_fit - INFO - Using weighting = optimal
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:39:04,513 - stpipe.Detector1Pipeline.ramp_fit - INFO - Number of leading groups that are flagged as DO_NOT_USE: 0
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:40:39,081 - stpipe.Detector1Pipeline.ramp_fit - INFO - Number of groups per integration: 10
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:40:39,085 - stpipe.Detector1Pipeline.ramp_fit - INFO - Number of integrations: 10
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:40:39,268 - stpipe.Detector1Pipeline.ramp_fit - INFO - Saved model in pipetest_miri_imtso_FULL_10g10i_F770W_b75_tso_0_ramp_fit.fits
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:40:39,508 - stpipe.Detector1Pipeline.ramp_fit - INFO - Saved model in pipetest_miri_imtso_FULL_10g10i_F770W_b75_tso_1_ramp_fit.fits
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:40:39,509 - stpipe.Detector1Pipeline.ramp_fit - INFO - Step ramp_fit done
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:40:39,660 - stpipe.Detector1Pipeline.gain_scale - INFO - Step gain_scale running with args (&lt;ImageModel(1024, 1032) from pipetest_miri_imtso_FULL_10g10i_F770W_b75_tso_0_ramp_fit.fits&gt;,).
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:40:39,662 - stpipe.Detector1Pipeline.gain_scale - INFO - Step gain_scale parameters are: {&#39;pre_hooks&#39;: [], &#39;post_hooks&#39;: [], &#39;output_file&#39;: None, &#39;output_dir&#39;: None, &#39;output_ext&#39;: &#39;.fits&#39;, &#39;output_use_model&#39;: False, &#39;output_use_index&#39;: True, &#39;save_results&#39;: False, &#39;skip&#39;: False, &#39;suffix&#39;: &#39;gain_scale&#39;, &#39;search_output_file&#39;: True, &#39;input_dir&#39;: &#39;&#39;}
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:40:39,713 - stpipe.Detector1Pipeline.gain_scale - INFO - GAINFACT not found in gain reference file
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:40:39,714 - stpipe.Detector1Pipeline.gain_scale - INFO - Step will be skipped
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:40:39,719 - stpipe.Detector1Pipeline.gain_scale - INFO - Step gain_scale done
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:40:39,834 - stpipe.Detector1Pipeline.gain_scale - INFO - Step gain_scale running with args (&lt;CubeModel(10, 1024, 1032) from pipetest_miri_imtso_FULL_10g10i_F770W_b75_tso_1_ramp_fit.fits&gt;,).
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:40:39,836 - stpipe.Detector1Pipeline.gain_scale - INFO - Step gain_scale parameters are: {&#39;pre_hooks&#39;: [], &#39;post_hooks&#39;: [], &#39;output_file&#39;: None, &#39;output_dir&#39;: None, &#39;output_ext&#39;: &#39;.fits&#39;, &#39;output_use_model&#39;: False, &#39;output_use_index&#39;: True, &#39;save_results&#39;: False, &#39;skip&#39;: False, &#39;suffix&#39;: &#39;gain_scaleints&#39;, &#39;search_output_file&#39;: True, &#39;input_dir&#39;: &#39;&#39;}
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:40:39,879 - stpipe.Detector1Pipeline.gain_scale - INFO - GAINFACT not found in gain reference file
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:40:39,880 - stpipe.Detector1Pipeline.gain_scale - INFO - Step will be skipped
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:40:39,885 - stpipe.Detector1Pipeline.gain_scale - INFO - Step gain_scale done
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:40:40,128 - stpipe.Detector1Pipeline - INFO - Saved model in pipetest_miri_imtso_FULL_10g10i_F770W_b75_tso_rateints.fits
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:40:40,129 - stpipe.Detector1Pipeline - INFO - ... ending calwebb_detector1
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:40:40,131 - stpipe.Detector1Pipeline - INFO - Results used CRDS context: jwst_0913.pmap
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:40:40,197 - stpipe.Detector1Pipeline - INFO - Saved model in pipetest_miri_imtso_FULL_10g10i_F770W_b75_tso_rate.fits
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 09:40:40,198 - stpipe.Detector1Pipeline - INFO - Step Detector1Pipeline done
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Detector 1 steps completed.
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">outname</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>pipetest_miri_imtso_FULL_10g10i_F770W_b75_tso
+</pre></div>
+</div>
+</div>
+</div>
+<p><a id="examine_data"></a></p>
+</section>
+</section>
+<section id="examine-input-and-output-data">
+<h2>Examine input and output data<a class="headerlink" href="#examine-input-and-output-data" title="Permalink to this headline">#</a></h2>
+<section id="take-a-look-at-the-input-data">
+<h3>Take a look at the input data<a class="headerlink" href="#take-a-look-at-the-input-data" title="Permalink to this headline">#</a></h3>
+<ul class="simple">
+<li><p>Look at the last frame</p></li>
+<li><p>plot a pixel up the ramp from the source</p></li>
+<li><p>plot a pixel up the ramp from the background</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sci_data</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">data</span>
+
+<span class="n">ngroups</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">exposure</span><span class="o">.</span><span class="n">ngroups</span>
+<span class="n">nints</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">exposure</span><span class="o">.</span><span class="n">nints</span>
+
+<span class="c1"># identify a science pixel</span>
+<span class="n">sci_px</span> <span class="o">=</span> <span class="p">[</span><span class="mi">512</span><span class="p">,</span> <span class="mi">692</span><span class="p">]</span>
+
+<span class="c1"># identify a pixel in blank sky</span>
+<span class="n">bgr_px</span> <span class="o">=</span> <span class="p">[</span><span class="mi">560</span><span class="p">,</span> <span class="mi">915</span><span class="p">]</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">nrows</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">[</span><span class="mi">12</span><span class="p">,</span><span class="mi">4</span><span class="p">])</span>
+
+<span class="c1"># plot 1: frame[-1] in the first integration</span>
+<span class="n">lastgrp</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">sci_data</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="n">ngroups</span><span class="o">-</span><span class="mi">1</span><span class="p">,:,:],</span> <span class="n">origin</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">&#39;None&#39;</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="s1">&#39;equal&#39;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Greys&#39;</span><span class="p">,</span>
+                      <span class="n">vmin</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">12000</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">sci_px</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">sci_px</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;sci pixel&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">bgr_px</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">bgr_px</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;+&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;bgr pixel&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Group </span><span class="si">{}</span><span class="s1"> Int 0&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ngroups</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;px&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;px&#39;</span><span class="p">)</span>
+
+<span class="c1"># plot 2: pixel slope, spectrum</span>
+
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Slopes, sci pixel (red x)&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nints</span><span class="p">):</span>
+    <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">sci_data</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:,</span> <span class="n">sci_px</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">sci_px</span><span class="p">[</span><span class="mi">1</span><span class="p">]])</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;integration&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;DN&#39;</span><span class="p">)</span>
+
+<span class="c1"># plot 3: pixel slope, background</span>
+
+<span class="n">ax</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Slopes, bgr pixel (yellow +)&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nints</span><span class="p">):</span>
+    <span class="n">ax</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">sci_data</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:,</span> <span class="n">bgr_px</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">bgr_px</span><span class="p">[</span><span class="mi">1</span><span class="p">]])</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;integration&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;DN&#39;</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">lastgrp</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/exec_jwst_detector1_miri_imtso_testing_18_0.png" src="../../../_images/exec_jwst_detector1_miri_imtso_testing_18_0.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="test-individual-output">
+<h2>Test individual output<a class="headerlink" href="#test-individual-output" title="Permalink to this headline">#</a></h2>
+<section id="test-saturation-output">
+<h3>Test Saturation output<a class="headerlink" href="#test-saturation-output" title="Permalink to this headline">#</a></h3>
+<p>The saturation step should flag any saturated pixels in the DQ extension. We check this here by stepping through each integration and looking at the pixel values in a 25 x 25 px box, and checking the maximum counts against the groupdq attribute of the saturation output model.</p>
+<p>The code below should check that pixels with counts &gt; satvalue are flagged, and report an error if the groupdq flag is incorrect.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># read in file output from saturation step</span>
+
+<span class="k">with</span> <span class="n">RampModel</span><span class="p">(</span><span class="n">outname</span><span class="o">+</span><span class="s1">&#39;_saturation.fits&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">satmodel</span><span class="p">:</span>
+    <span class="c1"># raises exception if file is not the correct model</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">satmodel</span><span class="o">.</span><span class="n">data</span>
+    <span class="n">satdq</span> <span class="o">=</span> <span class="n">satmodel</span><span class="o">.</span><span class="n">groupdq</span>
+
+<span class="n">satvalue</span> <span class="o">=</span> <span class="mi">55000</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Saturation level is: &#39;</span><span class="p">,</span> <span class="n">satvalue</span><span class="p">,</span> <span class="s1">&#39; counts.&#39;</span><span class="p">)</span>
+
+<span class="c1"># Test last frame of each integration for saturation and see if it was flagged.</span>
+
+<span class="n">ngroups</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">exposure</span><span class="o">.</span><span class="n">ngroups</span>
+<span class="n">nints</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">exposure</span><span class="o">.</span><span class="n">nints</span>
+
+<span class="k">for</span> <span class="n">integration</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nints</span><span class="p">):</span>
+    <span class="c1"># check last frame for saturation in region of star</span>
+    <span class="n">box</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">integration</span><span class="p">,</span> <span class="n">ngroups</span><span class="o">-</span><span class="mi">1</span> <span class="p">,</span> <span class="mi">500</span><span class="p">:</span><span class="mi">525</span><span class="p">,</span> <span class="mi">680</span><span class="p">:</span><span class="mi">705</span><span class="p">]</span>
+    <span class="nb">print</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Max value in 25x25 box around star position: &#39;</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">nanmax</span><span class="p">(</span><span class="n">box</span><span class="p">))</span>
+    <span class="n">satframe</span> <span class="o">=</span> <span class="n">satdq</span><span class="p">[</span><span class="n">integration</span><span class="p">,</span> <span class="n">ngroups</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">500</span><span class="p">:</span><span class="mi">525</span><span class="p">,</span> <span class="mi">680</span><span class="p">:</span><span class="mi">705</span> <span class="p">]</span>
+    
+    <span class="n">satpix</span> <span class="o">=</span> <span class="p">(</span><span class="n">box</span> <span class="o">&gt;=</span> <span class="n">satvalue</span><span class="p">)</span>
+
+    <span class="c1"># if pixels greater than value, then check that they are flagged</span>
+    <span class="k">if</span> <span class="n">satpix</span><span class="o">.</span><span class="n">any</span><span class="p">():</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Saturation detected in last frame of integration: &#39;</span><span class="p">,</span> <span class="n">integration</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">satframe</span><span class="p">[</span><span class="n">satpix</span><span class="p">]</span> <span class="o">==</span> <span class="n">dqflags</span><span class="o">.</span><span class="n">group</span><span class="p">[</span><span class="s1">&#39;SATURATED&#39;</span><span class="p">])</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;No pixels saturate in last frame of integration: &#39;</span><span class="p">,</span> <span class="n">integration</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Saturation level is:  55000  counts.
+
+Max value in 25x25 box around star position:  56628.0
+Saturation detected in last frame of integration:  0
+
+Max value in 25x25 box around star position:  52538.0
+No pixels saturate in last frame of integration:  1
+
+Max value in 25x25 box around star position:  53514.0
+No pixels saturate in last frame of integration:  2
+
+Max value in 25x25 box around star position:  53382.0
+No pixels saturate in last frame of integration:  3
+
+Max value in 25x25 box around star position:  53313.0
+No pixels saturate in last frame of integration:  4
+
+Max value in 25x25 box around star position:  53363.0
+No pixels saturate in last frame of integration:  5
+
+Max value in 25x25 box around star position:  53398.0
+No pixels saturate in last frame of integration:  6
+
+Max value in 25x25 box around star position:  53399.0
+No pixels saturate in last frame of integration:  7
+
+Max value in 25x25 box around star position:  53423.0
+No pixels saturate in last frame of integration:  8
+
+Max value in 25x25 box around star position:  53428.0
+No pixels saturate in last frame of integration:  9
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="look-at-plots-of-output">
+<h3>Look at plots of output<a class="headerlink" href="#look-at-plots-of-output" title="Permalink to this headline">#</a></h3>
+<p>Compare the slope image from the _rate output file to the median of the slopes of the _rateints file. They should be similar in appearance and flux levels.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># this plot will compare the slope image from the _rate file with the median of the slope images in the rateints file</span>
+<span class="c1"># check criterion: they should look similar and the maximim values seen in both these images should be similar</span>
+
+<span class="c1">#with ImageModel(outname+&#39;_rate.fits&#39;) as rmod:</span>
+    <span class="c1"># raises exception if file is not the correct model</span>
+<span class="c1">#    rdata = rmod.data</span>
+ 
+<span class="c1">#with CubeModel(outname+&#39;_rateints.fits&#39;) as rimod:</span>
+    <span class="c1"># raises exception if file is not the correct model</span>
+<span class="c1">#    rimoddata = rimod.data</span>
+
+<span class="n">rmod</span> <span class="o">=</span> <span class="n">ImageModel</span><span class="p">(</span><span class="n">outname</span><span class="o">+</span><span class="s1">&#39;_rate.fits&#39;</span><span class="p">)</span>
+<span class="n">rdata</span> <span class="o">=</span> <span class="n">rmod</span><span class="o">.</span><span class="n">data</span>
+<span class="n">rimod</span> <span class="o">=</span> <span class="n">CubeModel</span><span class="p">(</span><span class="n">outname</span><span class="o">+</span><span class="s1">&#39;_rateints.fits&#39;</span><span class="p">)</span>
+<span class="n">rimoddata</span> <span class="o">=</span> <span class="n">rimod</span><span class="o">.</span><span class="n">data</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">nrows</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">[</span><span class="mi">8</span><span class="p">,</span><span class="mi">10</span><span class="p">])</span>
+
+<span class="n">rplt</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">rdata</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="s1">&#39;equal&#39;</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">&#39;None&#39;</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Integrated rate file slope image&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;px&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;px&#39;</span><span class="p">)</span>
+
+<span class="n">riplt</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">rimoddata</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">origin</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="s1">&#39;equal&#39;</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">&#39;None&#39;</span><span class="p">,</span>
+                    <span class="n">vmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Median of rateints file slope images&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;px&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;px&#39;</span><span class="p">)</span>
+
+<span class="n">cbar</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">rplt</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">orientation</span><span class="o">=</span><span class="s1">&#39;horizontal&#39;</span><span class="p">)</span>
+<span class="n">cbar</span><span class="o">.</span><span class="n">set_label</span><span class="p">(</span><span class="s1">&#39;DN/s&#39;</span><span class="p">)</span>
+<span class="c1">#fig.tight_layout()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Max DN/s in the rate.fits slope image: </span><span class="si">{}</span><span class="s1"> DN/s&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">rdata</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Max DN/s of the median of the rateints.fits slope images: </span><span class="si">{}</span><span class="s1"> DN/s&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nanmax</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">rimoddata</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Max DN/s in the rate.fits slope image: 1810.6153564453125 DN/s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Max DN/s of the median of the rateints.fits slope images: 1811.336669921875 DN/s
+</pre></div>
+</div>
+<img alt="../../../_images/exec_jwst_detector1_miri_imtso_testing_23_2.png" src="../../../_images/exec_jwst_detector1_miri_imtso_testing_23_2.png" />
+</div>
+</div>
+</section>
+<section id="test-output-of-jump-step-to-see-if-specified-pixels-and-their-neighbors-were-flagged">
+<h3>Test output of jump step to see if specified pixels (and their neighbors) were flagged<a class="headerlink" href="#test-output-of-jump-step-to-see-if-specified-pixels-and-their-neighbors-were-flagged" title="Permalink to this headline">#</a></h3>
+<p>In this step we check the output of the jump detection step. This looks at the pixels to which a CR hit was added above, and checks whether they were flagged. The threshold can be adjusted above, and the step re-run to check consistence with the input.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># load jump step output file</span>
+<span class="k">with</span> <span class="n">RampModel</span><span class="p">(</span><span class="n">outname</span><span class="o">+</span><span class="s1">&#39;_jump.fits&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">jumpim</span><span class="p">:</span>
+    <span class="c1"># raises exception if file is not the correct model</span>
+    <span class="n">jumpdata</span> <span class="o">=</span> <span class="n">jumpim</span><span class="o">.</span><span class="n">data</span>
+    <span class="n">jumpdq</span> <span class="o">=</span> <span class="n">jumpim</span><span class="o">.</span><span class="n">groupdq</span>
+    
+<span class="n">integration</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">frame</span> <span class="o">=</span> <span class="mi">5</span>
+
+<span class="c1"># look for cr flags in dq grpdq array in specified locations</span>
+<span class="n">dqframe</span> <span class="o">=</span> <span class="n">jumpdq</span><span class="p">[</span><span class="n">integration</span><span class="p">,</span> <span class="n">frame</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:]</span>
+
+<span class="c1"># print output on which fluxes had neighbors flagged</span>
+<span class="c1"># output should include pixel coord, average pixel value nearby, cr value, whether neighbors were flagged</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;   xpos       ypos      crmag      avgcounts  pixflagged  neighborflagged </span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">crmag</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">xpos</span><span class="p">,</span> <span class="n">ypos</span><span class="p">,</span> <span class="n">crmags</span><span class="p">):</span>
+    <span class="c1"># check if pixel is flagged</span>
+    <span class="c1"># set default flag</span>
+    <span class="n">pixflagged</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">neighborflagged</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="c1"># get stats on flux values near cr hit</span>
+    <span class="n">avgcounts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">jumpdata</span><span class="p">[</span><span class="n">integration</span><span class="p">,</span> <span class="n">frame</span><span class="p">,</span> <span class="n">y</span> <span class="o">-</span> <span class="mi">10</span><span class="p">:</span> <span class="n">y</span> <span class="o">-</span> <span class="mi">5</span><span class="p">,</span> <span class="n">x</span> <span class="o">-</span> <span class="mi">10</span><span class="p">:</span> <span class="n">x</span> <span class="o">-</span> <span class="mi">5</span><span class="p">])</span>
+
+    <span class="k">if</span> <span class="n">dqframe</span><span class="p">[</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">]</span> <span class="o">&amp;</span> <span class="n">dqflags</span><span class="o">.</span><span class="n">pixel</span><span class="p">[</span><span class="s1">&#39;JUMP_DET&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">pixflagged</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="c1"># check neighbor pixels</span>
+        <span class="k">if</span> <span class="p">((</span><span class="n">dqframe</span><span class="p">[</span><span class="n">y</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">x</span><span class="p">]</span> <span class="o">&amp;</span> <span class="n">dqflags</span><span class="o">.</span><span class="n">pixel</span><span class="p">[</span><span class="s1">&#39;JUMP_DET&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">and</span>
+            <span class="p">(</span><span class="n">dqframe</span><span class="p">[</span><span class="n">y</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">x</span><span class="p">]</span> <span class="o">&amp;</span> <span class="n">dqflags</span><span class="o">.</span><span class="n">pixel</span><span class="p">[</span><span class="s1">&#39;JUMP_DET&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">and</span>
+            <span class="p">(</span><span class="n">dqframe</span><span class="p">[</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">&amp;</span> <span class="n">dqflags</span><span class="o">.</span><span class="n">pixel</span><span class="p">[</span><span class="s1">&#39;JUMP_DET&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">and</span>
+            <span class="p">(</span><span class="n">dqframe</span><span class="p">[</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">&amp;</span> <span class="n">dqflags</span><span class="o">.</span><span class="n">pixel</span><span class="p">[</span><span class="s1">&#39;JUMP_DET&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)):</span>
+                <span class="n">neighborflagged</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="c1"># write output</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:8.0f}</span><span class="s1"> </span><span class="si">{:8.0f}</span><span class="s1"> </span><span class="si">{:10.0f}</span><span class="s1"> </span><span class="si">{:15.2f}</span><span class="s1"> </span><span class="si">{:&gt;10}</span><span class="s1"> </span><span class="si">{:&gt;10}</span><span class="s1"> </span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">crmag</span><span class="p">,</span> <span class="n">avgcounts</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">pixflagged</span><span class="p">),</span> 
+                                                                      <span class="nb">str</span><span class="p">(</span><span class="n">neighborflagged</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>   xpos       ypos      crmag      avgcounts  pixflagged  neighborflagged 
+
+     460      150         10        10084.64      False      False 
+
+     480      150         25        10087.25      False      False 
+
+     500      150         50        10087.82      False      False 
+
+     520      150        100        10087.26       True      False 
+
+     540      150        200        10087.80       True       True 
+
+     560      150        500        10085.96       True       True 
+
+     580      150       1000        10086.31       True       True 
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># plot data to see what is being flagged</span>
+<span class="n">i</span><span class="o">=</span><span class="mi">10</span>
+<span class="n">nframes</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">exposure</span><span class="o">.</span><span class="n">ngroups</span>
+<span class="n">frames</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">nframes</span><span class="p">)</span>
+
+<span class="c1"># set up titles for plot</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Frame number&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;DN value up the ramp&#39;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">xpos</span><span class="p">,</span> <span class="n">ypos</span><span class="p">):</span>
+    <span class="c1"># get locations of flagged pixels within the ramps</span>
+    <span class="n">jumps</span> <span class="o">=</span> <span class="n">jumpdq</span><span class="p">[</span><span class="n">integration</span><span class="p">,</span> <span class="p">:,</span> <span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">]</span> <span class="o">&amp;</span> <span class="n">dqflags</span><span class="o">.</span><span class="n">pixel</span><span class="p">[</span><span class="s1">&#39;JUMP_DET&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span>
+    <span class="n">ramp</span> <span class="o">=</span> <span class="n">jumpdata</span><span class="p">[</span><span class="n">integration</span><span class="p">,</span> <span class="p">:,</span> <span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">]</span>
+
+    <span class="c1"># plot ramps of selected pixels and flagged jumps</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ramp</span><span class="o">+</span><span class="n">i</span><span class="o">*</span><span class="mi">10</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">frames</span><span class="p">[</span><span class="n">jumps</span><span class="p">],</span> <span class="n">ramp</span><span class="p">[</span><span class="n">jumps</span><span class="p">]</span><span class="o">+</span><span class="n">i</span><span class="o">*</span><span class="mi">10</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">)</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="n">i</span><span class="o">+</span><span class="mi">10</span>
+
+<span class="c1">#plt.legend()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/exec_jwst_detector1_miri_imtso_testing_26_0.png" src="../../../_images/exec_jwst_detector1_miri_imtso_testing_26_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># show region of dq array to see if cross pixels were flagged </span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">jumpdq</span><span class="p">[</span><span class="n">integration</span><span class="p">,</span> <span class="n">frame</span><span class="p">,</span> <span class="mi">140</span><span class="p">:</span><span class="mi">160</span><span class="p">,</span> <span class="mi">440</span><span class="p">:</span><span class="mi">600</span><span class="p">]</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Greys&#39;</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">vmax</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/exec_jwst_detector1_miri_imtso_testing_27_0.png" src="../../../_images/exec_jwst_detector1_miri_imtso_testing_27_0.png" />
+</div>
+</div>
+</section>
+<section id="rscd-testing">
+<h3>RSCD testing<a class="headerlink" href="#rscd-testing" title="Permalink to this headline">#</a></h3>
+<p>The RSCD step at the moment simply flags frames as ‘DO_NOT_USE’ in the groupdq array to avoid the frames that show the rscd effect being used for ramp fitting.</p>
+<p>For FULL frame FAST mode data, the RSCD reference file indicates that the first four frames in all integrations greater than 1 (or 0 for 0-indexing), should be flagged as ‘DO_NOT_USE’, which is indicated by a value 1 in the groupdq array. If the value of the flag in the frame is odd, then this frame has been correctly flagged.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Use the groupdq output of the jump step to test whether the proper frames are flagged.</span>
+<span class="c1"># Choose any pixel in the frame (500, 500) to test, since they should all be flagged the same.</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">jumpdq</span><span class="p">[:,:,</span><span class="mi">500</span><span class="p">,</span><span class="mi">500</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[0 0 0 0 0 0 0 0 0 0]
+ [1 1 1 1 0 0 0 0 0 0]
+ [1 1 1 1 0 0 0 0 0 0]
+ [1 1 1 1 0 0 0 0 0 0]
+ [1 1 1 1 0 0 0 0 0 0]
+ [1 1 1 1 0 0 0 0 0 0]
+ [1 1 1 1 0 0 0 0 0 0]
+ [1 1 1 1 0 0 0 0 0 0]
+ [1 1 1 1 0 0 0 0 0 0]
+ [1 1 1 1 0 0 0 0 0 0]]
+</pre></div>
+</div>
+</div>
+</div>
+<p><a id="about_ID"></a></p>
+</section>
+</section>
+<section id="about-this-notebook">
+<h2>About this Notebook<a class="headerlink" href="#about-this-notebook" title="Permalink to this headline">#</a></h2>
+<p><strong>Author:</strong> Misty Cracraft, Senior Staff Scientist, MIRI Branch
+<br><strong>Updated On:</strong> 07/28/2020</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "TheRealZoidberg/jwst_validation_test",
+            ref: "main",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./notebooks/calwebb_detector1/jwst_detector1_miri_test"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="../jwst_detector1_nircam_test/exec_jwst_detector1_nircam_test.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">JWST Pipeline Validation Notebook: calwebb_detector1, NIRCam imaging</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="jwst_detector1_miri_imtso_testing.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">JWST Pipeline Validation Testing Notebook: Calwebb_Detector1 for MIRI TSO imaging</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By STScI<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>

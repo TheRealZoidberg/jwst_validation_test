@@ -1,0 +1,115 @@
+Traceback (most recent call last):
+  File "/usr/share/miniconda/lib/python3.9/site-packages/jupyter_cache/executors/utils.py", line 51, in single_nb_execution
+    executenb(
+  File "/usr/share/miniconda/lib/python3.9/site-packages/nbclient/client.py", line 1204, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+  File "/usr/share/miniconda/lib/python3.9/site-packages/nbclient/util.py", line 84, in wrapped
+    return just_run(coro(*args, **kwargs))
+  File "/usr/share/miniconda/lib/python3.9/site-packages/nbclient/util.py", line 62, in just_run
+    return loop.run_until_complete(coro)
+  File "/usr/share/miniconda/lib/python3.9/asyncio/base_events.py", line 647, in run_until_complete
+    return future.result()
+  File "/usr/share/miniconda/lib/python3.9/site-packages/nbclient/client.py", line 663, in async_execute
+    await self.async_execute_cell(
+  File "/usr/share/miniconda/lib/python3.9/site-packages/nbclient/client.py", line 965, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "/usr/share/miniconda/lib/python3.9/site-packages/nbclient/client.py", line 862, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+print("Downloading input file 1")
+input_file1 = get_bigdata('jwst_validation_notebooks',
+                     'validation_data',
+                     'image3',
+                     'image3_miri_test', 
+                     'starfield_50star4ptdither_seq1_MIRIMAGE_F1130Wexp1_b75__cal.fits')
+print("Downloading input file 2")
+input_file2 = get_bigdata('jwst_validation_notebooks',
+                     'validation_data',
+                     'image3',
+                     'image3_miri_test', 
+                     'starfield_50star4ptdither_seq1_MIRIMAGE_F1130Wexp2_b75__cal.fits')
+print("Downloading input file 3")
+input_file3 = get_bigdata('jwst_validation_notebooks',
+                     'validation_data',
+                     'image3',
+                     'image3_miri_test', 
+                     'starfield_50star4ptdither_seq2_MIRIMAGE_F1130Wexp1_b75__cal.fits')
+print("Downloading input file 4")
+input_file4 = get_bigdata('jwst_validation_notebooks',
+                     'validation_data',
+                     'image3',
+                     'image3_miri_test', 
+                     'starfield_50star4ptdither_seq2_MIRIMAGE_F1130Wexp2_b75__cal.fits')
+print("Downloading input file 5")
+input_file5 = get_bigdata('jwst_validation_notebooks',
+                     'validation_data',
+                     'image3',
+                     'image3_miri_test', 
+                     'starfield_50star4ptdither_seq3_MIRIMAGE_F1130Wexp2_b75__cal.fits')
+print("Downloading input file 6")
+input_file6 = get_bigdata('jwst_validation_notebooks',
+                     'validation_data',
+                     'image3',
+                     'image3_miri_test', 
+                     'starfield_50star4ptdither_seq3_MIRIMAGE_F1130Wexp2_b75__cal.fits')
+print("Downloading input file 7")
+input_file7 = get_bigdata('jwst_validation_notebooks',
+                     'validation_data',
+                     'image3',
+                     'image3_miri_test', 
+                     'starfield_50star4ptdither_seq4_MIRIMAGE_F1130Wexp2_b75__cal.fits')
+print("Downloading input file 8")
+input_file8 = get_bigdata('jwst_validation_notebooks',
+                     'validation_data',
+                     'image3',
+                     'image3_miri_test', 
+                     'starfield_50star4ptdither_seq4_MIRIMAGE_F1130Wexp2_b75__cal.fits')
+print("Finished Downloads")
+input_files=[input_file1,input_file2,input_file3,input_file4,input_file5,input_file6,input_file7,input_file8]
+------------------
+
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mBigdataError[0m                              Traceback (most recent call last)
+Cell [0;32mIn [5], line 2[0m
+[1;32m      1[0m [38;5;28mprint[39m([38;5;124m"[39m[38;5;124mDownloading input file 1[39m[38;5;124m"[39m)
+[0;32m----> 2[0m input_file1 [38;5;241m=[39m [43mget_bigdata[49m[43m([49m[38;5;124;43m'[39;49m[38;5;124;43mjwst_validation_notebooks[39;49m[38;5;124;43m'[39;49m[43m,[49m
+[1;32m      3[0m [43m                     [49m[38;5;124;43m'[39;49m[38;5;124;43mvalidation_data[39;49m[38;5;124;43m'[39;49m[43m,[49m
+[1;32m      4[0m [43m                     [49m[38;5;124;43m'[39;49m[38;5;124;43mimage3[39;49m[38;5;124;43m'[39;49m[43m,[49m
+[1;32m      5[0m [43m                     [49m[38;5;124;43m'[39;49m[38;5;124;43mimage3_miri_test[39;49m[38;5;124;43m'[39;49m[43m,[49m[43m [49m
+[1;32m      6[0m [43m                     [49m[38;5;124;43m'[39;49m[38;5;124;43mstarfield_50star4ptdither_seq1_MIRIMAGE_F1130Wexp1_b75__cal.fits[39;49m[38;5;124;43m'[39;49m[43m)[49m
+[1;32m      7[0m [38;5;28mprint[39m([38;5;124m"[39m[38;5;124mDownloading input file 2[39m[38;5;124m"[39m)
+[1;32m      8[0m input_file2 [38;5;241m=[39m get_bigdata([38;5;124m'[39m[38;5;124mjwst_validation_notebooks[39m[38;5;124m'[39m,
+[1;32m      9[0m                      [38;5;124m'[39m[38;5;124mvalidation_data[39m[38;5;124m'[39m,
+[1;32m     10[0m                      [38;5;124m'[39m[38;5;124mimage3[39m[38;5;124m'[39m,
+[1;32m     11[0m                      [38;5;124m'[39m[38;5;124mimage3_miri_test[39m[38;5;124m'[39m, 
+[1;32m     12[0m                      [38;5;124m'[39m[38;5;124mstarfield_50star4ptdither_seq1_MIRIMAGE_F1130Wexp2_b75__cal.fits[39m[38;5;124m'[39m)
+
+File [0;32m/usr/share/miniconda/lib/python3.9/site-packages/ci_watson/artifactory_helpers.py:200[0m, in [0;36mget_bigdata[0;34m(docopy, timeout, chunk_size, *args)[0m
+[1;32m    164[0m [38;5;28;01mdef[39;00m [38;5;21mget_bigdata[39m([38;5;241m*[39margs, docopy[38;5;241m=[39m[38;5;28;01mTrue[39;00m, timeout[38;5;241m=[39mTIMEOUT, chunk_size[38;5;241m=[39mCHUNK_SIZE):
+[1;32m    165[0m     [38;5;124;03m"""[39;00m
+[1;32m    166[0m [38;5;124;03m    Acquire requested data from a managed resource[39;00m
+[1;32m    167[0m [38;5;124;03m    to the current directory.[39;00m
+[0;32m   (...)[0m
+[1;32m    198[0m 
+[1;32m    199[0m [38;5;124;03m    """[39;00m
+[0;32m--> 200[0m     src [38;5;241m=[39m os[38;5;241m.[39mpath[38;5;241m.[39mjoin([43mget_bigdata_root[49m[43m([49m[43m)[49m, [38;5;241m*[39margs)
+[1;32m    201[0m     src_exists [38;5;241m=[39m os[38;5;241m.[39mpath[38;5;241m.[39mexists(src)
+[1;32m    202[0m     src_is_url [38;5;241m=[39m check_url(src)
+
+File [0;32m/usr/share/miniconda/lib/python3.9/site-packages/ci_watson/artifactory_helpers.py:153[0m, in [0;36mget_bigdata_root[0;34m(envkey)[0m
+[1;32m    141[0m [38;5;124;03m"""[39;00m
+[1;32m    142[0m [38;5;124;03mFind and returns the path to the nearest big datasets.[39;00m
+[1;32m    143[0m 
+[0;32m   (...)[0m
+[1;32m    150[0m 
+[1;32m    151[0m [38;5;124;03m"""[39;00m
+[1;32m    152[0m [38;5;28;01mif[39;00m envkey [38;5;129;01mnot[39;00m [38;5;129;01min[39;00m os[38;5;241m.[39menviron:
+[0;32m--> 153[0m     [38;5;28;01mraise[39;00m BigdataError(
+[1;32m    154[0m         [38;5;124m'[39m[38;5;124mEnvironment variable [39m[38;5;132;01m{}[39;00m[38;5;124m is undefined[39m[38;5;124m'[39m[38;5;241m.[39mformat(envkey))
+[1;32m    156[0m path [38;5;241m=[39m os[38;5;241m.[39menviron[envkey]
+[1;32m    158[0m [38;5;28;01mif[39;00m os[38;5;241m.[39mpath[38;5;241m.[39mexists(path) [38;5;129;01mor[39;00m check_url(path):
+
+[0;31mBigdataError[0m: Environment variable TEST_BIGDATA is undefined
+BigdataError: Environment variable TEST_BIGDATA is undefined
+

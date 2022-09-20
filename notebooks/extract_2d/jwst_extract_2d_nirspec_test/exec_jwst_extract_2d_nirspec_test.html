@@ -1,0 +1,2598 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>JWST Pipeline Validation Testing Notebook: spec2, extract_2d step &#8212; Notebook repository template</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/main.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/clipboard.min.js"></script>
+    <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../../_static/sphinx-thebe.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.1/dist/embed-amd.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="JWST Pipeline Validation Notebook: calwebb_detector1, persistence unit tests" href="../../persistence/exec_jwst_persistence_unit_tests.html" />
+    <link rel="prev" title="JWST Pipeline Validation Testing Notebook: spec2, extract_2d step" href="jwst_extract_2d_nirspec_test.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../../../_static/logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Notebook repository template</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../index.html">
+                    <no title>
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../background/jwst_background_miri_test/jwst_background_subtraction_miri_imaging_testing.html">
+   JWST Pipeline Validation Notebook: calwebb_image2, background subtraction for MIRI imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../background/jwst_background_miri_test/exec_jwst_background_subtraction_miri_imaging_testing.html">
+   JWST Pipeline Validation Notebook: calwebb_image2, background subtraction for MIRI imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../background/jwst_background_miri_test/exec_background_sub-miri-lrs-slit.html">
+   JWST Pipeline Validation Testing Notebook: Background_subtract() for MIRI LRS SLIT
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../background/jwst_background_miri_test/background_sub-miri-lrs-slit.html">
+   JWST Pipeline Validation Testing Notebook: Background_subtract() for MIRI LRS SLIT
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../pathloss/jwst_pathloss_nirspec_test/exec_jwst_pathloss_nirspec_test.html">
+   JWST Pipeline Validation Testing Notebook: spec2, pathloss step
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../pathloss/jwst_pathloss_nirspec_test/jwst_pathloss_nirspec_test.html">
+   JWST Pipeline Validation Testing Notebook: spec2, pathloss step
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../msaflagopen/jwst_msa_flagging_nirspec_test.html">
+   JWST Pipeline Validation Testing Notebook: spec2, msa_flagging step
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../msaflagopen/exec_jwst_msa_flagging_nirspec_test.html">
+   JWST Pipeline Validation Testing Notebook: spec2, msa_flagging step
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../resample/jwst_resample_miri_test/jwst_resample_miri_lrs_slit.html">
+   JWST Pipeline Validation Testing Notebook: Calwebb_Image3, Resample step
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../resample/jwst_resample_miri_test/exec_jwst_resample_miri_lrs_slit.html">
+   JWST Pipeline Validation Testing Notebook: Calwebb_Image3, Resample step
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../resample/jwst_resample_miri_test/jwst_resample_miri_testing.html">
+   JWST Pipeline Validation Testing Notebook: Calwebb_Image3, Resample step with MIRI imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../resample/jwst_resample_miri_test/exec_jwst_resample_miri_testing.html">
+   JWST Pipeline Validation Testing Notebook: Calwebb_Image3, Resample step with MIRI imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../example_notebook/example_notebook.html">
+   Draft: Notebook title
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../source_catalog/jwst_source_catalog_miri_test/exec_jwst_source_catalog_miri_test.html">
+   JWST Pipeline Validation Notebook: calwebb_image3: source_catalog with MIRI
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../source_catalog/jwst_source_catalog_miri_test/jwst_source_catalog_miri_test.html">
+   JWST Pipeline Validation Notebook: calwebb_image3: source_catalog with MIRI
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../source_catalog/jwst_source_catalog_nircam_test/jwst_nircam_imaging_source_catalog.html">
+   JWST Pipeline Validation Notebook: NIRCam, calwebb_image3, source_catalog
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../source_catalog/jwst_source_catalog_nircam_test/exec_jwst_nircam_imaging_source_catalog.html">
+   JWST Pipeline Validation Notebook: NIRCam, calwebb_image3, source_catalog
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../lastframe/exec_jwst_lastframe_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, lastframe unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../lastframe/jwst_lastframe_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, lastframe unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../photom/jwst_photom_miri_test/exec_photom_miri_lrs_slitless.html">
+   JWST Pipeline Validation Testing Notebook: MIRI LRS Slitless spectroscopy
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../photom/jwst_photom_miri_test/photom_miri_mrs_test.html">
+   JWST Pipeline Validation Testing Notebook: Spec2, photom, MIRI
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../photom/jwst_photom_miri_test/exec_photom_miri_lrs_slit.html">
+   JWST Pipeline Validation Testing Notebook: MIRI LRS Slit spectroscopy
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../photom/jwst_photom_miri_test/exec_photom_miri_mrs_test.html">
+   JWST Pipeline Validation Testing Notebook: Spec2, photom, MIRI
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../photom/jwst_photom_miri_test/photom_miri_lrs_slit.html">
+   JWST Pipeline Validation Testing Notebook: MIRI LRS Slit spectroscopy
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../photom/jwst_photom_miri_test/photom_miri_lrs_slitless.html">
+   JWST Pipeline Validation Testing Notebook: MIRI LRS Slitless spectroscopy
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../photom/jwst_photom_miri_test/exec_jwst_photom_miri_test.html">
+   JWST Pipeline Validation Notebook: photom with MIRI Imager
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../photom/jwst_photom_miri_test/jwst_photom_miri_test.html">
+   JWST Pipeline Validation Notebook: photom with MIRI Imager
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../ami3/run_ami_pipeline.html">
+   JWST Pipeline Validation Notebook:  AMI3, AMI3 Pipeline
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../ami3/exec_ami_analyze_verify.html">
+   JWST Pipeline Validation Notebook: AMI3, AmiAnalyze
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../ami3/exec_ami_average.html">
+   JWST Pipeline Validation Notebook:  calwebb_ami3, ami_average
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../ami3/exec_ami_normalize.html">
+   JWST Pipeline Validation Notebook: calwebb_ami3, ami_normalize
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../ami3/exec_run_ami_pipeline.html">
+   JWST Pipeline Validation Notebook:  AMI3, AMI3 Pipeline
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../ami3/ami_normalize.html">
+   JWST Pipeline Validation Notebook: calwebb_ami3, ami_normalize
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../ami3/ami_average.html">
+   JWST Pipeline Validation Notebook:  calwebb_ami3, ami_average
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../ami3/ami_analyze_verify.html">
+   JWST Pipeline Validation Notebook: AMI3, AmiAnalyze
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../assign_wcs/jwst_assign_wcs_nirspec_test/jwst_assign_wcs_nirspec_test.html">
+   JWST Pipeline Validation Testing Notebook: NIRSpec, spec2, assign_wcs step
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../assign_wcs/jwst_assign_wcs_nirspec_test/exec_jwst_assign_wcs_nirspec_test.html">
+   JWST Pipeline Validation Testing Notebook: NIRSpec, spec2, assign_wcs step
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../assign_wcs/jwst_assign_wcs_niriss_test/jwst_assign_wcs_niriss_image.html">
+   JWST Pipeline Validation Notebook: NIRISS, image2, assign_wcs
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../assign_wcs/jwst_assign_wcs_niriss_test/exec_jwst_assign_wcs_niriss_image.html">
+   JWST Pipeline Validation Notebook: NIRISS, image2, assign_wcs
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../assign_wcs/jwst_assign_wcs_miri_test/exec_assign_wcs-miri-mrs.html">
+   JWST Pipeline Validation Testing Notebook: MIRI MRS Spec2: Assign_wcs()
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../assign_wcs/jwst_assign_wcs_miri_test/exec_assign_wcs-miri-lrs-tso.html">
+   JWST Pipeline Validation Testing Notebook: MIRI LRS Time Series Observation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../assign_wcs/jwst_assign_wcs_miri_test/assign_wcs-miri-lrs-slit.html">
+   JWST Pipeline Validation Testing Notebook: MIRI LRS Slit
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../assign_wcs/jwst_assign_wcs_miri_test/assign_wcs-miri-mrs.html">
+   JWST Pipeline Validation Testing Notebook: MIRI MRS Spec2: Assign_wcs()
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../assign_wcs/jwst_assign_wcs_miri_test/assign_wcs-miri-lrs-tso.html">
+   JWST Pipeline Validation Testing Notebook: MIRI LRS Time Series Observation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../assign_wcs/jwst_assign_wcs_miri_test/exec_assign_wcs-miri-lrs-slit.html">
+   JWST Pipeline Validation Testing Notebook: MIRI LRS Slit
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../barshadow/jwst_barshadow_nirspec_test/jwst_barshadow_nirspec_test.html">
+   JWST Pipeline Validation Testing Notebook: spec2, barshadow step
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../barshadow/jwst_barshadow_nirspec_test/exec_jwst_barshadow_nirspec_test.html">
+   JWST Pipeline Validation Testing Notebook: spec2, barshadow step
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../reset/jwst_reset_miri_test/exec_jwst_reset_miri_testing.html">
+   JWST Pipeline Validation Testing Notebook: Calwebb_detector1, reset step for MIRI
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../reset/jwst_reset_miri_test/jwst_reset_miri_testing.html">
+   JWST Pipeline Validation Testing Notebook: Calwebb_detector1, reset step for MIRI
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../refpix/jwst_refpix_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, refpix unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../refpix/exec_jwst_refpix_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, refpix unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../flat_field/jwst_flat_field_nirspec_test/jwst_flat_field_nirspec_test.html">
+   JWST Pipeline Validation Testing Notebook: spec2, flat_field step
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../flat_field/jwst_flat_field_nirspec_test/exec_jwst_flat_field_nirspec_test.html">
+   JWST Pipeline Validation Testing Notebook: spec2, flat_field step
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../flat_field/jwst_flat_field_miri_test/exec_flatfield_analysis_slitless.html">
+   JWST Pipeline Validation Testing Notebook: MIRI LRS Slitless spectroscopy
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../flat_field/jwst_flat_field_miri_test/exec_jwst_flat_field_miri_test.html">
+   JWST Pipeline Validation Testing notebook: flat_field step with MIRI Imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../flat_field/jwst_flat_field_miri_test/exec_flat-miri-lrs-slit.html">
+   JWST Pipeline Validation Testing Notebook: MIRI LRS Slit spectroscopy
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../flat_field/jwst_flat_field_miri_test/flatfield_analysis_slitless.html">
+   JWST Pipeline Validation Testing Notebook: MIRI LRS Slitless spectroscopy
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../flat_field/jwst_flat_field_miri_test/exec_flat_miri_mrs_test.html">
+   JWST Pipeline Validation Testing Notebook: Spec2, flat_field, MIRI
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../flat_field/jwst_flat_field_miri_test/flat-miri-lrs-slit.html">
+   JWST Pipeline Validation Testing Notebook: MIRI LRS Slit spectroscopy
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../flat_field/jwst_flat_field_miri_test/jwst_flat_field_miri_test.html">
+   JWST Pipeline Validation Testing notebook: flat_field step with MIRI Imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../flat_field/jwst_flat_field_miri_test/flat_miri_mrs_test.html">
+   JWST Pipeline Validation Testing Notebook: Spec2, flat_field, MIRI
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../skymatch/jwst_skymatch_miri_test/jwst_skymatch_photom_miri_test.html">
+   JWST Pipeline Validation Notebook: skymatch and photometry with MIRI
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../skymatch/jwst_skymatch_miri_test/exec_jwst_skymatch_miri_test.html">
+   JWST Pipeline Validation Notebook: skymatch with MIRI
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../skymatch/jwst_skymatch_miri_test/exec_jwst_skymatch_photom_miri_test.html">
+   JWST Pipeline Validation Notebook: skymatch and photometry with MIRI
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../skymatch/jwst_skymatch_miri_test/jwst_skymatch_miri_test.html">
+   JWST Pipeline Validation Notebook: skymatch with MIRI
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../jump/jwst_jump_miri_test/jwst_jump_miri_testing.html">
+   JWST Pipeline Validation Testing Notebook: Calwebb_Detector1, Jump step
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../jump/jwst_jump_miri_test/exec_jwst_jump_miri_testing.html">
+   JWST Pipeline Validation Testing Notebook: Calwebb_Detector1, Jump step
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../jump/jwst_jump_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, jump unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../jump/exec_jwst_jump_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, jump unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../calwebb_image3/jwst_image3_nircam_test/jwst_image3_nircam_test.html">
+   JWST Pipeline Validation Notebook: calwebb_image3, NIRCam imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../calwebb_image3/jwst_image3_nircam_test/exec_jwst_image3_nircam_test.html">
+   JWST Pipeline Validation Notebook: calwebb_image3, NIRCam imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../calwebb_image3/jwst_image3_miri_test/exec_jwst_image3_miri_test.html">
+   JWST Pipeline Validation Notebook: calwebb_image3 with MIRI
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../calwebb_image3/jwst_image3_miri_test/jwst_image3_miri_test.html">
+   JWST Pipeline Validation Notebook: calwebb_image3 with MIRI
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../calwebb_detector1/jwst_detector1_nircam_test/jwst_detector1_nircam_test.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, NIRCam imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../calwebb_detector1/jwst_detector1_nircam_test/exec_jwst_detector1_nircam_test.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, NIRCam imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../calwebb_detector1/jwst_detector1_miri_test/exec_jwst_detector1_miri_imtso_testing.html">
+   JWST Pipeline Validation Testing Notebook: Calwebb_Detector1 for MIRI TSO imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../calwebb_detector1/jwst_detector1_miri_test/jwst_detector1_miri_imtso_testing.html">
+   JWST Pipeline Validation Testing Notebook: Calwebb_Detector1 for MIRI TSO imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../calwebb_detector1/jwst_detector1_miri_test/exec_caldetector1-miri-lrs-tso.html">
+   JWST Pipeline Validation Testing Notebook: MIRI LRS Time Series Observation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../calwebb_detector1/jwst_detector1_miri_test/caldetector1-miri-lrs-tso.html">
+   JWST Pipeline Validation Testing Notebook: MIRI LRS Time Series Observation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../rscd/jwst_rscd_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, rscd unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../rscd/exec_jwst_rscd_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, rscd unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../rscd/jwst_rscd_miri_test/exec_jwst_miri_rscd_testing.html">
+   JWST Pipeline Validation Testing Notebook: Calwebb_Detector1, RSCD step
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../rscd/jwst_rscd_miri_test/jwst_miri_rscd_testing.html">
+   JWST Pipeline Validation Testing Notebook: Calwebb_Detector1, RSCD step
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../calwebb_image2/jwst_image2_nircam_test/jwst_image2_nircam_test.html">
+   JWST Pipeline Validation Notebook: calwebb_image2, NIRCam imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../calwebb_image2/jwst_image2_nircam_test/exec_jwst_image2_nircam_test.html">
+   JWST Pipeline Validation Notebook: calwebb_image2, NIRCam imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../ramp_fitting/exec_jwst_ramp_fitting_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, ramp_fitting unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../ramp_fitting/jwst_ramp_fitting_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, ramp_fitting unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../firstframe/exec_jwst_firstframe_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, firstframe unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../firstframe/jwst_firstframe_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, firstframe unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../dq_init/exec_jwst_dq_init_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, dq_init unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../dq_init/jwst_dq_init_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, dq_init unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../cube_build/jwst_cube_build_miri_test/test_cube_build_spec3.html">
+   JWST Pipeline Validation Testing Notebook: Cube Build with MIRISIM Data
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../cube_build/jwst_cube_build_miri_test/exec_testing_point_source_flux_conservation_modeshep_all.html">
+   JWST Pipeline Validation Testing Notebook: Point Source Flux Conservation Modeshep
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../cube_build/jwst_cube_build_miri_test/testing_point_source_flux_conservation_modeshep_all.html">
+   JWST Pipeline Validation Testing Notebook: Point Source Flux Conservation Modeshep
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../cube_build/jwst_cube_build_miri_test/exec_test_cube_build_spec3.html">
+   JWST Pipeline Validation Testing Notebook: Cube Build with MIRISIM Data
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../saturation/exec_jwst_saturation_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, saturation unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../saturation/jwst_saturation_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, saturation unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="jwst_extract_2d_nirspec_test.html">
+   JWST Pipeline Validation Testing Notebook: spec2, extract_2d step
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   JWST Pipeline Validation Testing Notebook: spec2, extract_2d step
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../persistence/exec_jwst_persistence_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, persistence unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../persistence/jwst_persistence_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, persistence unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../extract_1d/jwst_extract_1d_miri_test/exec_extract_1d-spec2-miri-lrs-slit.html">
+   JWST Pipeline Validation Testing Notebook: MIRI LRS Slit
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../extract_1d/jwst_extract_1d_miri_test/extract_1d-spec2-miri-lrs-slitless.html">
+   JWST Pipeline Validation Testing Notebook: MIRI LRS Slitless
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../extract_1d/jwst_extract_1d_miri_test/extract_1d-spec2-miri-lrs-slit.html">
+   JWST Pipeline Validation Testing Notebook: MIRI LRS Slit
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../extract_1d/jwst_extract_1d_miri_test/exec_extract_1d-spec2-miri-lrs-slitless.html">
+   JWST Pipeline Validation Testing Notebook: MIRI LRS Slitless
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../dark_current/exec_jwst_dark_current_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, dark_current unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../dark_current/jwst_dark_current_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, dark_current unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../templates/jwst_validation_notebook_template.html">
+   JWST Pipeline Validation Notebook:
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../templates/exec_jwst_validation_notebook_template.html">
+   JWST Pipeline Validation Notebook:
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../templates/validation_test_template.html">
+   JWST Pipeline Validation Testing Notebook: Descriptive Name of Test You Are Performing
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../templates/exec_validation_test_template.html">
+   JWST Pipeline Validation Testing Notebook: Descriptive Name of Test You Are Performing
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../ipc/exec_jwst_ipc_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, ipc unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../ipc/jwst_ipc_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, ipc unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/background/exec_jwst_background_unit_tests.html">
+   JWST calwebb_image2, background unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/background/jwst_background_unit_tests.html">
+   JWST calwebb_image2, background unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/jwst_nirspec_regression_tests.html">
+   JWST NIRSpec regression tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/flatfield/exec_jwst_flatfield_unit_tests.html">
+   JWST calwebb_image2 and calwebb_spec2, flatfield unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/flatfield/jwst_flatfield_unit_tests.html">
+   JWST calwebb_image2 and calwebb_spec2, flatfield unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/jwst_nircam_regression_tests.html">
+   JWST NIRCam regression tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/resample/exec_jwst_resample_unit_tests.html">
+   JWST calwebb_image2 and calwebb_spec2, resample unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/resample/jwst_resample_unit_tests.html">
+   JWST calwebb_image2 and calwebb_spec2, resample unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/jwst_niriss_regression_tests.html">
+   JWST NIRISS regression tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/source_catalog/jwst_source_catalog_unit_tests.html">
+   JWST calwebb_image3, source_catalog unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/source_catalog/exec_jwst_source_catalog_unit_tests.html">
+   JWST calwebb_image3, source_catalog unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/exec_jwst_fgs_regression_tests.html">
+   JWST FGS regression tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/photom/jwst_photom_unit_tests.html">
+   JWST calwebb_image2 and calwebb_spec2, photom unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/photom/exec_jwst_photom_unit_tests.html">
+   JWST calwebb_image2 and calwebb_spec2, photom unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/assign_wcs/jwst_assign_wcs_unit_tests.html">
+   JWST calwebb_image2 and calwebb_spec2, assign_wcs unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/assign_wcs/exec_jwst_assign_wcs_unit_tests.html">
+   JWST calwebb_image2 and calwebb_spec2, assign_wcs unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/skymatch/jwst_skymatch_unit_tests.html">
+   JWST calwebb_image3, skymatch unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/skymatch/exec_jwst_skymatch_unit_tests.html">
+   JWST calwebb_image3, skymatch unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/exec_jwst_niriss_regression_tests.html">
+   JWST NIRISS regression tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/exec_jwst_nirspec_regression_tests.html">
+   JWST NIRSpec regression tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/exec_jwst_nircam_regression_tests.html">
+   JWST NIRCam regression tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/jwst_fgs_regression_tests.html">
+   JWST FGS regression tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/exec_jwst_miri_regression_tests.html">
+   JWST MIRI regression tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/jwst_miri_regression_tests.html">
+   JWST MIRI regression tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/tweakreg/exec_jwst_tweakreg_unit_tests.html">
+   JWST calwebb_image3, tweakreg unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/tweakreg/jwst_tweakreg_unit_tests.html">
+   JWST calwebb_image3, tweakreg unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/outlier_detection/jwst_outlier_detection_unit_tests.html">
+   JWST calwebb_image3, calwebb_spec3, calwebb_coron3, calwebb_tso3, outlier_detection unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/outlier_detection/exec_jwst_outlier_detection_unit_tests.html">
+   JWST calwebb_image3, calwebb_spec3, calwebb_coron3, calwebb_tso3, outlier_detection unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../tweakreg/jwst_tweakreg_miri_test/exec_jwst_tweakreg_miri_test.html">
+   JWST Pipeline Validation Testing Notebook: Calwebb_Image3, Tweakreg step with MIRI imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../tweakreg/jwst_tweakreg_miri_test/jwst_tweakreg_miri_test.html">
+   JWST Pipeline Validation Testing Notebook: Calwebb_Image3, Tweakreg step with MIRI imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../outlier_detection/jwst_outlier_detection_miri_test/exec_jwst_outlier_detection_miri_test.html">
+   JWST Pipeline Validation Notebook: outlier_detection with MIRI
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../outlier_detection/jwst_outlier_detection_miri_test/exec_jwst_outlier_detection_view_miri_test.html">
+   JWST Pipeline Validation Notebook: MIRI view outlier_detection
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../outlier_detection/jwst_outlier_detection_miri_test/exec_out_det_test2.html">
+   JWST Pipeline Validation Notebook: Outlier Detection for MIRI MRS
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../outlier_detection/jwst_outlier_detection_miri_test/out_det_test2.html">
+   JWST Pipeline Validation Notebook: Outlier Detection for MIRI MRS
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../outlier_detection/jwst_outlier_detection_miri_test/jwst_outlier_detection_miri_test.html">
+   JWST Pipeline Validation Notebook: outlier_detection with MIRI
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../outlier_detection/jwst_outlier_detection_miri_test/jwst_outlier_detection_view_miri_test.html">
+   JWST Pipeline Validation Notebook: MIRI view outlier_detection
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../superbias/exec_jwst_superbias_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, superbias unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../superbias/jwst_superbias_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, superbias unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../calwebb_coron3/exec_MIRI_shared_calcoron3_testing.html">
+   JWST Pipeline Validation Testing Notebook: Calwebb_Coron3 for MIRI Coronagraphic Imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../calwebb_coron3/jwst_calcoron3_nircam_test.html">
+   JWST Pipeline Validation Notebook: calwebb_coron3 with NIRCam
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../calwebb_coron3/exec_jwst_calcoron3_nircam_test.html">
+   JWST Pipeline Validation Notebook: calwebb_coron3 with NIRCam
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../calwebb_coron3/MIRI_shared_calcoron3_testing.html">
+   JWST Pipeline Validation Testing Notebook: Calwebb_Coron3 for MIRI Coronagraphic Imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../fringe/JWST_fringe_miri_test/exec_fringe_miri_mrs_test.html">
+   JWST Pipeline Validation Testing Notebook: Spec2, fringe, MIRI
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../fringe/JWST_fringe_miri_test/fringe_miri_mrs_test.html">
+   JWST Pipeline Validation Testing Notebook: Spec2, fringe, MIRI
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../image3/jwst_image3_miri_test/exec_jwst_image3_miri_test.html">
+   JWST Pipeline Validation Notebook: calwebb_image3 with MIRI
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../image3/jwst_image3_miri_test/jwst_image3_miri_test.html">
+   JWST Pipeline Validation Notebook: calwebb_image3 with MIRI
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../linearity/jwst_linearity_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, linearity unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../linearity/exec_jwst_linearity_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, linearity unit tests
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/TheRealZoidberg/jwst_validation_test/main?urlpath=tree/notebooks/extract_2d/jwst_extract_2d_nirspec_test/exec_jwst_extract_2d_nirspec_test.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../../../_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://colab.research.google.com/github/TheRealZoidberg/jwst_validation_test/blob/main/notebooks/extract_2d/jwst_extract_2d_nirspec_test/exec_jwst_extract_2d_nirspec_test.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Colab"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../../../_static/images/logo_colab.png">
+  </span>
+<span class="headerbtn__text-container">Colab</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="initThebeSBT()"
+  class="headerbtn headerbtn-launch-thebe"
+  data-toggle="tooltip"
+data-placement="left"
+title="Launch Thebe"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-play"></i>
+  </span>
+<span class="headerbtn__text-container">Live Code</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Source repositories">
+      <i class="fab fa-github"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://github.com/TheRealZoidberg/jwst_validation_test"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/TheRealZoidberg/jwst_validation_test/issues/new?title=Issue%20on%20page%20%2Fnotebooks/extract_2d/jwst_extract_2d_nirspec_test/exec_jwst_extract_2d_nirspec_test.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="headerbtn__text-container">open issue</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../../../_sources/notebooks/extract_2d/jwst_extract_2d_nirspec_test/exec_jwst_extract_2d_nirspec_test.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   JWST Pipeline Validation Testing Notebook: spec2, extract_2d step
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#table-of-contents">
+     Table of Contents
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#imports">
+   Imports
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#test-description">
+   Test Description
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#results">
+     Results
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#calibration-wg-requested-algorithm">
+     Calibration WG Requested Algorithm:
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#defining-term">
+     Defining Term
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#run-the-jwst-pipeline-and-extract-2d-validation-tests">
+   Run the JWST pipeline and extract_2d validation tests
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#testing-data-set">
+   Testing Data Set
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#about-this-notebook">
+     About this Notebook
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>JWST Pipeline Validation Testing Notebook: spec2, extract_2d step</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   JWST Pipeline Validation Testing Notebook: spec2, extract_2d step
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#table-of-contents">
+     Table of Contents
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#imports">
+   Imports
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#test-description">
+   Test Description
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#results">
+     Results
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#calibration-wg-requested-algorithm">
+     Calibration WG Requested Algorithm:
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#defining-term">
+     Defining Term
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#run-the-jwst-pipeline-and-extract-2d-validation-tests">
+   Run the JWST pipeline and extract_2d validation tests
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#testing-data-set">
+   Testing Data Set
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#about-this-notebook">
+     About this Notebook
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <p><a id="title_ID"></a></p>
+<section class="tex2jax_ignore mathjax_ignore" id="jwst-pipeline-validation-testing-notebook-spec2-extract-2d-step">
+<h1>JWST Pipeline Validation Testing Notebook: spec2, extract_2d step<a class="headerlink" href="#jwst-pipeline-validation-testing-notebook-spec2-extract-2d-step" title="Permalink to this headline">#</a></h1>
+<p><span style="color:red"> <strong>Instruments Affected</strong></span>: NIRSpec</p>
+<p>Tested on CV3 data</p>
+<section id="table-of-contents">
+<h2>Table of Contents<a class="headerlink" href="#table-of-contents" title="Permalink to this headline">#</a></h2>
+<div style="text-align: left"> 
+<p><br> <a class="reference external" href="#imports_ID">Imports</a> <br> <a class="reference external" href="#intro_ID">Introduction</a> <br> <a class="reference external" href="#data_ID">Testing Data Set</a> <br> <a class="reference external" href="#pipeline_ID">Run the JWST pipeline and assign_wcs validation tests</a>: <a class="reference external" href="#FULLFRAME">FS Full-Frame test</a>, <a class="reference external" href="#ALLSLITS">FS ALLSLITS test</a>, <a class="reference external" href="#MOS">MOS test</a> <br> <a class="reference external" href="#about_ID">About This Notebook</a><br> <a class="reference external" href="#results">Results</a> <br></p>
+</div><p><a id="imports_ID"></a></p>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="imports">
+<h1>Imports<a class="headerlink" href="#imports" title="Permalink to this headline">#</a></h1>
+<p>The library imports relevant to this notebook are aready taken care of by importing PTT.</p>
+<ul class="simple">
+<li><p><a class="reference external" href="http://astropy.io">astropy.io</a> for opening fits files</p></li>
+<li><p>jwst.module.PipelineStep is the pipeline step being tested</p></li>
+<li><p>matplotlib.pyplot.plt to generate plot</p></li>
+</ul>
+<p>NOTE: This notebook assumes that the pipeline version to be tested is already installed and its environment is activated.</p>
+<p>To be able to run this notebook you need to install nptt.</p>
+<p>If all goes well you will be able to import PTT.</p>
+<p><a class="reference external" href="#title_ID">Top of Page</a></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create a temporary directory to hold notebook output, and change the working directory to that directory.</span>
+<span class="kn">from</span> <span class="nn">tempfile</span> <span class="kn">import</span> <span class="n">TemporaryDirectory</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">shutil</span>
+<span class="n">data_dir</span> <span class="o">=</span> <span class="n">TemporaryDirectory</span><span class="p">()</span>
+
+<span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">data_dir</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="k">if</span> <span class="s1">&#39;CRDS_CACHE_TYPE&#39;</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;CRDS_CACHE_TYPE&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;local&#39;</span><span class="p">:</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;CRDS_PATH&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;HOME&#39;</span><span class="p">],</span> <span class="s1">&#39;crds&#39;</span><span class="p">,</span> <span class="s1">&#39;cache&#39;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;CRDS_CACHE_TYPE&#39;</span><span class="p">]):</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;CRDS_PATH&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;CRDS_CACHE_TYPE&#39;</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;CRDS cache location: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;CRDS_PATH&#39;</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">KeyError</span><span class="g g-Whitespace">                                  </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span> <span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">line</span> <span class="mi">7</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span>     <span class="k">elif</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;CRDS_CACHE_TYPE&#39;</span><span class="p">]):</span>
+<span class="g g-Whitespace">      </span><span class="mi">6</span>         <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;CRDS_PATH&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;CRDS_CACHE_TYPE&#39;</span><span class="p">]</span>
+<span class="ne">----&gt; </span><span class="mi">7</span> <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;CRDS cache location: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;CRDS_PATH&#39;</span><span class="p">]))</span>
+
+<span class="nn">File /usr/share/miniconda/lib/python3.9/os.py:679,</span> in <span class="ni">_Environ.__getitem__</span><span class="nt">(self, key)</span>
+<span class="g g-Whitespace">    </span><span class="mi">676</span>     <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">encodekey</span><span class="p">(</span><span class="n">key</span><span class="p">)]</span>
+<span class="g g-Whitespace">    </span><span class="mi">677</span> <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">678</span>     <span class="c1"># raise KeyError with the original key value</span>
+<span class="ne">--&gt; </span><span class="mi">679</span>     <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="kn">from</span> <span class="bp">None</span>
+<span class="g g-Whitespace">    </span><span class="mi">680</span> <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">decodevalue</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+<span class="ne">KeyError</span>: &#39;CRDS_PATH&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">import</span> <span class="nn">psutil</span>
+<span class="kn">from</span> <span class="nn">astropy.io</span> <span class="kn">import</span> <span class="n">fits</span>
+
+<span class="c1"># Only print a DeprecationWarning the first time it shows up, not every time.</span>
+<span class="k">with</span> <span class="n">warnings</span><span class="o">.</span><span class="n">catch_warnings</span><span class="p">():</span>
+    <span class="n">warnings</span><span class="o">.</span><span class="n">simplefilter</span><span class="p">(</span><span class="s2">&quot;once&quot;</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="ne">DeprecationWarning</span><span class="p">)</span>
+    <span class="kn">import</span> <span class="nn">jwst</span>
+    <span class="kn">from</span> <span class="nn">jwst.pipeline.calwebb_detector1</span> <span class="kn">import</span> <span class="n">Detector1Pipeline</span>
+    <span class="kn">from</span> <span class="nn">jwst.assign_wcs.assign_wcs_step</span> <span class="kn">import</span> <span class="n">AssignWcsStep</span>
+    <span class="kn">from</span> <span class="nn">jwst.msaflagopen.msaflagopen_step</span> <span class="kn">import</span> <span class="n">MSAFlagOpenStep</span>
+    <span class="kn">from</span> <span class="nn">jwst.extract_2d.extract_2d_step</span> <span class="kn">import</span> <span class="n">Extract2dStep</span>
+
+<span class="c1"># The latest version of NPTT is installed in the requirements text file at:</span>
+<span class="c1"># /jwst_validation_notebooks/environment.yml</span>
+
+<span class="c1"># import NPTT</span>
+<span class="kn">import</span> <span class="nn">nirspec_pipe_testing_tool</span> <span class="k">as</span> <span class="nn">nptt</span>
+
+<span class="c1"># To get data from Artifactory</span>
+<span class="kn">from</span> <span class="nn">ci_watson.artifactory_helpers</span> <span class="kn">import</span> <span class="n">get_bigdata</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>**WARNING**: LOCAL JWST PRD VERSION PRDOPSSOC-051 DOESN&#39;T MATCH THE CURRENT ONLINE VERSION PRDOPSSOC-055
+Please consider updating pysiaf, e.g. pip install --upgrade pysiaf or conda update pysiaf
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Print the versions used for the pipeline and NPTT</span>
+
+<span class="n">pipeline_version</span> <span class="o">=</span> <span class="n">jwst</span><span class="o">.</span><span class="n">__version__</span>
+<span class="n">nptt_version</span> <span class="o">=</span> <span class="n">nptt</span><span class="o">.</span><span class="n">__version__</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Using jwst pipeline version: &quot;</span><span class="p">,</span> <span class="n">pipeline_version</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Using NPTT version: &quot;</span><span class="p">,</span> <span class="n">nptt_version</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Using jwst pipeline version:  1.5.3
+Using NPTT version:  2.0.0
+</pre></div>
+</div>
+</div>
+</div>
+<p><a id="intro_ID"></a></p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="test-description">
+<h1>Test Description<a class="headerlink" href="#test-description" title="Permalink to this headline">#</a></h1>
+<p>We compared Institute’s pipeline product of the assign_wcs step with our benchmark files, or with the intermediary products from the ESA pipeline, which is completely independent from the Institute’s. The comparison file is referred to as ‘truth’. We calculated the relative difference and expected it to be equal to or less than computer precision:  relative_difference = absolute_value( (Truth - ST)/Truth )  &lt;= 1x10^-7.</p>
+<p>For the test to be considered PASSED, every single slit (for FS data), slitlet (for MOS data) or slice (for IFU data) in the input file has to pass. If there is any failure, the whole test will be considered as FAILED.</p>
+<p>The code for this test can be obtained at: <a class="reference external" href="https://github.com/spacetelescope/nirspec_pipe_testing_tool/blob/master/nirspec_pipe_testing_tool/calwebb_spec2_pytests/auxiliary_code/check_corners_extract2d.py">https://github.com/spacetelescope/nirspec_pipe_testing_tool/blob/master/nirspec_pipe_testing_tool/calwebb_spec2_pytests/auxiliary_code/check_corners_extract2d.py</a>. Multi Object Spectroscopy (MOS), the code is in the same repository but is named <code class="docutils literal notranslate"><span class="pre">compare_wcs_mos.py</span></code>, and for Integral Field Unit (IFU) data, the test is named <code class="docutils literal notranslate"><span class="pre">compare_wcs_ifu.py</span></code>.
+The input file is defined in the variable <code class="docutils literal notranslate"><span class="pre">input_file</span></code> (see section <a class="reference external" href="#data_ID">Testing Data Set and Variable Setup</a>).</p>
+<p>Step description: <a class="reference external" href="https://jwst-pipeline.readthedocs.io/en/latest/jwst/extract_2d/main.html">https://jwst-pipeline.readthedocs.io/en/latest/jwst/extract_2d/main.html</a></p>
+<p>Pipeline code: <a class="reference external" href="https://github.com/spacetelescope/jwst/tree/master/jwst/extract_2d">https://github.com/spacetelescope/jwst/tree/master/jwst/extract_2d</a></p>
+<section id="results">
+<h2>Results<a class="headerlink" href="#results" title="Permalink to this headline">#</a></h2>
+<p>If the test <strong>PASSED</strong> this means that all slits, slitlets, or slices individually passed the test. However, if ony one individual slit (for FS data), slitlet (for MOS data) or slice (for IFU data) test failed, the whole test will be reported as <strong>FAILED</strong>.</p>
+</section>
+<section id="calibration-wg-requested-algorithm">
+<h2>Calibration WG Requested Algorithm:<a class="headerlink" href="#calibration-wg-requested-algorithm" title="Permalink to this headline">#</a></h2>
+<p>A short description and link to the page:
+<a class="reference external" href="https://outerspace.stsci.edu/display/JWSTCC/Vanilla+Path-Loss+Correction">https://outerspace.stsci.edu/display/JWSTCC/Vanilla+Path-Loss+Correction</a></p>
+</section>
+<section id="defining-term">
+<h2>Defining Term<a class="headerlink" href="#defining-term" title="Permalink to this headline">#</a></h2>
+<p>Acronymns used un this notebook:</p>
+<p>pipeline: calibration pipeline</p>
+<p>spec2: spectroscopic calibration pipeline level 2b</p>
+<p>PTT: NIRSpec pipeline testing tool (<a class="reference external" href="https://github.com/spacetelescope/nirspec_pipe_testing_tool">https://github.com/spacetelescope/nirspec_pipe_testing_tool</a>)</p>
+<p><a class="reference external" href="#title_ID">Top of Page</a></p>
+<p><a id="pipeline_ID"></a></p>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="run-the-jwst-pipeline-and-extract-2d-validation-tests">
+<h1>Run the JWST pipeline and extract_2d validation tests<a class="headerlink" href="#run-the-jwst-pipeline-and-extract-2d-validation-tests" title="Permalink to this headline">#</a></h1>
+<p>The pipeline can be run from the command line in two variants: full or per step.</p>
+<p>Tu run the spec2 pipeline in full use the command:</p>
+<p>$ strun jwst.pipeline.Spec2Pipeline jwtest_rate.fits</p>
+<p>Tu only run the extract_2d step, use the command:</p>
+<p>$ strun jwst.extract_2d.Extract2dStep jwtest_previous_step_output.fits</p>
+<p>These options are also callable from a script with the testing environment active. The Python call for running the pipeline in full or by step are:</p>
+<p><span class="math notranslate nohighlight">\(\gt\)</span> from jwst.pipeline.calwebb_spec2 import Spec2Pipeline</p>
+<p><span class="math notranslate nohighlight">\(\gt\)</span> Spec2Pipeline.call(jwtest_rate.fits)</p>
+<p>or</p>
+<p><span class="math notranslate nohighlight">\(\gt\)</span> from jwst.extract_2d import Extract2dStep</p>
+<p><span class="math notranslate nohighlight">\(\gt\)</span> Extract2dStep.call(jwtest_previous_step_output.fits)</p>
+<p>PTT can run the spec2 pipeline either in full or per step, as well as the imaging pipeline in full. In this notebook we will use PTT to run the pipeline and the validation tests. To run PTT, follow the directions in the corresponding repo page.</p>
+<p><a class="reference external" href="#title_ID">Top of Page</a></p>
+<p><a id="data_ID"></a></p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="testing-data-set">
+<h1>Testing Data Set<a class="headerlink" href="#testing-data-set" title="Permalink to this headline">#</a></h1>
+<p>All testing data is from the CV3 campaign. We chose these files because this is our most complete data set, i.e. all modes and filter-grating combinations.</p>
+<p>Data used was for testing was only FS and MOS, since extract_2d is skipped for IFU. Data sets are:</p>
+<ul class="simple">
+<li><p>FS_PRISM_CLEAR</p></li>
+<li><p>FS_FULLFRAME_G395H_F290LP</p></li>
+<li><p>FS_ALLSLITS_G140H_F100LP</p></li>
+<li><p>MOS_G140M_LINE1</p></li>
+<li><p>MOS_PRISM_CLEAR</p></li>
+</ul>
+<p><a class="reference external" href="#title_ID">Top of Page</a></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">testing_data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;fs_prism_clear&#39;</span><span class="p">:{</span>
+                                  <span class="s1">&#39;uncal_file_nrs1&#39;</span><span class="p">:</span> <span class="s1">&#39;fs_prism_nrs1_uncal.fits&#39;</span><span class="p">,</span>
+                                  <span class="s1">&#39;uncal_file_nrs2&#39;</span><span class="p">:</span> <span class="s1">&#39;fs_prism_nrs2_uncal.fits&#39;</span><span class="p">,</span>
+                                  <span class="s1">&#39;truth_file_nrs1&#39;</span><span class="p">:</span> <span class="s1">&#39;fs_prism_nrs1_extract_2d_truth.fits&#39;</span><span class="p">,</span>
+                                  <span class="s1">&#39;truth_file_nrs2&#39;</span><span class="p">:</span> <span class="s1">&#39;fs_prism_nrs2_extract_2d_truth.fits&#39;</span><span class="p">,</span>
+                                  <span class="s1">&#39;msa_shutter_config&#39;</span><span class="p">:</span> <span class="kc">None</span> <span class="p">},</span>
+                
+                <span class="s1">&#39;fs_fullframe_g395h_f290lp&#39;</span><span class="p">:{</span>
+                                  <span class="s1">&#39;uncal_file_nrs1&#39;</span><span class="p">:</span> <span class="s1">&#39;fs_fullframe_g35h_f290lp_nrs1_uncal.fits&#39;</span><span class="p">,</span>
+                                  <span class="s1">&#39;uncal_file_nrs2&#39;</span><span class="p">:</span> <span class="s1">&#39;fs_fullframe_g35h_f290lp_nrs2_uncal.fits&#39;</span><span class="p">,</span>
+                                  <span class="s1">&#39;truth_file_nrs1&#39;</span><span class="p">:</span> <span class="s1">&#39;fs_fullframe_g35h_f290lp_nrs1_extract_2d_truth.fits&#39;</span><span class="p">,</span>
+                                  <span class="s1">&#39;truth_file_nrs2&#39;</span><span class="p">:</span> <span class="s1">&#39;fs_fullframe_g35h_f290lp_nrs2_extract_2d_truth.fits&#39;</span><span class="p">,</span>  
+                                  <span class="s1">&#39;msa_shutter_config&#39;</span><span class="p">:</span> <span class="kc">None</span> <span class="p">},</span>
+                
+                <span class="s1">&#39;fs_allslits_g140h_f100lp&#39;</span><span class="p">:{</span>
+                                  <span class="s1">&#39;uncal_file_nrs1&#39;</span><span class="p">:</span> <span class="s1">&#39;fs_allslits_g140h_f100lp_nrs1_uncal.fits&#39;</span><span class="p">,</span>
+                                  <span class="s1">&#39;uncal_file_nrs2&#39;</span><span class="p">:</span> <span class="s1">&#39;fs_allslits_g140h_f100lp_nrs2_uncal.fits&#39;</span><span class="p">,</span>
+                                  <span class="s1">&#39;truth_file_nrs1&#39;</span><span class="p">:</span> <span class="s1">&#39;fs_allslits_g140h_f100lp_nrs1_extract_2d_truth.fits&#39;</span><span class="p">,</span>
+                                  <span class="s1">&#39;truth_file_nrs2&#39;</span><span class="p">:</span> <span class="s1">&#39;fs_allslits_g140h_f100lp_nrs2_extract_2d_truth.fits&#39;</span><span class="p">,</span>
+                                  <span class="s1">&#39;msa_shutter_config&#39;</span><span class="p">:</span> <span class="kc">None</span> <span class="p">},</span>
+                
+                <span class="c1"># Commented out because the pipeline is failing with this file</span>
+                <span class="c1">#&#39;bots_g235h_f170lp&#39;:{</span>
+                <span class="c1">#                  &#39;uncal_file_nrs1&#39;: &#39;bots_g235h_f170lp_nrs1_uncal.fits&#39;,</span>
+                <span class="c1">#                  &#39;uncal_file_nrs2&#39;: &#39;bots_g235h_f170lp_nrs2_uncal.fits&#39;,</span>
+                <span class="c1">#                  &#39;truth_file_nrs1&#39;: &#39;bots_g235h_f170lp_nrs1_extract_2d_truth.fits&#39;,</span>
+                <span class="c1">#                  &#39;truth_file_nrs2&#39;: &#39;bots_g235h_f170lp_nrs2_extract_2d_truth.fits&#39;,</span>
+                <span class="c1">#                  &#39;msa_shutter_config&#39;: None },</span>
+                
+                <span class="s1">&#39;mos_prism_clear&#39;</span><span class="p">:{</span>
+                                  <span class="s1">&#39;uncal_file_nrs1&#39;</span><span class="p">:</span> <span class="s1">&#39;mos_prism_nrs1_uncal.fits&#39;</span><span class="p">,</span>
+                                  <span class="s1">&#39;uncal_file_nrs2&#39;</span><span class="p">:</span> <span class="s1">&#39;mos_prism_nrs2_uncal.fits&#39;</span><span class="p">,</span>
+                                  <span class="s1">&#39;truth_file_nrs1&#39;</span><span class="p">:</span> <span class="s1">&#39;mos_prism_nrs1_extract_2d_truth.fits&#39;</span><span class="p">,</span>
+                                  <span class="s1">&#39;truth_file_nrs2&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+                                  <span class="s1">&#39;msa_shutter_config&#39;</span><span class="p">:</span> <span class="s1">&#39;V0030006000104_msa.fits&#39;</span> <span class="p">},</span>
+                
+                <span class="s1">&#39;mos_g140m_f100lp&#39;</span><span class="p">:{</span>
+                                  <span class="s1">&#39;uncal_file_nrs1&#39;</span><span class="p">:</span> <span class="s1">&#39;mos_g140m_line1_NRS1_uncal.fits&#39;</span><span class="p">,</span>
+                                  <span class="s1">&#39;uncal_file_nrs2&#39;</span><span class="p">:</span> <span class="s1">&#39;mos_g140m_line1_NRS2_uncal.fits&#39;</span><span class="p">,</span>  
+                                  <span class="s1">&#39;truth_file_nrs1&#39;</span><span class="p">:</span> <span class="s1">&#39;mos_g140m_line1_nrs1_extract_2d_truth.fits&#39;</span><span class="p">,</span>
+                                  <span class="s1">&#39;truth_file_nrs2&#39;</span><span class="p">:</span> <span class="s1">&#39;mos_g140m_line1_nrs2_extract_2d_truth.fits&#39;</span><span class="p">,</span>
+                                  <span class="s1">&#39;msa_shutter_config&#39;</span><span class="p">:</span> <span class="s1">&#39;V8460001000101_msa.fits&#39;</span> <span class="p">},</span>
+                                
+
+               <span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># define function to pull data from Artifactory</span>
+<span class="k">def</span> <span class="nf">get_artifactory_file</span><span class="p">(</span><span class="n">data_set_dict</span><span class="p">,</span> <span class="n">detector</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This function creates a list with all the files needed per detector to run the test.</span>
+<span class="sd">    Args:</span>
+<span class="sd">        data_set_dict: dictionary, contains inputs for a specific mode and configuration</span>
+<span class="sd">        detector: string, either nrs1 or nrs2</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        data: list, contains all files needed to run test</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">files2obtain</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;uncal_file_nrs1&#39;</span><span class="p">,</span> <span class="s1">&#39;truth_file_nrs1&#39;</span><span class="p">,</span> <span class="s1">&#39;msa_shutter_config&#39;</span><span class="p">]</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">files2obtain</span><span class="p">:</span>
+        <span class="n">data_file</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">try</span><span class="p">:</span> 
+            <span class="k">if</span> <span class="s1">&#39;_nrs&#39;</span> <span class="ow">in</span> <span class="n">file</span> <span class="ow">and</span> <span class="s1">&#39;2&#39;</span> <span class="ow">in</span> <span class="n">detector</span><span class="p">:</span>
+                <span class="n">file</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;_nrs1&#39;</span><span class="p">,</span> <span class="s1">&#39;_nrs2&#39;</span><span class="p">)</span>
+
+            <span class="n">data_file</span> <span class="o">=</span> <span class="n">get_bigdata</span><span class="p">(</span><span class="s1">&#39;jwst_validation_notebooks&#39;</span><span class="p">,</span>
+                                         <span class="s1">&#39;validation_data&#39;</span><span class="p">,</span>
+                                         <span class="s1">&#39;nirspec_data&#39;</span><span class="p">,</span> 
+                                         <span class="n">data_set_dict</span><span class="p">[</span><span class="n">file</span><span class="p">])</span>
+        <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
+            <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+            <span class="k">continue</span>
+
+        <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">data_file</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">data</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Set common NPTT switches for NPTT and run the test for both detectors in each data set</span>
+
+<span class="c1"># define benchmark (or &#39;truth&#39;) file</span>
+<span class="n">compare_assign_wcs_and_extract_2d_with_esa</span> <span class="o">=</span> <span class="kc">False</span>
+
+<span class="c1"># accepted threshold difference with respect to benchmark files</span>
+<span class="n">extract_2d_threshold_diff</span> <span class="o">=</span> <span class="mi">4</span>
+
+<span class="c1"># define benchmark (or &#39;truth&#39;) file</span>
+<span class="n">esa_files_path</span><span class="p">,</span> <span class="n">raw_data_root_file</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
+<span class="n">compare_assign_wcs_and_extract_2d_with_esa</span> <span class="o">=</span> <span class="kc">False</span>
+
+<span class="c1"># Get the data</span>
+<span class="n">results_dict</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">detectors</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;nrs1&#39;</span><span class="p">,</span> <span class="s1">&#39;nrs2&#39;</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">mode_config</span><span class="p">,</span> <span class="n">data_set_dict</span> <span class="ow">in</span> <span class="n">testing_data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="k">for</span> <span class="n">det</span> <span class="ow">in</span> <span class="n">detectors</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Testing files for detector: &#39;</span><span class="p">,</span> <span class="n">det</span><span class="p">)</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">get_artifactory_file</span><span class="p">(</span><span class="n">data_set_dict</span><span class="p">,</span> <span class="n">det</span><span class="p">)</span>
+        <span class="n">uncal_file</span><span class="p">,</span> <span class="n">truth_file</span><span class="p">,</span> <span class="n">msa_shutter_config</span> <span class="o">=</span> <span class="n">data</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Working with uncal_file: &#39;</span><span class="p">,</span> <span class="n">uncal_file</span><span class="p">)</span>
+        <span class="n">uncal_basename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">uncal_file</span><span class="p">)</span>
+        
+        <span class="c1"># Make sure that there is an assign_wcs truth product to compare to, else skip this data set</span>
+        <span class="k">if</span> <span class="n">truth_file</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;No truth file to compare to for this detector, skipping this file.  </span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="n">skip_file</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">skip_file</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">skip_file</span><span class="p">:</span>       
+            <span class="c1"># Run the stage 1 pipeline </span>
+            <span class="n">rate_object</span> <span class="o">=</span> <span class="n">Detector1Pipeline</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">uncal_file</span><span class="p">)</span>
+            <span class="c1"># Make sure the MSA shutter configuration file is set up correctly</span>
+            <span class="k">if</span> <span class="n">msa_shutter_config</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">msa_metadata</span> <span class="o">=</span> <span class="n">rate_object</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">instrument</span><span class="o">.</span><span class="n">msa_metadata_file</span>
+                <span class="nb">print</span><span class="p">(</span><span class="n">msa_metadata</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">msa_metadata</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">msa_metadata</span> <span class="o">==</span> <span class="s1">&#39;N/A&#39;</span><span class="p">:</span>
+                    <span class="n">rate_object</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">instrument</span><span class="o">.</span><span class="n">msa_metadata_file</span> <span class="o">=</span> <span class="n">msa_shutter_config</span>
+
+            <span class="c1"># Run the stage 2 pipeline steps</span>
+            <span class="n">pipe_object</span> <span class="o">=</span> <span class="n">AssignWcsStep</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">rate_object</span><span class="p">)</span>
+            <span class="k">if</span> <span class="s1">&#39;mos&#39;</span> <span class="ow">in</span> <span class="n">uncal_basename</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
+                <span class="n">pipe_object</span> <span class="o">=</span> <span class="n">MSAFlagOpenStep</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">pipe_object</span><span class="p">)</span>
+            <span class="n">extract_2d_object</span> <span class="o">=</span> <span class="n">Extract2dStep</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">pipe_object</span><span class="p">)</span>
+
+            <span class="c1"># Run the validation test</span>
+            <span class="o">%</span><span class="k">matplotlib</span> inline
+
+            <span class="k">if</span> <span class="s1">&#39;fs&#39;</span> <span class="ow">in</span> <span class="n">uncal_file</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Running test for FS...&#39;</span><span class="p">)</span>
+                <span class="n">result</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">nptt</span><span class="o">.</span><span class="n">calwebb_spec2_pytests</span><span class="o">.</span><span class="n">auxiliary_code</span><span class="o">.</span><span class="n">check_corners_extract2d</span><span class="o">.</span><span class="n">find_FSwindowcorners</span><span class="p">(</span>
+                                                                   <span class="n">extract_2d_object</span><span class="p">,</span> 
+                                                                   <span class="n">truth_file</span><span class="o">=</span><span class="n">truth_file</span><span class="p">,</span>
+                                                                   <span class="n">esa_files_path</span><span class="o">=</span><span class="n">esa_files_path</span><span class="p">,</span>
+                                                                   <span class="n">extract_2d_threshold_diff</span><span class="o">=</span><span class="n">extract_2d_threshold_diff</span><span class="p">)</span>
+            <span class="k">if</span> <span class="s1">&#39;mos&#39;</span> <span class="ow">in</span> <span class="n">uncal_file</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Running test for MOS...&#39;</span><span class="p">)</span>
+                <span class="n">result</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">nptt</span><span class="o">.</span><span class="n">calwebb_spec2_pytests</span><span class="o">.</span><span class="n">auxiliary_code</span><span class="o">.</span><span class="n">check_corners_extract2d</span><span class="o">.</span><span class="n">find_MOSwindowcorners</span><span class="p">(</span>
+                                                                   <span class="n">extract_2d_object</span><span class="p">,</span>
+                                                                   <span class="n">msa_shutter_config</span><span class="p">,</span>
+                                                                   <span class="n">truth_file</span><span class="o">=</span><span class="n">truth_file</span><span class="p">,</span>
+                                                                   <span class="n">esa_files_path</span><span class="o">=</span><span class="n">esa_files_path</span><span class="p">,</span>
+                                                                   <span class="n">extract_2d_threshold_diff</span><span class="o">=</span> <span class="n">extract_2d_threshold_diff</span><span class="p">)</span>
+
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="s1">&#39;skipped&#39;</span>
+
+        <span class="c1"># Did the test passed </span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Did assign_wcs validation test passed? &quot;</span><span class="p">,</span> <span class="n">result</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">rd</span> <span class="o">=</span> <span class="p">{</span><span class="n">uncal_basename</span><span class="p">:</span> <span class="n">result</span><span class="p">}</span>
+        <span class="n">results_dict</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">rd</span><span class="p">)</span>
+        
+        <span class="c1"># close all open files</span>
+        <span class="n">psutil</span><span class="o">.</span><span class="n">Process</span><span class="p">()</span><span class="o">.</span><span class="n">open_files</span><span class="p">()</span>
+        <span class="n">closing_files</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">fd</span> <span class="ow">in</span> <span class="n">psutil</span><span class="o">.</span><span class="n">Process</span><span class="p">()</span><span class="o">.</span><span class="n">open_files</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">data_dir</span><span class="o">.</span><span class="n">name</span> <span class="ow">in</span> <span class="n">fd</span><span class="o">.</span><span class="n">path</span><span class="p">:</span>
+                <span class="n">closing_files</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">fd</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">fd</span> <span class="ow">in</span> <span class="n">closing_files</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Closing file: &#39;</span><span class="p">,</span> <span class="n">fd</span><span class="p">)</span>
+                <span class="nb">open</span><span class="p">(</span><span class="n">fd</span><span class="o">.</span><span class="n">fd</span><span class="p">)</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;File already closed: &#39;</span><span class="p">,</span> <span class="n">fd</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Testing files for detector:  nrs1
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Working with uncal_file:  /internal/data1/jenkins/workspace/Notebooks/jwst_validation_notebooks_spacetelescope/tmp/tmppzwjp923/fs_prism_nrs1_uncal.fits
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/internal/data1/jenkins/workspace/Notebooks/jwst_validation_notebooks_spacetelescope/miniconda3/envs/jwst_validation_notebooks/lib/python3.10/site-packages/stdatamodels/validate.py:38: ValidationWarning: While validating meta.instrument.fixed_slit the following error occurred:
+&#39;FULL&#39; is not one of [&#39;S200A1&#39;, &#39;S200A2&#39;, &#39;S200B1&#39;, &#39;S400A1&#39;, &#39;S1600A1&#39;, &#39;NONE&#39;]
+
+Failed validating &#39;enum&#39; in schema:
+    OrderedDict([(&#39;title&#39;, &#39;Name of fixed slit aperture used&#39;),
+                 (&#39;type&#39;, &#39;string&#39;),
+                 (&#39;enum&#39;,
+                  [&#39;S200A1&#39;,
+                   &#39;S200A2&#39;,
+                   &#39;S200B1&#39;,
+                   &#39;S400A1&#39;,
+                   &#39;S1600A1&#39;,
+                   &#39;NONE&#39;]),
+                 (&#39;fits_keyword&#39;, &#39;FXD_SLIT&#39;),
+                 (&#39;blend_table&#39;, True)])
+
+On instance:
+    &#39;FULL&#39;
+  warnings.warn(errmsg, ValidationWarning)
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:16:38,448 - stpipe - INFO - PARS-DETECTOR1PIPELINE parameters found: /grp/crds/cache/references/jwst/jwst_nirspec_pars-detector1pipeline_0004.asdf
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:16:38,492 - stpipe.Detector1Pipeline - INFO - Detector1Pipeline instance created.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:16:38,494 - stpipe.Detector1Pipeline.group_scale - INFO - GroupScaleStep instance created.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:16:38,496 - stpipe.Detector1Pipeline.dq_init - INFO - DQInitStep instance created.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:16:38,497 - stpipe.Detector1Pipeline.saturation - INFO - SaturationStep instance created.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:16:38,499 - stpipe.Detector1Pipeline.ipc - INFO - IPCStep instance created.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:16:38,500 - stpipe.Detector1Pipeline.superbias - INFO - SuperBiasStep instance created.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:16:38,501 - stpipe.Detector1Pipeline.refpix - INFO - RefPixStep instance created.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:16:38,502 - stpipe.Detector1Pipeline.rscd - INFO - RscdStep instance created.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:16:38,504 - stpipe.Detector1Pipeline.firstframe - INFO - FirstFrameStep instance created.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:16:38,506 - stpipe.Detector1Pipeline.lastframe - INFO - LastFrameStep instance created.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:16:38,508 - stpipe.Detector1Pipeline.linearity - INFO - LinearityStep instance created.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:16:38,509 - stpipe.Detector1Pipeline.dark_current - INFO - DarkCurrentStep instance created.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:16:38,510 - stpipe.Detector1Pipeline.reset - INFO - ResetStep instance created.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:16:38,511 - stpipe.Detector1Pipeline.persistence - INFO - PersistenceStep instance created.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:16:38,513 - stpipe.Detector1Pipeline.jump - INFO - JumpStep instance created.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:16:38,514 - stpipe.Detector1Pipeline.ramp_fit - INFO - RampFitStep instance created.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:16:38,515 - stpipe.Detector1Pipeline.gain_scale - INFO - GainScaleStep instance created.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:16:38,709 - stpipe.Detector1Pipeline - INFO - Step Detector1Pipeline running with args (&#39;/internal/data1/jenkins/workspace/Notebooks/jwst_validation_notebooks_spacetelescope/tmp/tmppzwjp923/fs_prism_nrs1_uncal.fits&#39;,).
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:16:38,719 - stpipe.Detector1Pipeline - INFO - Step Detector1Pipeline parameters are: {&#39;pre_hooks&#39;: [], &#39;post_hooks&#39;: [], &#39;output_file&#39;: None, &#39;output_dir&#39;: None, &#39;output_ext&#39;: &#39;.fits&#39;, &#39;output_use_model&#39;: False, &#39;output_use_index&#39;: True, &#39;save_results&#39;: False, &#39;skip&#39;: False, &#39;suffix&#39;: None, &#39;search_output_file&#39;: True, &#39;input_dir&#39;: &#39;&#39;, &#39;save_calibrated_ramp&#39;: False, &#39;steps&#39;: {&#39;group_scale&#39;: {&#39;pre_hooks&#39;: [], &#39;post_hooks&#39;: [], &#39;output_file&#39;: None, &#39;output_dir&#39;: None, &#39;output_ext&#39;: &#39;.fits&#39;, &#39;output_use_model&#39;: False, &#39;output_use_index&#39;: True, &#39;save_results&#39;: False, &#39;skip&#39;: False, &#39;suffix&#39;: None, &#39;search_output_file&#39;: True, &#39;input_dir&#39;: &#39;&#39;}, &#39;dq_init&#39;: {&#39;pre_hooks&#39;: [], &#39;post_hooks&#39;: [], &#39;output_file&#39;: None, &#39;output_dir&#39;: None, &#39;output_ext&#39;: &#39;.fits&#39;, &#39;output_use_model&#39;: False, &#39;output_use_index&#39;: True, &#39;save_results&#39;: False, &#39;skip&#39;: False, &#39;suffix&#39;: None, &#39;search_output_file&#39;: True, &#39;input_dir&#39;: &#39;&#39;}, &#39;saturation&#39;: {&#39;pre_hooks&#39;: [], &#39;post_hooks&#39;: [], &#39;output_file&#39;: None, &#39;output_dir&#39;: None, &#39;output_ext&#39;: &#39;.fits&#39;, &#39;output_use_model&#39;: False, &#39;output_use_index&#39;: True, &#39;save_results&#39;: False, &#39;skip&#39;: False, &#39;suffix&#39;: None, &#39;search_output_file&#39;: True, &#39;input_dir&#39;: &#39;&#39;, &#39;n_pix_grow_sat&#39;: 1}, &#39;ipc&#39;: {&#39;pre_hooks&#39;: [], &#39;post_hooks&#39;: [], &#39;output_file&#39;: None, &#39;output_dir&#39;: None, &#39;output_ext&#39;: &#39;.fits&#39;, &#39;output_use_model&#39;: False, &#39;output_use_index&#39;: True, &#39;save_results&#39;: False, &#39;skip&#39;: True, &#39;suffix&#39;: None, &#39;search_output_file&#39;: True, &#39;input_dir&#39;: &#39;&#39;}, &#39;superbias&#39;: {&#39;pre_hooks&#39;: [], &#39;post_hooks&#39;: [], &#39;output_file&#39;: None, &#39;output_dir&#39;: None, &#39;output_ext&#39;: &#39;.fits&#39;, &#39;output_use_model&#39;: False, &#39;output_use_index&#39;: True, &#39;save_results&#39;: False, &#39;skip&#39;: False, &#39;suffix&#39;: None, &#39;search_output_file&#39;: True, &#39;input_dir&#39;: &#39;&#39;}, &#39;refpix&#39;: {&#39;pre_hooks&#39;: [], &#39;post_hooks&#39;: [], &#39;output_file&#39;: None, &#39;output_dir&#39;: None, &#39;output_ext&#39;: &#39;.fits&#39;, &#39;output_use_model&#39;: False, &#39;output_use_index&#39;: True, &#39;save_results&#39;: False, &#39;skip&#39;: False, &#39;suffix&#39;: None, &#39;search_output_file&#39;: True, &#39;input_dir&#39;: &#39;&#39;, &#39;odd_even_columns&#39;: True, &#39;use_side_ref_pixels&#39;: True, &#39;side_smoothing_length&#39;: 11, &#39;side_gain&#39;: 1.0, &#39;odd_even_rows&#39;: True}, &#39;rscd&#39;: {&#39;pre_hooks&#39;: [], &#39;post_hooks&#39;: [], &#39;output_file&#39;: None, &#39;output_dir&#39;: None, &#39;output_ext&#39;: &#39;.fits&#39;, &#39;output_use_model&#39;: False, &#39;output_use_index&#39;: True, &#39;save_results&#39;: False, &#39;skip&#39;: False, &#39;suffix&#39;: None, &#39;search_output_file&#39;: True, &#39;input_dir&#39;: &#39;&#39;, &#39;type&#39;: &#39;baseline&#39;}, &#39;firstframe&#39;: {&#39;pre_hooks&#39;: [], &#39;post_hooks&#39;: [], &#39;output_file&#39;: None, &#39;output_dir&#39;: None, &#39;output_ext&#39;: &#39;.fits&#39;, &#39;output_use_model&#39;: False, &#39;output_use_index&#39;: True, &#39;save_results&#39;: False, &#39;skip&#39;: False, &#39;suffix&#39;: None, &#39;search_output_file&#39;: True, &#39;input_dir&#39;: &#39;&#39;}, &#39;lastframe&#39;: {&#39;pre_hooks&#39;: [], &#39;post_hooks&#39;: [], &#39;output_file&#39;: None, &#39;output_dir&#39;: None, &#39;output_ext&#39;: &#39;.fits&#39;, &#39;output_use_model&#39;: False, &#39;output_use_index&#39;: True, &#39;save_results&#39;: False, &#39;skip&#39;: False, &#39;suffix&#39;: None, &#39;search_output_file&#39;: True, &#39;input_dir&#39;: &#39;&#39;}, &#39;linearity&#39;: {&#39;pre_hooks&#39;: [], &#39;post_hooks&#39;: [], &#39;output_file&#39;: None, &#39;output_dir&#39;: None, &#39;output_ext&#39;: &#39;.fits&#39;, &#39;output_use_model&#39;: False, &#39;output_use_index&#39;: True, &#39;save_results&#39;: False, &#39;skip&#39;: False, &#39;suffix&#39;: None, &#39;search_output_file&#39;: True, &#39;input_dir&#39;: &#39;&#39;}, &#39;dark_current&#39;: {&#39;pre_hooks&#39;: [], &#39;post_hooks&#39;: [], &#39;output_file&#39;: None, &#39;output_dir&#39;: None, &#39;output_ext&#39;: &#39;.fits&#39;, &#39;output_use_model&#39;: False, &#39;output_use_index&#39;: True, &#39;save_results&#39;: False, &#39;skip&#39;: False, &#39;suffix&#39;: None, &#39;search_output_file&#39;: True, &#39;input_dir&#39;: &#39;&#39;, &#39;dark_output&#39;: None}, &#39;reset&#39;: {&#39;pre_hooks&#39;: [], &#39;post_hooks&#39;: [], &#39;output_file&#39;: None, &#39;output_dir&#39;: None, &#39;output_ext&#39;: &#39;.fits&#39;, &#39;output_use_model&#39;: False, &#39;output_use_index&#39;: True, &#39;save_results&#39;: False, &#39;skip&#39;: False, &#39;suffix&#39;: None, &#39;search_output_file&#39;: True, &#39;input_dir&#39;: &#39;&#39;}, &#39;persistence&#39;: {&#39;pre_hooks&#39;: [], &#39;post_hooks&#39;: [], &#39;output_file&#39;: None, &#39;output_dir&#39;: None, &#39;output_ext&#39;: &#39;.fits&#39;, &#39;output_use_model&#39;: False, &#39;output_use_index&#39;: True, &#39;save_results&#39;: False, &#39;skip&#39;: False, &#39;suffix&#39;: None, &#39;search_output_file&#39;: True, &#39;input_dir&#39;: &#39;&#39;, &#39;input_trapsfilled&#39;: &#39;&#39;, &#39;flag_pers_cutoff&#39;: 40.0, &#39;save_persistence&#39;: False, &#39;save_trapsfilled&#39;: True}, &#39;jump&#39;: {&#39;pre_hooks&#39;: [], &#39;post_hooks&#39;: [], &#39;output_file&#39;: None, &#39;output_dir&#39;: None, &#39;output_ext&#39;: &#39;.fits&#39;, &#39;output_use_model&#39;: False, &#39;output_use_index&#39;: True, &#39;save_results&#39;: False, &#39;skip&#39;: False, &#39;suffix&#39;: None, &#39;search_output_file&#39;: True, &#39;input_dir&#39;: &#39;&#39;, &#39;rejection_threshold&#39;: 4.0, &#39;three_group_rejection_threshold&#39;: 6.0, &#39;four_group_rejection_threshold&#39;: 5.0, &#39;maximum_cores&#39;: &#39;none&#39;, &#39;flag_4_neighbors&#39;: True, &#39;max_jump_to_flag_neighbors&#39;: 1000.0, &#39;min_jump_to_flag_neighbors&#39;: 10.0}, &#39;ramp_fit&#39;: {&#39;pre_hooks&#39;: [], &#39;post_hooks&#39;: [], &#39;output_file&#39;: None, &#39;output_dir&#39;: None, &#39;output_ext&#39;: &#39;.fits&#39;, &#39;output_use_model&#39;: False, &#39;output_use_index&#39;: True, &#39;save_results&#39;: False, &#39;skip&#39;: False, &#39;suffix&#39;: None, &#39;search_output_file&#39;: True, &#39;input_dir&#39;: &#39;&#39;, &#39;int_name&#39;: &#39;&#39;, &#39;save_opt&#39;: False, &#39;opt_name&#39;: &#39;&#39;, &#39;suppress_one_group&#39;: True, &#39;maximum_cores&#39;: &#39;none&#39;}, &#39;gain_scale&#39;: {&#39;pre_hooks&#39;: [], &#39;post_hooks&#39;: [], &#39;output_file&#39;: None, &#39;output_dir&#39;: None, &#39;output_ext&#39;: &#39;.fits&#39;, &#39;output_use_model&#39;: False, &#39;output_use_index&#39;: True, &#39;save_results&#39;: False, &#39;skip&#39;: False, &#39;suffix&#39;: None, &#39;search_output_file&#39;: True, &#39;input_dir&#39;: &#39;&#39;}}}
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:16:38,910 - stpipe.Detector1Pipeline - INFO - Prefetching reference files for dataset: &#39;fs_prism_nrs1_uncal.fits&#39; reftypes = [&#39;dark&#39;, &#39;gain&#39;, &#39;linearity&#39;, &#39;mask&#39;, &#39;persat&#39;, &#39;readnoise&#39;, &#39;refpix&#39;, &#39;reset&#39;, &#39;rscd&#39;, &#39;saturation&#39;, &#39;superbias&#39;, &#39;trapdensity&#39;, &#39;trappars&#39;]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:16:38,997 - stpipe.Detector1Pipeline - INFO - Prefetch for DARK reference file is &#39;/grp/crds/cache/references/jwst/jwst_nirspec_dark_0086.fits&#39;.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:16:39,000 - stpipe.Detector1Pipeline - INFO - Prefetch for GAIN reference file is &#39;/grp/crds/cache/references/jwst/jwst_nirspec_gain_0019.fits&#39;.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:16:39,002 - stpipe.Detector1Pipeline - INFO - Prefetch for LINEARITY reference file is &#39;/grp/crds/cache/references/jwst/jwst_nirspec_linearity_0018.fits&#39;.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:16:39,005 - stpipe.Detector1Pipeline - INFO - Prefetch for MASK reference file is &#39;/grp/crds/cache/references/jwst/jwst_nirspec_mask_0010.fits&#39;.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:16:39,008 - stpipe.Detector1Pipeline - INFO - Prefetch for PERSAT reference file is &#39;N/A&#39;.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:16:39,009 - stpipe.Detector1Pipeline - INFO - Prefetch for READNOISE reference file is &#39;/grp/crds/cache/references/jwst/jwst_nirspec_readnoise_0018.fits&#39;.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:16:39,011 - stpipe.Detector1Pipeline - INFO - Prefetch for REFPIX reference file is &#39;/grp/crds/cache/references/jwst/jwst_nirspec_refpix_0022.fits&#39;.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:16:39,013 - stpipe.Detector1Pipeline - INFO - Prefetch for RESET reference file is &#39;N/A&#39;.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:16:39,014 - stpipe.Detector1Pipeline - INFO - Prefetch for RSCD reference file is &#39;N/A&#39;.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:16:39,015 - stpipe.Detector1Pipeline - INFO - Prefetch for SATURATION reference file is &#39;/grp/crds/cache/references/jwst/jwst_nirspec_saturation_0020.fits&#39;.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:16:39,019 - stpipe.Detector1Pipeline - INFO - Prefetch for SUPERBIAS reference file is &#39;/grp/crds/cache/references/jwst/jwst_nirspec_superbias_0113.fits&#39;.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:16:39,021 - stpipe.Detector1Pipeline - INFO - Prefetch for TRAPDENSITY reference file is &#39;N/A&#39;.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:16:39,022 - stpipe.Detector1Pipeline - INFO - Prefetch for TRAPPARS reference file is &#39;N/A&#39;.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:16:39,023 - stpipe.Detector1Pipeline - INFO - Starting calwebb_detector1 ...
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:16:39,461 - stpipe.Detector1Pipeline.group_scale - INFO - Step group_scale running with args (&lt;RampModel(1, 4, 3200, 2048) from fs_prism_nrs1_uncal.fits&gt;,).
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:16:39,463 - stpipe.Detector1Pipeline.group_scale - INFO - Step group_scale parameters are: {&#39;pre_hooks&#39;: [], &#39;post_hooks&#39;: [], &#39;output_file&#39;: None, &#39;output_dir&#39;: None, &#39;output_ext&#39;: &#39;.fits&#39;, &#39;output_use_model&#39;: False, &#39;output_use_index&#39;: True, &#39;save_results&#39;: False, &#39;skip&#39;: False, &#39;suffix&#39;: None, &#39;search_output_file&#39;: True, &#39;input_dir&#39;: &#39;/internal/data1/jenkins/workspace/Notebooks/jwst_validation_notebooks_spacetelescope/tmp/tmppzwjp923&#39;}
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:16:39,608 - stpipe.Detector1Pipeline.group_scale - INFO - NFRAMES and FRMDIVSR are equal; correction not needed
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:16:39,609 - stpipe.Detector1Pipeline.group_scale - INFO - Step will be skipped
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:16:39,613 - stpipe.Detector1Pipeline.group_scale - INFO - Step group_scale done
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:16:39,773 - stpipe.Detector1Pipeline.dq_init - INFO - Step dq_init running with args (&lt;RampModel(1, 4, 3200, 2048) from fs_prism_nrs1_uncal.fits&gt;,).
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:16:39,776 - stpipe.Detector1Pipeline.dq_init - INFO - Step dq_init parameters are: {&#39;pre_hooks&#39;: [], &#39;post_hooks&#39;: [], &#39;output_file&#39;: None, &#39;output_dir&#39;: None, &#39;output_ext&#39;: &#39;.fits&#39;, &#39;output_use_model&#39;: False, &#39;output_use_index&#39;: True, &#39;save_results&#39;: False, &#39;skip&#39;: False, &#39;suffix&#39;: None, &#39;search_output_file&#39;: True, &#39;input_dir&#39;: &#39;/internal/data1/jenkins/workspace/Notebooks/jwst_validation_notebooks_spacetelescope/tmp/tmppzwjp923&#39;}
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:16:39,811 - stpipe.Detector1Pipeline.dq_init - INFO - Using MASK reference file /grp/crds/cache/references/jwst/jwst_nirspec_mask_0010.fits
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:16:40,270 - stpipe.Detector1Pipeline.dq_init - INFO - Step dq_init done
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:16:40,433 - stpipe.Detector1Pipeline.saturation - INFO - Step saturation running with args (&lt;RampModel(1, 4, 3200, 2048) from fs_prism_nrs1_uncal.fits&gt;,).
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:16:40,435 - stpipe.Detector1Pipeline.saturation - INFO - Step saturation parameters are: {&#39;pre_hooks&#39;: [], &#39;post_hooks&#39;: [], &#39;output_file&#39;: None, &#39;output_dir&#39;: None, &#39;output_ext&#39;: &#39;.fits&#39;, &#39;output_use_model&#39;: False, &#39;output_use_index&#39;: True, &#39;save_results&#39;: False, &#39;skip&#39;: False, &#39;suffix&#39;: None, &#39;search_output_file&#39;: True, &#39;input_dir&#39;: &#39;/internal/data1/jenkins/workspace/Notebooks/jwst_validation_notebooks_spacetelescope/tmp/tmppzwjp923&#39;, &#39;n_pix_grow_sat&#39;: 1}
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:16:40,459 - stpipe.Detector1Pipeline.saturation - INFO - Using SATURATION reference file /grp/crds/cache/references/jwst/jwst_nirspec_saturation_0020.fits
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:16:42,133 - stpipe.Detector1Pipeline.saturation - INFO - Detected 49730 saturated pixels
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:16:42,168 - stpipe.Detector1Pipeline.saturation - INFO - Detected 0 A/D floor pixels
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:16:42,196 - stpipe.Detector1Pipeline.saturation - INFO - Step saturation done
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:16:42,368 - stpipe.Detector1Pipeline.ipc - INFO - Step ipc running with args (&lt;RampModel(1, 4, 3200, 2048) from fs_prism_nrs1_uncal.fits&gt;,).
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:16:42,370 - stpipe.Detector1Pipeline.ipc - INFO - Step ipc parameters are: {&#39;pre_hooks&#39;: [], &#39;post_hooks&#39;: [], &#39;output_file&#39;: None, &#39;output_dir&#39;: None, &#39;output_ext&#39;: &#39;.fits&#39;, &#39;output_use_model&#39;: False, &#39;output_use_index&#39;: True, &#39;save_results&#39;: False, &#39;skip&#39;: True, &#39;suffix&#39;: None, &#39;search_output_file&#39;: True, &#39;input_dir&#39;: &#39;/internal/data1/jenkins/workspace/Notebooks/jwst_validation_notebooks_spacetelescope/tmp/tmppzwjp923&#39;}
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:16:42,371 - stpipe.Detector1Pipeline.ipc - INFO - Step skipped.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:16:42,374 - stpipe.Detector1Pipeline.ipc - INFO - Step ipc done
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:16:42,517 - stpipe.Detector1Pipeline.superbias - INFO - Step superbias running with args (&lt;RampModel(1, 4, 3200, 2048) from fs_prism_nrs1_uncal.fits&gt;,).
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:16:42,519 - stpipe.Detector1Pipeline.superbias - INFO - Step superbias parameters are: {&#39;pre_hooks&#39;: [], &#39;post_hooks&#39;: [], &#39;output_file&#39;: None, &#39;output_dir&#39;: None, &#39;output_ext&#39;: &#39;.fits&#39;, &#39;output_use_model&#39;: False, &#39;output_use_index&#39;: True, &#39;save_results&#39;: False, &#39;skip&#39;: False, &#39;suffix&#39;: None, &#39;search_output_file&#39;: True, &#39;input_dir&#39;: &#39;/internal/data1/jenkins/workspace/Notebooks/jwst_validation_notebooks_spacetelescope/tmp/tmppzwjp923&#39;}
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:16:42,544 - stpipe.Detector1Pipeline.superbias - INFO - Using SUPERBIAS reference file /grp/crds/cache/references/jwst/jwst_nirspec_superbias_0113.fits
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/internal/data1/jenkins/workspace/Notebooks/jwst_validation_notebooks_spacetelescope/miniconda3/envs/jwst_validation_notebooks/lib/python3.10/site-packages/stdatamodels/validate.py:38: ValidationWarning: While validating meta.exposure.readpatt the following error occurred:
+&#39;ALLIRS2&#39; is not one of [&#39;ACQ1&#39;, &#39;ACQ2&#39;, &#39;BRIGHT1&#39;, &#39;BRIGHT2&#39;, &#39;DEEP2&#39;, &#39;DEEP8&#39;, &#39;FAST&#39;, &#39;FASTGRPAVG&#39;, &#39;FASTGRPAVG8&#39;, &#39;FASTGRPAVG16&#39;, &#39;FASTGRPAVG32&#39;, &#39;FASTGRPAVG64&#39;, &#39;FASTR1&#39;, &#39;FASTR100&#39;, &#39;FGS&#39;, &#39;FGS60&#39;, &#39;FGS8370&#39;, &#39;FGS840&#39;, &#39;FGSRAPID&#39;, &#39;FINEGUIDE&#39;, &#39;ID&#39;, &#39;MEDIUM2&#39;, &#39;MEDIUM8&#39;, &#39;NIS&#39;, &#39;NISRAPID&#39;, &#39;NRS&#39;, &#39;NRSIRS2&#39;, &#39;NRSN16R4&#39;, &#39;NRSN32R8&#39;, &#39;NRSN8R2&#39;, &#39;NRSRAPID&#39;, &#39;NRSIRS2RAPID&#39;, &#39;NRSRAPIDD1&#39;, &#39;NRSRAPIDD2&#39;, &#39;NRSRAPIDD6&#39;, &#39;NRSSLOW&#39;, &#39;RAPID&#39;, &#39;SHALLOW2&#39;, &#39;SHALLOW4&#39;, &#39;SLOW&#39;, &#39;SLOWR1&#39;, &#39;TRACK&#39;, &#39;ANY&#39;, &#39;N/A&#39;]
+
+Failed validating &#39;enum&#39; in schema:
+    OrderedDict([(&#39;title&#39;, &#39;Readout pattern&#39;),
+                 (&#39;type&#39;, &#39;string&#39;),
+                 (&#39;enum&#39;,
+                  [&#39;ACQ1&#39;,
+                   &#39;ACQ2&#39;,
+                   &#39;BRIGHT1&#39;,
+                   &#39;BRIGHT2&#39;,
+                   &#39;DEEP2&#39;,
+                   &#39;DEEP8&#39;,
+                   &#39;FAST&#39;,
+                   &#39;FASTGRPAVG&#39;,
+                   &#39;FASTGRPAVG8&#39;,
+                   &#39;FASTGRPAVG16&#39;,
+                   &#39;FASTGRPAVG32&#39;,
+                   &#39;FASTGRPAVG64&#39;,
+                   &#39;FASTR1&#39;,
+                   &#39;FASTR100&#39;,
+                   &#39;FGS&#39;,
+                   &#39;FGS60&#39;,
+                   &#39;FGS8370&#39;,
+                   &#39;FGS840&#39;,
+                   &#39;FGSRAPID&#39;,
+                   &#39;FINEGUIDE&#39;,
+                   &#39;ID&#39;,
+                   &#39;MEDIUM2&#39;,
+                   &#39;MEDIUM8&#39;,
+                   &#39;NIS&#39;,
+                   &#39;NISRAPID&#39;,
+                   &#39;NRS&#39;,
+                   &#39;NRSIRS2&#39;,
+                   &#39;NRSN16R4&#39;,
+                   &#39;NRSN32R8&#39;,
+                   &#39;NRSN8R2&#39;,
+                   &#39;NRSRAPID&#39;,
+                   &#39;NRSIRS2RAPID&#39;,
+                   &#39;NRSRAPIDD1&#39;,
+                   &#39;NRSRAPIDD2&#39;,
+                   &#39;NRSRAPIDD6&#39;,
+                   &#39;NRSSLOW&#39;,
+                   &#39;RAPID&#39;,
+                   &#39;SHALLOW2&#39;,
+                   &#39;SHALLOW4&#39;,
+                   &#39;SLOW&#39;,
+                   &#39;SLOWR1&#39;,
+                   &#39;TRACK&#39;,
+                   &#39;ANY&#39;,
+                   &#39;N/A&#39;]),
+                 (&#39;fits_ke ...
+  warnings.warn(errmsg, ValidationWarning)
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:16:45,664 - stpipe.Detector1Pipeline.superbias - INFO - Step superbias done
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:16:45,831 - stpipe.Detector1Pipeline.refpix - INFO - Step refpix running with args (&lt;RampModel(1, 4, 3200, 2048) from fs_prism_nrs1_uncal.fits&gt;,).
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:16:45,833 - stpipe.Detector1Pipeline.refpix - INFO - Step refpix parameters are: {&#39;pre_hooks&#39;: [], &#39;post_hooks&#39;: [], &#39;output_file&#39;: None, &#39;output_dir&#39;: None, &#39;output_ext&#39;: &#39;.fits&#39;, &#39;output_use_model&#39;: False, &#39;output_use_index&#39;: True, &#39;save_results&#39;: False, &#39;skip&#39;: False, &#39;suffix&#39;: None, &#39;search_output_file&#39;: True, &#39;input_dir&#39;: &#39;/internal/data1/jenkins/workspace/Notebooks/jwst_validation_notebooks_spacetelescope/tmp/tmppzwjp923&#39;, &#39;odd_even_columns&#39;: True, &#39;use_side_ref_pixels&#39;: True, &#39;side_smoothing_length&#39;: 11, &#39;side_gain&#39;: 1.0, &#39;odd_even_rows&#39;: True}
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:16:45,859 - stpipe.Detector1Pipeline.refpix - INFO - Using refpix reference file: /grp/crds/cache/references/jwst/jwst_nirspec_refpix_0022.fits
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:16:48,283 - stpipe.Detector1Pipeline.refpix - INFO - Working on integration 1
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:17:02,006 - stpipe.Detector1Pipeline.refpix - INFO - Step refpix done
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:17:02,302 - stpipe.Detector1Pipeline.linearity - INFO - Step linearity running with args (&lt;RampModel(1, 4, 3200, 2048) from fs_prism_nrs1_uncal.fits&gt;,).
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:17:02,305 - stpipe.Detector1Pipeline.linearity - INFO - Step linearity parameters are: {&#39;pre_hooks&#39;: [], &#39;post_hooks&#39;: [], &#39;output_file&#39;: None, &#39;output_dir&#39;: None, &#39;output_ext&#39;: &#39;.fits&#39;, &#39;output_use_model&#39;: False, &#39;output_use_index&#39;: True, &#39;save_results&#39;: False, &#39;skip&#39;: False, &#39;suffix&#39;: None, &#39;search_output_file&#39;: True, &#39;input_dir&#39;: &#39;/internal/data1/jenkins/workspace/Notebooks/jwst_validation_notebooks_spacetelescope/tmp/tmppzwjp923&#39;}
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:17:02,335 - stpipe.Detector1Pipeline.linearity - INFO - Using Linearity reference file /grp/crds/cache/references/jwst/jwst_nirspec_linearity_0018.fits
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:17:05,590 - stpipe.Detector1Pipeline.linearity - INFO - Step linearity done
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:17:05,775 - stpipe.Detector1Pipeline.dark_current - INFO - Step dark_current running with args (&lt;RampModel(1, 4, 3200, 2048) from fs_prism_nrs1_uncal.fits&gt;,).
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:17:05,777 - stpipe.Detector1Pipeline.dark_current - INFO - Step dark_current parameters are: {&#39;pre_hooks&#39;: [], &#39;post_hooks&#39;: [], &#39;output_file&#39;: None, &#39;output_dir&#39;: None, &#39;output_ext&#39;: &#39;.fits&#39;, &#39;output_use_model&#39;: False, &#39;output_use_index&#39;: True, &#39;save_results&#39;: False, &#39;skip&#39;: False, &#39;suffix&#39;: None, &#39;search_output_file&#39;: True, &#39;input_dir&#39;: &#39;/internal/data1/jenkins/workspace/Notebooks/jwst_validation_notebooks_spacetelescope/tmp/tmppzwjp923&#39;, &#39;dark_output&#39;: None}
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:17:05,868 - stpipe.Detector1Pipeline.dark_current - INFO - Using DARK reference file /grp/crds/cache/references/jwst/jwst_nirspec_dark_0086.fits
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:17:40,637 - stpipe.Detector1Pipeline.dark_current - INFO - Science data nints=1, ngroups=4, nframes=1, groupgap=0
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:17:40,639 - stpipe.Detector1Pipeline.dark_current - INFO - Dark data nints=1, ngroups=65, nframes=1, groupgap=0
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:17:41,279 - stpipe.Detector1Pipeline.dark_current - INFO - Step dark_current done
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:17:41,471 - stpipe.Detector1Pipeline.jump - INFO - Step jump running with args (&lt;RampModel(1, 4, 3200, 2048) from fs_prism_nrs1_uncal.fits&gt;,).
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:17:41,473 - stpipe.Detector1Pipeline.jump - INFO - Step jump parameters are: {&#39;pre_hooks&#39;: [], &#39;post_hooks&#39;: [], &#39;output_file&#39;: None, &#39;output_dir&#39;: None, &#39;output_ext&#39;: &#39;.fits&#39;, &#39;output_use_model&#39;: False, &#39;output_use_index&#39;: True, &#39;save_results&#39;: False, &#39;skip&#39;: False, &#39;suffix&#39;: None, &#39;search_output_file&#39;: True, &#39;input_dir&#39;: &#39;/internal/data1/jenkins/workspace/Notebooks/jwst_validation_notebooks_spacetelescope/tmp/tmppzwjp923&#39;, &#39;rejection_threshold&#39;: 4.0, &#39;three_group_rejection_threshold&#39;: 6.0, &#39;four_group_rejection_threshold&#39;: 5.0, &#39;maximum_cores&#39;: &#39;none&#39;, &#39;flag_4_neighbors&#39;: True, &#39;max_jump_to_flag_neighbors&#39;: 1000.0, &#39;min_jump_to_flag_neighbors&#39;: 10.0}
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:17:41,501 - stpipe.Detector1Pipeline.jump - INFO - CR rejection threshold = 4 sigma
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:17:41,535 - stpipe.Detector1Pipeline.jump - INFO - Using GAIN reference file: /grp/crds/cache/references/jwst/jwst_nirspec_gain_0019.fits
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:17:42,558 - stpipe.Detector1Pipeline.jump - INFO - Using READNOISE reference file: /grp/crds/cache/references/jwst/jwst_nirspec_readnoise_0018.fits
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:17:42,951 - stpipe.Detector1Pipeline.jump - INFO - Executing two-point difference method
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:17:43,000 - stpipe.Detector1Pipeline.jump - INFO - Working on integration 1:
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/internal/data1/jenkins/workspace/Notebooks/jwst_validation_notebooks_spacetelescope/miniconda3/envs/jwst_validation_notebooks/lib/python3.10/site-packages/stcal/jump/twopoint_difference.py:128: RuntimeWarning: All-NaN slice encountered
+  max_ratio = np.nanmax(ratio, axis=0)
+2022-07-06 15:17:44,552 - stpipe.Detector1Pipeline.jump - INFO - From highest outlier, two-point found 0 pixels with at least one CR from five groups.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:17:44,554 - stpipe.Detector1Pipeline.jump - INFO - From highest outlier, two-point found 6026 pixels with at least one CR from four groups.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:17:44,555 - stpipe.Detector1Pipeline.jump - INFO - From highest outlier, two-point found 110 pixels with at least one CR from three groups.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:17:45,152 - stpipe.Detector1Pipeline.jump - INFO - Total elapsed time = 2.19955 sec
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:17:45,156 - stpipe.Detector1Pipeline.jump - INFO - The execution time in seconds: 3.654840
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:17:45,162 - stpipe.Detector1Pipeline.jump - INFO - Step jump done
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:17:45,291 - stpipe.Detector1Pipeline.ramp_fit - INFO - Step ramp_fit running with args (&lt;RampModel(1, 4, 3200, 2048) from fs_prism_nrs1_uncal.fits&gt;,).
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:17:45,292 - stpipe.Detector1Pipeline.ramp_fit - INFO - Step ramp_fit parameters are: {&#39;pre_hooks&#39;: [], &#39;post_hooks&#39;: [], &#39;output_file&#39;: None, &#39;output_dir&#39;: None, &#39;output_ext&#39;: &#39;.fits&#39;, &#39;output_use_model&#39;: False, &#39;output_use_index&#39;: True, &#39;save_results&#39;: False, &#39;skip&#39;: False, &#39;suffix&#39;: None, &#39;search_output_file&#39;: True, &#39;input_dir&#39;: &#39;/internal/data1/jenkins/workspace/Notebooks/jwst_validation_notebooks_spacetelescope/tmp/tmppzwjp923&#39;, &#39;int_name&#39;: &#39;&#39;, &#39;save_opt&#39;: False, &#39;opt_name&#39;: &#39;&#39;, &#39;suppress_one_group&#39;: True, &#39;maximum_cores&#39;: &#39;none&#39;}
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:17:45,372 - stpipe.Detector1Pipeline.ramp_fit - INFO - Using READNOISE reference file: /grp/crds/cache/references/jwst/jwst_nirspec_readnoise_0018.fits
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:17:45,373 - stpipe.Detector1Pipeline.ramp_fit - INFO - Using GAIN reference file: /grp/crds/cache/references/jwst/jwst_nirspec_gain_0019.fits
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:17:45,484 - stpipe.Detector1Pipeline.ramp_fit - INFO - Using algorithm = ols
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:17:45,485 - stpipe.Detector1Pipeline.ramp_fit - INFO - Using weighting = optimal
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/internal/data1/jenkins/workspace/Notebooks/jwst_validation_notebooks_spacetelescope/miniconda3/envs/jwst_validation_notebooks/lib/python3.10/site-packages/stcal/ramp_fitting/ols_fit.py:1195: RuntimeWarning: invalid value encountered in multiply
+  var_p4[num_int, :, :, :] *= (segs_4[num_int, :, :, :] &gt; 0)
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:17:59,829 - stpipe.Detector1Pipeline.ramp_fit - INFO - Number of groups per integration: 4
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:17:59,831 - stpipe.Detector1Pipeline.ramp_fit - INFO - Number of integrations: 1
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:18:00,021 - stpipe.Detector1Pipeline.ramp_fit - INFO - Step ramp_fit done
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:18:00,158 - stpipe.Detector1Pipeline.gain_scale - INFO - Step gain_scale running with args (&lt;ImageModel(2048, 2048) from fs_prism_nrs1_uncal.fits&gt;,).
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:18:00,160 - stpipe.Detector1Pipeline.gain_scale - INFO - Step gain_scale parameters are: {&#39;pre_hooks&#39;: [], &#39;post_hooks&#39;: [], &#39;output_file&#39;: None, &#39;output_dir&#39;: None, &#39;output_ext&#39;: &#39;.fits&#39;, &#39;output_use_model&#39;: False, &#39;output_use_index&#39;: True, &#39;save_results&#39;: False, &#39;skip&#39;: False, &#39;suffix&#39;: &#39;gain_scale&#39;, &#39;search_output_file&#39;: True, &#39;input_dir&#39;: &#39;/internal/data1/jenkins/workspace/Notebooks/jwst_validation_notebooks_spacetelescope/tmp/tmppzwjp923&#39;}
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:18:00,229 - stpipe.Detector1Pipeline.gain_scale - INFO - GAINFACT not found in gain reference file
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:18:00,230 - stpipe.Detector1Pipeline.gain_scale - INFO - Step will be skipped
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:18:00,235 - stpipe.Detector1Pipeline.gain_scale - INFO - Step gain_scale done
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:18:00,348 - stpipe.Detector1Pipeline.gain_scale - INFO - Step gain_scale running with args (&lt;CubeModel(1, 2048, 2048) from fs_prism_nrs1_uncal.fits&gt;,).
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:18:00,350 - stpipe.Detector1Pipeline.gain_scale - INFO - Step gain_scale parameters are: {&#39;pre_hooks&#39;: [], &#39;post_hooks&#39;: [], &#39;output_file&#39;: None, &#39;output_dir&#39;: None, &#39;output_ext&#39;: &#39;.fits&#39;, &#39;output_use_model&#39;: False, &#39;output_use_index&#39;: True, &#39;save_results&#39;: False, &#39;skip&#39;: False, &#39;suffix&#39;: &#39;gain_scaleints&#39;, &#39;search_output_file&#39;: True, &#39;input_dir&#39;: &#39;/internal/data1/jenkins/workspace/Notebooks/jwst_validation_notebooks_spacetelescope/tmp/tmppzwjp923&#39;}
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:18:00,421 - stpipe.Detector1Pipeline.gain_scale - INFO - GAINFACT not found in gain reference file
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:18:00,422 - stpipe.Detector1Pipeline.gain_scale - INFO - Step will be skipped
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:18:00,427 - stpipe.Detector1Pipeline.gain_scale - INFO - Step gain_scale done
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:18:00,428 - stpipe.Detector1Pipeline - INFO - ... ending calwebb_detector1
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:18:00,428 - stpipe.Detector1Pipeline - INFO - Results used CRDS context: jwst_0914.pmap
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:18:00,429 - stpipe.Detector1Pipeline - INFO - Step Detector1Pipeline done
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:18:00,438 - stpipe.AssignWcsStep - INFO - AssignWcsStep instance created.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:18:00,549 - stpipe.AssignWcsStep - INFO - Step AssignWcsStep running with args (&lt;ImageModel(2048, 2048) from fs_prism_nrs1_uncal.fits&gt;,).
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:18:00,551 - stpipe.AssignWcsStep - INFO - Step AssignWcsStep parameters are: {&#39;pre_hooks&#39;: [], &#39;post_hooks&#39;: [], &#39;output_file&#39;: None, &#39;output_dir&#39;: None, &#39;output_ext&#39;: &#39;.fits&#39;, &#39;output_use_model&#39;: False, &#39;output_use_index&#39;: True, &#39;save_results&#39;: False, &#39;skip&#39;: False, &#39;suffix&#39;: None, &#39;search_output_file&#39;: True, &#39;input_dir&#39;: &#39;&#39;, &#39;sip_approx&#39;: True, &#39;sip_max_pix_error&#39;: 0.25, &#39;sip_degree&#39;: None, &#39;sip_max_inv_pix_error&#39;: 0.25, &#39;sip_inv_degree&#39;: None, &#39;sip_npoints&#39;: 32, &#39;slit_y_low&#39;: -0.55, &#39;slit_y_high&#39;: 0.55}
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:18:00,736 - stpipe.AssignWcsStep - INFO - gwa_ytilt is 0.0332140289247036 deg
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:18:00,737 - stpipe.AssignWcsStep - INFO - gwa_xtilt is 0.3367482721805573 deg
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:18:00,738 - stpipe.AssignWcsStep - INFO - theta_y correction: -1.0907214098475986e-05 deg
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:18:00,739 - stpipe.AssignWcsStep - INFO - theta_x correction: 0.0 deg
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:18:01,129 - stpipe.AssignWcsStep - INFO - Removing slit S200B1 from the list of open slits because the WCS bounding_box is completely outside the detector.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:18:01,130 - stpipe.AssignWcsStep - INFO - Slits projected on detector NRS1: [&#39;S200A1&#39;, &#39;S200A2&#39;, &#39;S400A1&#39;, &#39;S1600A1&#39;]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:18:01,130 - stpipe.AssignWcsStep - INFO - Computing WCS for 4 open slitlets
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:18:01,168 - stpipe.AssignWcsStep - INFO - gwa_ytilt is 0.0332140289247036 deg
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:18:01,169 - stpipe.AssignWcsStep - INFO - gwa_xtilt is 0.3367482721805573 deg
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:18:01,169 - stpipe.AssignWcsStep - INFO - theta_y correction: -1.0907214098475986e-05 deg
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:18:01,171 - stpipe.AssignWcsStep - INFO - theta_x correction: 0.0 deg
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:18:01,191 - stpipe.AssignWcsStep - INFO - SPORDER= 0, wrange=[6e-07, 5.3e-06]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:18:01,354 - stpipe.AssignWcsStep - INFO - There are 0 open slits in quadrant 1
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:18:01,355 - stpipe.AssignWcsStep - INFO - There are 0 open slits in quadrant 2
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:18:01,356 - stpipe.AssignWcsStep - INFO - There are 0 open slits in quadrant 3
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:18:01,356 - stpipe.AssignWcsStep - INFO - There are 0 open slits in quadrant 4
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:18:01,357 - stpipe.AssignWcsStep - INFO - There are 4 open slits in quadrant 5
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:18:01,548 - stpipe.AssignWcsStep - INFO - Created a NIRSPEC nrs_fixedslit pipeline with references {&#39;distortion&#39;: None, &#39;filteroffset&#39;: None, &#39;specwcs&#39;: None, &#39;regions&#39;: None, &#39;wavelengthrange&#39;: &#39;/grp/crds/cache/references/jwst/jwst_nirspec_wavelengthrange_0004.asdf&#39;, &#39;camera&#39;: &#39;/grp/crds/cache/references/jwst/jwst_nirspec_camera_0004.asdf&#39;, &#39;collimator&#39;: &#39;/grp/crds/cache/references/jwst/jwst_nirspec_collimator_0004.asdf&#39;, &#39;disperser&#39;: &#39;/grp/crds/cache/references/jwst/jwst_nirspec_disperser_0034.asdf&#39;, &#39;fore&#39;: &#39;/grp/crds/cache/references/jwst/jwst_nirspec_fore_0028.asdf&#39;, &#39;fpa&#39;: &#39;/grp/crds/cache/references/jwst/jwst_nirspec_fpa_0005.asdf&#39;, &#39;msa&#39;: &#39;/grp/crds/cache/references/jwst/jwst_nirspec_msa_0005.asdf&#39;, &#39;ote&#39;: &#39;/grp/crds/cache/references/jwst/jwst_nirspec_ote_0005.asdf&#39;, &#39;ifupost&#39;: None, &#39;ifufore&#39;: None, &#39;ifuslicer&#39;: None}
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:18:01,913 - stpipe.AssignWcsStep - INFO - COMPLETED assign_wcs
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:18:01,928 - stpipe.AssignWcsStep - INFO - Results used CRDS context: jwst_0914.pmap
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:18:01,929 - stpipe.AssignWcsStep - INFO - Step AssignWcsStep done
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:18:01,939 - stpipe.Extract2dStep - INFO - Extract2dStep instance created.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:18:02,065 - stpipe.Extract2dStep - INFO - Step Extract2dStep running with args (&lt;ImageModel(2048, 2048) from fs_prism_nrs1_uncal.fits&gt;,).
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:18:02,067 - stpipe.Extract2dStep - INFO - Step Extract2dStep parameters are: {&#39;pre_hooks&#39;: [], &#39;post_hooks&#39;: [], &#39;output_file&#39;: None, &#39;output_dir&#39;: None, &#39;output_ext&#39;: &#39;.fits&#39;, &#39;output_use_model&#39;: False, &#39;output_use_index&#39;: True, &#39;save_results&#39;: False, &#39;skip&#39;: False, &#39;suffix&#39;: None, &#39;search_output_file&#39;: True, &#39;input_dir&#39;: &#39;&#39;, &#39;slit_name&#39;: None, &#39;extract_orders&#39;: None, &#39;grism_objects&#39;: None, &#39;tsgrism_extract_height&#39;: None, &#39;wfss_extract_half_height&#39;: 5, &#39;wfss_mmag_extract&#39;: None, &#39;wfss_nbright&#39;: 1000}
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:18:02,083 - stpipe.Extract2dStep - INFO - EXP_TYPE is NRS_FIXEDSLIT
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:18:02,278 - stpipe.Extract2dStep - INFO - Name of subarray extracted: S200A1
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:18:02,279 - stpipe.Extract2dStep - INFO - Subarray x-extents are: 1083 1518
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:18:02,279 - stpipe.Extract2dStep - INFO - Subarray y-extents are: 1057 1096
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:18:02,467 - stpipe.Extract2dStep - INFO - set slit_attributes completed
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:18:02,478 - stpipe.Extract2dStep - INFO - Update S_REGION to POLYGON ICRS  156.191685737 -45.682908511 156.190837415 -45.682092120 156.190771015 -45.682126390 156.191619323 -45.682942792
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:18:02,480 - stpipe.Extract2dStep - INFO - Updated S_REGION to POLYGON ICRS  156.191685737 -45.682908511 156.190837415 -45.682092120 156.190771015 -45.682126390 156.191619323 -45.682942792
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:18:02,654 - stpipe.Extract2dStep - INFO - Name of subarray extracted: S200A2
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:18:02,655 - stpipe.Extract2dStep - INFO - Subarray x-extents are: 892 1328
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:18:02,656 - stpipe.Extract2dStep - INFO - Subarray y-extents are: 1021 1060
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:18:02,840 - stpipe.Extract2dStep - INFO - set slit_attributes completed
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:18:02,852 - stpipe.Extract2dStep - INFO - Update S_REGION to POLYGON ICRS  156.184519149 -45.685298792 156.183675453 -45.684484578 156.183609578 -45.684518640 156.184453260 -45.685332865
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:18:02,853 - stpipe.Extract2dStep - INFO - Updated S_REGION to POLYGON ICRS  156.184519149 -45.685298792 156.183675453 -45.684484578 156.183609578 -45.684518640 156.184453260 -45.685332865
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:18:03,182 - stpipe.Extract2dStep - INFO - Name of subarray extracted: S400A1
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:18:03,183 - stpipe.Extract2dStep - INFO - Subarray x-extents are: 1025 1460
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:18:03,184 - stpipe.Extract2dStep - INFO - Subarray y-extents are: 980 1024
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:18:03,384 - stpipe.Extract2dStep - INFO - set slit_attributes completed
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:18:03,394 - stpipe.Extract2dStep - INFO - Update S_REGION to POLYGON ICRS  156.187759056 -45.682331806 156.186793281 -45.681401531 156.186663358 -45.681468621 156.187629101 -45.682398919
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:18:03,395 - stpipe.Extract2dStep - INFO - Updated S_REGION to POLYGON ICRS  156.187759056 -45.682331806 156.186793281 -45.681401531 156.186663358 -45.681468621 156.187629101 -45.682398919
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:18:03,569 - stpipe.Extract2dStep - INFO - Name of subarray extracted: S1600A1
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:18:03,570 - stpipe.Extract2dStep - INFO - Subarray x-extents are: 1056 1488
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:18:03,571 - stpipe.Extract2dStep - INFO - Subarray y-extents are: 960 982
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:18:03,761 - stpipe.Extract2dStep - INFO - set slit_attributes completed
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:18:03,776 - stpipe.Extract2dStep - INFO - Update S_REGION to POLYGON ICRS  156.187720636 -45.680802803 156.187307671 -45.680405209 156.186792650 -45.680671077 156.187205560 -45.681068709
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:18:03,779 - stpipe.Extract2dStep - INFO - Updated S_REGION to POLYGON ICRS  156.187720636 -45.680802803 156.187307671 -45.680405209 156.186792650 -45.680671077 156.187205560 -45.681068709
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:18:03,993 - stpipe.Extract2dStep - INFO - Results used CRDS context: jwst_0914.pmap
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-06 15:18:03,994 - stpipe.Extract2dStep - INFO - Step Extract2dStep done
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Running test for FS...
+Information from the &#39;truth&#39; (or comparison) file 
+Filename: /internal/data1/jenkins/workspace/Notebooks/jwst_validation_notebooks_spacetelescope/tmp/tmppzwjp923/fs_prism_nrs1_extract_2d_truth.fits
+No.    Name      Ver    Type      Cards   Dimensions   Format
+  0  PRIMARY       1 PrimaryHDU     277   ()      
+  1  SCI           1 ImageHDU        56   (435, 40)   float32   
+  2  DQ            1 ImageHDU        11   (435, 40)   int32 (rescales to uint32)   
+  3  ERR           1 ImageHDU        10   (435, 40)   float32   
+  4  WAVELENGTH    1 ImageHDU         9   (435, 40)   float32   
+  5  VAR_POISSON    1 ImageHDU         9   (435, 40)   float32   
+  6  VAR_RNOISE    1 ImageHDU         9   (435, 40)   float32   
+  7  SCI           2 ImageHDU        56   (436, 40)   float32   
+  8  DQ            2 ImageHDU        11   (436, 40)   int32 (rescales to uint32)   
+  9  ERR           2 ImageHDU        10   (436, 40)   float32   
+ 10  WAVELENGTH    2 ImageHDU         9   (436, 40)   float32   
+ 11  VAR_POISSON    2 ImageHDU         9   (436, 40)   float32   
+ 12  VAR_RNOISE    2 ImageHDU         9   (436, 40)   float32   
+ 13  SCI           3 ImageHDU        56   (435, 45)   float32   
+ 14  DQ            3 ImageHDU        11   (435, 45)   int32 (rescales to uint32)   
+ 15  ERR           3 ImageHDU        10   (435, 45)   float32   
+ 16  WAVELENGTH    3 ImageHDU         9   (435, 45)   float32   
+ 17  VAR_POISSON    3 ImageHDU         9   (435, 45)   float32   
+ 18  VAR_RNOISE    3 ImageHDU         9   (435, 45)   float32   
+ 19  SCI           4 ImageHDU        56   (432, 23)   float32   
+ 20  DQ            4 ImageHDU        11   (432, 23)   int32 (rescales to uint32)   
+ 21  ERR           4 ImageHDU        10   (432, 23)   float32   
+ 22  WAVELENGTH    4 ImageHDU         9   (432, 23)   float32   
+ 23  VAR_POISSON    4 ImageHDU         9   (432, 23)   float32   
+ 24  VAR_RNOISE    4 ImageHDU         9   (432, 23)   float32   
+ 25  ASDF          1 BinTableHDU     11   1R x 1C   [283821B]   
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>None
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>from assign_wcs file  --&gt;     Detector: NRS1   Grating: PRISM   Filter: CLEAR   Lamp: LINE4
+
+Working with slit: S200A1
+    Truth slit size =  [435, 40]
+ Pipeline slit size =  435 39
+Corners for slit S200A1:  [x0, y0, x1, y1]
+   Truth corners: [1084, 1057, 1519, 1097]
+    Pipeline corners: [1084, 1058, 1519, 1097]
+* Test PASSED: All corners match within the threshold.
+
+Working with slit: S200A2
+    Truth slit size =  [436, 40]
+ Pipeline slit size =  436 39
+Corners for slit S200A2:  [x0, y0, x1, y1]
+   Truth corners: [893, 1021, 1329, 1061]
+    Pipeline corners: [893, 1022, 1329, 1061]
+* Test PASSED: All corners match within the threshold.
+
+Working with slit: S400A1
+    Truth slit size =  [435, 45]
+ Pipeline slit size =  435 44
+Corners for slit S400A1:  [x0, y0, x1, y1]
+   Truth corners: [1026, 980, 1461, 1025]
+    Pipeline corners: [1026, 981, 1461, 1025]
+* Test PASSED: All corners match within the threshold.
+
+Working with slit: S1600A1
+    Truth slit size =  [432, 23]
+ Pipeline slit size =  432 22
+Corners for slit S1600A1:  [x0, y0, x1, y1]
+   Truth corners: [1057, 960, 1489, 983]
+    Pipeline corners: [1057, 961, 1489, 983]
+* Test PASSED: All corners match within the threshold.
+
+Summary of test results: 
+ OrderedDict([(&#39;S200A1&#39;, True), (&#39;S200A2&#39;, True), (&#39;S400A1&#39;, True), (&#39;S1600A1&#39;, True)])
+
+ *** Final result for extract_2d test will be reported as PASSED *** 
+
+All slits PASSED extract_2d test.
+Did assign_wcs validation test passed?  True 
+
+
+Closing file:  popenfile(path=&#39;/internal/data1/jenkins/workspace/Notebooks/jwst_validation_notebooks_spacetelescope/tmp/tmppzwjp923/fs_prism_nrs1_extract_2d_truth.fits&#39;, fd=56, position=1981440, mode=&#39;r&#39;, flags=557056)
+Testing files for detector:  nrs2
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Working with uncal_file:  /internal/data1/jenkins/workspace/Notebooks/jwst_validation_notebooks_spacetelescope/tmp/tmppzwjp923/fs_prism_nrs2_uncal.fits
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/internal/data1/jenkins/workspace/Notebooks/jwst_validation_notebooks_spacetelescope/miniconda3/envs/jwst_validation_notebooks/lib/python3.10/site-packages/stdatamodels/validate.py:38: ValidationWarning: While validating meta.instrument.fixed_slit the following error occurred:
+&#39;FULL&#39; is not one of [&#39;S200A1&#39;, &#39;S200A2&#39;, &#39;S200B1&#39;, &#39;S400A1&#39;, &#39;S1600A1&#39;, &#39;NONE&#39;]
+
+Failed validating &#39;enum&#39; in schema:
+    OrderedDict([(&#39;title&#39;, &#39;Name of fixed slit aperture used&#39;),
+                 (&#39;type&#39;, &#39;string&#39;),
+                 (&#39;enum&#39;,
+                  [&#39;S200A1&#39;,
+                   &#39;S200A2&#39;,
+                   &#39;S200B1&#39;,
+                   &#39;S400A1&#39;,
+                   &#39;S1600A1&#39;,
+                   &#39;NONE&#39;]),
+                 (&#39;fits_keyword&#39;, &#39;FXD_SLIT&#39;),
+                 (&#39;blend_table&#39;, True)])
+
+On instance:
+    &#39;FULL&#39;
+  warnings.warn(errmsg, ValidationWarning)
+</pre></div>
+</div>
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">OSError</span><span class="g g-Whitespace">                                   </span>Traceback (most recent call last)
+<span class="nn">Input In [7],</span> in <span class="ni">&lt;cell line: 16&gt;</span><span class="nt">()</span>
+<span class="g g-Whitespace">     </span><span class="mi">29</span>     <span class="n">skip_file</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="g g-Whitespace">     </span><span class="mi">31</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">skip_file</span><span class="p">:</span>       
+<span class="g g-Whitespace">     </span><span class="mi">32</span>     <span class="c1"># Run the stage 1 pipeline </span>
+<span class="ne">---&gt; </span><span class="mi">33</span>     <span class="n">rate_object</span> <span class="o">=</span> <span class="n">Detector1Pipeline</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">uncal_file</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">34</span>     <span class="c1"># Make sure the MSA shutter configuration file is set up correctly</span>
+<span class="g g-Whitespace">     </span><span class="mi">35</span>     <span class="k">if</span> <span class="n">msa_shutter_config</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+
+<span class="nn">File ~/miniconda3/envs/jwst_validation_notebooks/lib/python3.10/site-packages/stpipe/step.py:591,</span> in <span class="ni">Step.call</span><span class="nt">(cls, *args, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">589</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">590</span>     <span class="n">filename</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="ne">--&gt; </span><span class="mi">591</span> <span class="n">config</span><span class="p">,</span> <span class="n">config_file</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">build_config</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">593</span> <span class="k">if</span> <span class="s1">&#39;class&#39;</span> <span class="ow">in</span> <span class="n">config</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">594</span>     <span class="k">del</span> <span class="n">config</span><span class="p">[</span><span class="s1">&#39;class&#39;</span><span class="p">]</span>
+
+<span class="nn">File ~/miniconda3/envs/jwst_validation_notebooks/lib/python3.10/site-packages/stpipe/step.py:1310,</span> in <span class="ni">Step.build_config</span><span class="nt">(cls, input, **kwargs)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1308</span> <span class="n">log_cls</span> <span class="o">=</span> <span class="n">log</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">logger_name</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1309</span> <span class="k">if</span> <span class="nb">input</span><span class="p">:</span>
+<span class="ne">-&gt; </span><span class="mi">1310</span>     <span class="n">config</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">get_config_from_reference</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1311</span> <span class="k">else</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">1312</span>     <span class="n">log_cls</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;No filename given, cannot retrieve config from CRDS&quot;</span><span class="p">)</span>
+
+<span class="nn">File ~/miniconda3/envs/jwst_validation_notebooks/lib/python3.10/site-packages/stpipe/pipeline.py:168,</span> in <span class="ni">Pipeline.get_config_from_reference</span><span class="nt">(cls, dataset, disable)</span>
+<span class="g g-Whitespace">    </span><span class="mi">165</span> <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Retrieving all substep parameters from CRDS&#39;</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">166</span> <span class="c1">#</span>
+<span class="g g-Whitespace">    </span><span class="mi">167</span> <span class="c1"># Iterate over the steps in the pipeline</span>
+<span class="ne">--&gt; </span><span class="mi">168</span> <span class="k">with</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_datamodels_open</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">asn_n_members</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="k">as</span> <span class="n">model</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">169</span>     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">):</span>
+<span class="g g-Whitespace">    </span><span class="mi">170</span>         <span class="k">for</span> <span class="n">contained_model</span> <span class="ow">in</span> <span class="n">model</span><span class="p">:</span>
+
+<span class="nn">File ~/miniconda3/envs/jwst_validation_notebooks/lib/python3.10/site-packages/jwst/stpipe/core.py:28,</span> in <span class="ni">JwstStep._datamodels_open</span><span class="nt">(cls, init, **kwargs)</span>
+<span class="g g-Whitespace">     </span><span class="mi">26</span> <span class="nd">@classmethod</span>
+<span class="g g-Whitespace">     </span><span class="mi">27</span> <span class="k">def</span> <span class="nf">_datamodels_open</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">init</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="ne">---&gt; </span><span class="mi">28</span>     <span class="k">return</span> <span class="n">datamodels</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">init</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+<span class="nn">File ~/miniconda3/envs/jwst_validation_notebooks/lib/python3.10/site-packages/jwst/datamodels/util.py:217,</span> in <span class="ni">open</span><span class="nt">(init, guess, memmap, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">214</span>     <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Opening as </span><span class="si">{</span><span class="n">new_class</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">216</span> <span class="c1"># Actually open the model</span>
+<span class="ne">--&gt; </span><span class="mi">217</span> <span class="n">model</span> <span class="o">=</span> <span class="n">new_class</span><span class="p">(</span><span class="n">init</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">219</span> <span class="c1"># Close the hdulist if we opened it</span>
+<span class="g g-Whitespace">    </span><span class="mi">220</span> <span class="k">if</span> <span class="n">file_to_close</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">221</span>     <span class="c1"># TODO: We need a better solution than messing with DataModel</span>
+<span class="g g-Whitespace">    </span><span class="mi">222</span>     <span class="c1"># internals.</span>
+
+<span class="nn">File ~/miniconda3/envs/jwst_validation_notebooks/lib/python3.10/site-packages/stdatamodels/model_base.py:226,</span> in <span class="ni">DataModel.__init__</span><span class="nt">(self, init, schema, memmap, pass_invalid_values, strict_validation, validate_on_assignment, cast_fits_arrays, validate_arrays, ignore_missing_extensions, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">223</span>     <span class="n">asdffile</span> <span class="o">=</span> <span class="n">init</span>
+<span class="g g-Whitespace">    </span><span class="mi">225</span> <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">init</span><span class="p">,</span> <span class="n">fits</span><span class="o">.</span><span class="n">HDUList</span><span class="p">):</span>
+<span class="ne">--&gt; </span><span class="mi">226</span>     <span class="n">asdffile</span> <span class="o">=</span> <span class="n">fits_support</span><span class="o">.</span><span class="n">from_fits</span><span class="p">(</span><span class="n">init</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_schema</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ctx</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">227</span>                                       <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">229</span> <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">init</span><span class="p">,</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">PurePath</span><span class="p">)):</span>
+<span class="g g-Whitespace">    </span><span class="mi">230</span>     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">init</span><span class="p">,</span> <span class="n">PurePath</span><span class="p">):</span>
+
+<span class="nn">File ~/miniconda3/envs/jwst_validation_notebooks/lib/python3.10/site-packages/stdatamodels/fits_support.py:628,</span> in <span class="ni">from_fits</span><span class="nt">(hdulist, schema, context, skip_fits_update, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">623</span> <span class="c1"># Determine whether skipping the FITS loading can be done.</span>
+<span class="g g-Whitespace">    </span><span class="mi">624</span> <span class="n">skip_fits_update</span> <span class="o">=</span> <span class="n">_verify_skip_fits_update</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">625</span>     <span class="n">skip_fits_update</span><span class="p">,</span> <span class="n">hdulist</span><span class="p">,</span> <span class="n">ff</span><span class="p">,</span> <span class="n">context</span>
+<span class="g g-Whitespace">    </span><span class="mi">626</span> <span class="p">)</span>
+<span class="ne">--&gt; </span><span class="mi">628</span> <span class="n">known_keywords</span><span class="p">,</span> <span class="n">known_datas</span> <span class="o">=</span> <span class="n">_load_from_schema</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">629</span>     <span class="n">hdulist</span><span class="p">,</span> <span class="n">schema</span><span class="p">,</span> <span class="n">ff</span><span class="o">.</span><span class="n">tree</span><span class="p">,</span> <span class="n">context</span><span class="p">,</span> <span class="n">skip_fits_update</span><span class="o">=</span><span class="n">skip_fits_update</span>
+<span class="g g-Whitespace">    </span><span class="mi">630</span> <span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">631</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">skip_fits_update</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">632</span>     <span class="n">_load_extra_fits</span><span class="p">(</span><span class="n">hdulist</span><span class="p">,</span> <span class="n">known_keywords</span><span class="p">,</span> <span class="n">known_datas</span><span class="p">,</span> <span class="n">ff</span><span class="o">.</span><span class="n">tree</span><span class="p">)</span>
+
+<span class="nn">File ~/miniconda3/envs/jwst_validation_notebooks/lib/python3.10/site-packages/stdatamodels/fits_support.py:548,</span> in <span class="ni">_load_from_schema</span><span class="nt">(hdulist, schema, tree, context, skip_fits_update)</span>
+<span class="g g-Whitespace">    </span><span class="mi">542</span>                 <span class="n">recurse</span><span class="p">(</span><span class="n">schema</span><span class="p">[</span><span class="s1">&#39;items&#39;</span><span class="p">],</span>
+<span class="g g-Whitespace">    </span><span class="mi">543</span>                         <span class="n">path</span> <span class="o">+</span> <span class="p">[</span><span class="n">i</span><span class="p">],</span>
+<span class="g g-Whitespace">    </span><span class="mi">544</span>                         <span class="n">combiner</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">545</span>                         <span class="p">{</span><span class="s1">&#39;hdu_index&#39;</span><span class="p">:</span> <span class="n">i</span><span class="p">})</span>
+<span class="g g-Whitespace">    </span><span class="mi">546</span>             <span class="k">return</span> <span class="kc">True</span>
+<span class="ne">--&gt; </span><span class="mi">548</span> <span class="n">mschema</span><span class="o">.</span><span class="n">walk_schema</span><span class="p">(</span><span class="n">schema</span><span class="p">,</span> <span class="n">callback</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">549</span> <span class="k">return</span> <span class="n">known_keywords</span><span class="p">,</span> <span class="n">known_datas</span>
+
+<span class="nn">File ~/miniconda3/envs/jwst_validation_notebooks/lib/python3.10/site-packages/stdatamodels/schema.py:149,</span> in <span class="ni">walk_schema</span><span class="nt">(schema, callback, ctx)</span>
+<span class="g g-Whitespace">    </span><span class="mi">147</span> <span class="k">if</span> <span class="n">ctx</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">148</span>     <span class="n">ctx</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="ne">--&gt; </span><span class="mi">149</span> <span class="n">recurse</span><span class="p">(</span><span class="n">schema</span><span class="p">,</span> <span class="p">[],</span> <span class="kc">None</span><span class="p">,</span> <span class="n">ctx</span><span class="p">)</span>
+
+<span class="nn">File ~/miniconda3/envs/jwst_validation_notebooks/lib/python3.10/site-packages/stdatamodels/schema.py:137,</span> in <span class="ni">walk_schema.&lt;locals&gt;.recurse</span><span class="nt">(schema, path, combiner, ctx)</span>
+<span class="g g-Whitespace">    </span><span class="mi">135</span> <span class="k">if</span> <span class="n">schema</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;type&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="s1">&#39;object&#39;</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">136</span>     <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">schema</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;properties&#39;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+<span class="ne">--&gt; </span><span class="mi">137</span>         <span class="n">recurse</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="n">path</span> <span class="o">+</span> <span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="n">combiner</span><span class="p">,</span> <span class="n">ctx</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">139</span> <span class="k">if</span> <span class="n">schema</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;type&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="s1">&#39;array&#39;</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">140</span>     <span class="n">items</span> <span class="o">=</span> <span class="n">schema</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;items&#39;</span><span class="p">,</span> <span class="p">{})</span>
+
+<span class="nn">File ~/miniconda3/envs/jwst_validation_notebooks/lib/python3.10/site-packages/stdatamodels/schema.py:124,</span> in <span class="ni">walk_schema.&lt;locals&gt;.recurse</span><span class="nt">(schema, path, combiner, ctx)</span>
+<span class="g g-Whitespace">    </span><span class="mi">123</span> <span class="k">def</span> <span class="nf">recurse</span><span class="p">(</span><span class="n">schema</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">combiner</span><span class="p">,</span> <span class="n">ctx</span><span class="p">):</span>
+<span class="ne">--&gt; </span><span class="mi">124</span>     <span class="k">if</span> <span class="n">callback</span><span class="p">(</span><span class="n">schema</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">combiner</span><span class="p">,</span> <span class="n">ctx</span><span class="p">,</span> <span class="n">recurse</span><span class="p">):</span>
+<span class="g g-Whitespace">    </span><span class="mi">125</span>         <span class="k">return</span>
+<span class="g g-Whitespace">    </span><span class="mi">127</span>     <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;allOf&#39;</span><span class="p">,</span> <span class="s1">&#39;not&#39;</span><span class="p">]:</span>
+
+<span class="nn">File ~/miniconda3/envs/jwst_validation_notebooks/lib/python3.10/site-packages/stdatamodels/fits_support.py:526,</span> in <span class="ni">_load_from_schema.&lt;locals&gt;.callback</span><span class="nt">(schema, path, combiner, ctx, recurse)</span>
+<span class="g g-Whitespace">    </span><span class="mi">522</span>             <span class="n">properties</span><span class="o">.</span><span class="n">put_value</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">result</span><span class="p">,</span> <span class="n">tree</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">524</span> <span class="k">elif</span> <span class="s1">&#39;fits_hdu&#39;</span> <span class="ow">in</span> <span class="n">schema</span> <span class="ow">and</span> <span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">525</span>         <span class="s1">&#39;max_ndim&#39;</span> <span class="ow">in</span> <span class="n">schema</span> <span class="ow">or</span> <span class="s1">&#39;ndim&#39;</span> <span class="ow">in</span> <span class="n">schema</span> <span class="ow">or</span> <span class="s1">&#39;datatype&#39;</span> <span class="ow">in</span> <span class="n">schema</span><span class="p">):</span>
+<span class="ne">--&gt; </span><span class="mi">526</span>     <span class="n">result</span> <span class="o">=</span> <span class="n">_fits_array_loader</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">527</span>         <span class="n">hdulist</span><span class="p">,</span> <span class="n">schema</span><span class="p">,</span> <span class="n">ctx</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;hdu_index&#39;</span><span class="p">),</span> <span class="n">known_datas</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">529</span>     <span class="k">if</span> <span class="n">result</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">context</span><span class="o">.</span><span class="n">_validate_on_assignment</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">530</span>         <span class="n">validate</span><span class="o">.</span><span class="n">value_change</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">result</span><span class="p">,</span> <span class="n">schema</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span>
+
+<span class="nn">File ~/miniconda3/envs/jwst_validation_notebooks/lib/python3.10/site-packages/stdatamodels/fits_support.py:478,</span> in <span class="ni">_fits_array_loader</span><span class="nt">(hdulist, schema, hdu_index, known_datas, context)</span>
+<span class="g g-Whitespace">    </span><span class="mi">475</span>     <span class="k">return</span> <span class="kc">None</span>
+<span class="g g-Whitespace">    </span><span class="mi">477</span> <span class="n">known_datas</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">hdu</span><span class="p">)</span>
+<span class="ne">--&gt; </span><span class="mi">478</span> <span class="k">return</span> <span class="n">from_fits_hdu</span><span class="p">(</span><span class="n">hdu</span><span class="p">,</span> <span class="n">schema</span><span class="p">,</span> <span class="n">context</span><span class="o">.</span><span class="n">_cast_fits_arrays</span><span class="p">)</span>
+
+<span class="nn">File ~/miniconda3/envs/jwst_validation_notebooks/lib/python3.10/site-packages/stdatamodels/fits_support.py:657,</span> in <span class="ni">from_fits_hdu</span><span class="nt">(hdu, schema, cast_arrays)</span>
+<span class="g g-Whitespace">    </span><span class="mi">653</span> <span class="k">def</span> <span class="nf">from_fits_hdu</span><span class="p">(</span><span class="n">hdu</span><span class="p">,</span> <span class="n">schema</span><span class="p">,</span> <span class="n">cast_arrays</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="g g-Whitespace">    </span><span class="mi">654</span>     <span class="sd">&quot;&quot;&quot;</span>
+<span class="g g-Whitespace">    </span><span class="mi">655</span><span class="sd">     Read the data from a fits hdu into a numpy ndarray</span>
+<span class="g g-Whitespace">    </span><span class="mi">656</span><span class="sd">     &quot;&quot;&quot;</span>
+<span class="ne">--&gt; </span><span class="mi">657</span>     <span class="n">data</span> <span class="o">=</span> <span class="n">hdu</span><span class="o">.</span><span class="n">data</span>
+<span class="g g-Whitespace">    </span><span class="mi">659</span>     <span class="k">if</span> <span class="n">cast_arrays</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">660</span>         <span class="c1"># Save the column listeners for possible restoration</span>
+<span class="g g-Whitespace">    </span><span class="mi">661</span>         <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="s1">&#39;_coldefs&#39;</span><span class="p">):</span>
+
+<span class="nn">File ~/miniconda3/envs/jwst_validation_notebooks/lib/python3.10/site-packages/astropy/utils/decorators.py:777,</span> in <span class="ni">lazyproperty.__get__</span><span class="nt">(self, obj, owner)</span>
+<span class="g g-Whitespace">    </span><span class="mi">775</span>         <span class="n">val</span> <span class="o">=</span> <span class="n">obj_dict</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_key</span><span class="p">,</span> <span class="n">_NotFound</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">776</span>         <span class="k">if</span> <span class="n">val</span> <span class="ow">is</span> <span class="n">_NotFound</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">777</span>             <span class="n">val</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fget</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">778</span>             <span class="n">obj_dict</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_key</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span>
+<span class="g g-Whitespace">    </span><span class="mi">779</span> <span class="k">return</span> <span class="n">val</span>
+
+<span class="nn">File ~/miniconda3/envs/jwst_validation_notebooks/lib/python3.10/site-packages/astropy/io/fits/hdu/image.py:235,</span> in <span class="ni">_ImageBaseHDU.data</span><span class="nt">(self)</span>
+<span class="g g-Whitespace">    </span><span class="mi">232</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_axes</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">233</span>     <span class="k">return</span>
+<span class="ne">--&gt; </span><span class="mi">235</span> <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_scaled_image_data</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data_offset</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">236</span> <span class="bp">self</span><span class="o">.</span><span class="n">_update_header_scale_info</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">238</span> <span class="k">return</span> <span class="n">data</span>
+
+<span class="nn">File ~/miniconda3/envs/jwst_validation_notebooks/lib/python3.10/site-packages/astropy/io/fits/hdu/image.py:779,</span> in <span class="ni">_ImageBaseHDU._get_scaled_image_data</span><span class="nt">(self, offset, shape)</span>
+<span class="g g-Whitespace">    </span><span class="mi">771</span> <span class="sd">&quot;&quot;&quot;</span>
+<span class="g g-Whitespace">    </span><span class="mi">772</span><span class="sd"> Internal function for reading image data from a file and apply scale</span>
+<span class="g g-Whitespace">    </span><span class="mi">773</span><span class="sd"> factors to it.  Normally this is used for the entire image, but it</span>
+<span class="g g-Whitespace">    </span><span class="mi">774</span><span class="sd"> supports alternate offset/shape for Section support.</span>
+<span class="g g-Whitespace">    </span><span class="mi">775</span><span class="sd"> &quot;&quot;&quot;</span>
+<span class="g g-Whitespace">    </span><span class="mi">777</span> <span class="n">code</span> <span class="o">=</span> <span class="n">BITPIX2DTYPE</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_orig_bitpix</span><span class="p">]</span>
+<span class="ne">--&gt; </span><span class="mi">779</span> <span class="n">raw_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_raw_data</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">code</span><span class="p">,</span> <span class="n">offset</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">780</span> <span class="n">raw_data</span><span class="o">.</span><span class="n">dtype</span> <span class="o">=</span> <span class="n">raw_data</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">newbyteorder</span><span class="p">(</span><span class="s1">&#39;&gt;&#39;</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">782</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_do_not_scale_image_data</span> <span class="ow">or</span> <span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">783</span>         <span class="bp">self</span><span class="o">.</span><span class="n">_orig_bzero</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_orig_bscale</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span>
+<span class="g g-Whitespace">    </span><span class="mi">784</span>         <span class="bp">self</span><span class="o">.</span><span class="n">_blank</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">):</span>
+<span class="g g-Whitespace">    </span><span class="mi">785</span>     <span class="c1"># No further conversion of the data is necessary</span>
+
+<span class="nn">File ~/miniconda3/envs/jwst_validation_notebooks/lib/python3.10/site-packages/astropy/io/fits/hdu/base.py:522,</span> in <span class="ni">_BaseHDU._get_raw_data</span><span class="nt">(self, shape, code, offset)</span>
+<span class="g g-Whitespace">    </span><span class="mi">519</span>     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">code</span><span class="p">,</span> <span class="n">buffer</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_buffer</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">520</span>                       <span class="n">offset</span><span class="o">=</span><span class="n">offset</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">521</span> <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">522</span>     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">readarray</span><span class="p">(</span><span class="n">offset</span><span class="o">=</span><span class="n">offset</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">code</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="n">shape</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">523</span> <span class="k">else</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">524</span>     <span class="k">return</span> <span class="kc">None</span>
+
+<span class="nn">File ~/miniconda3/envs/jwst_validation_notebooks/lib/python3.10/site-packages/astropy/io/fits/file.py:280,</span> in <span class="ni">_File.readarray</span><span class="nt">(self, size, offset, dtype, shape)</span>
+<span class="g g-Whitespace">    </span><span class="mi">276</span>     <span class="k">elif</span> <span class="n">actualsize</span> <span class="o">&lt;</span> <span class="n">size</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">277</span>         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;size </span><span class="si">{}</span><span class="s1"> is too many bytes for a </span><span class="si">{}</span><span class="s1"> array of &#39;</span>
+<span class="g g-Whitespace">    </span><span class="mi">278</span>                          <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="p">))</span>
+<span class="ne">--&gt; </span><span class="mi">280</span> <span class="n">filepos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">tell</span><span class="p">()</span>
+<span class="g g-Whitespace">    </span><span class="mi">282</span> <span class="k">try</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">283</span>     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">memmap</span><span class="p">:</span>
+
+<span class="ne">OSError</span>: [Errno 9] Bad file descriptor
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Quickly see if the test passed </span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;These are the final results of the tests: &#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">results_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><a id="about_ID"></a></p>
+<section id="about-this-notebook">
+<h2>About this Notebook<a class="headerlink" href="#about-this-notebook" title="Permalink to this headline">#</a></h2>
+<p><strong>Author:</strong> Maria A. Pena-Guerrero, Staff Scientist II - Systems Science Support, NIRSpec
+<br><strong>Updated On:</strong> Mar/24/2021</p>
+<p><a class="reference external" href="#title_ID">Top of Page</a>
+<img style="float: right;" src="./stsci_pri_combo_mark_horizonal_white_bkgd.png" alt="stsci_pri_combo_mark_horizonal_white_bkgd" width="200px"/></p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "TheRealZoidberg/jwst_validation_test",
+            ref: "main",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./notebooks/extract_2d/jwst_extract_2d_nirspec_test"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="jwst_extract_2d_nirspec_test.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">JWST Pipeline Validation Testing Notebook: spec2, extract_2d step</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="../../persistence/exec_jwst_persistence_unit_tests.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">JWST Pipeline Validation Notebook: calwebb_detector1, persistence unit tests</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By STScI<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>

@@ -1,0 +1,2292 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>JWST Pipeline Validation Notebook: NIRISS, image2, assign_wcs &#8212; Notebook repository template</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/main.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/clipboard.min.js"></script>
+    <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../../_static/sphinx-thebe.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.1/dist/embed-amd.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="JWST Pipeline Validation Notebook: NIRISS, image2, assign_wcs" href="exec_jwst_assign_wcs_niriss_image.html" />
+    <link rel="prev" title="JWST Pipeline Validation Testing Notebook: NIRSpec, spec2, assign_wcs step" href="../jwst_assign_wcs_nirspec_test/exec_jwst_assign_wcs_nirspec_test.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../../../_static/logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Notebook repository template</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../index.html">
+                    <no title>
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../background/jwst_background_miri_test/jwst_background_subtraction_miri_imaging_testing.html">
+   JWST Pipeline Validation Notebook: calwebb_image2, background subtraction for MIRI imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../background/jwst_background_miri_test/exec_jwst_background_subtraction_miri_imaging_testing.html">
+   JWST Pipeline Validation Notebook: calwebb_image2, background subtraction for MIRI imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../background/jwst_background_miri_test/exec_background_sub-miri-lrs-slit.html">
+   JWST Pipeline Validation Testing Notebook: Background_subtract() for MIRI LRS SLIT
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../background/jwst_background_miri_test/background_sub-miri-lrs-slit.html">
+   JWST Pipeline Validation Testing Notebook: Background_subtract() for MIRI LRS SLIT
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../pathloss/jwst_pathloss_nirspec_test/exec_jwst_pathloss_nirspec_test.html">
+   JWST Pipeline Validation Testing Notebook: spec2, pathloss step
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../pathloss/jwst_pathloss_nirspec_test/jwst_pathloss_nirspec_test.html">
+   JWST Pipeline Validation Testing Notebook: spec2, pathloss step
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../msaflagopen/jwst_msa_flagging_nirspec_test.html">
+   JWST Pipeline Validation Testing Notebook: spec2, msa_flagging step
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../msaflagopen/exec_jwst_msa_flagging_nirspec_test.html">
+   JWST Pipeline Validation Testing Notebook: spec2, msa_flagging step
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../resample/jwst_resample_miri_test/jwst_resample_miri_lrs_slit.html">
+   JWST Pipeline Validation Testing Notebook: Calwebb_Image3, Resample step
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../resample/jwst_resample_miri_test/exec_jwst_resample_miri_lrs_slit.html">
+   JWST Pipeline Validation Testing Notebook: Calwebb_Image3, Resample step
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../resample/jwst_resample_miri_test/jwst_resample_miri_testing.html">
+   JWST Pipeline Validation Testing Notebook: Calwebb_Image3, Resample step with MIRI imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../resample/jwst_resample_miri_test/exec_jwst_resample_miri_testing.html">
+   JWST Pipeline Validation Testing Notebook: Calwebb_Image3, Resample step with MIRI imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../example_notebook/example_notebook.html">
+   Draft: Notebook title
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../source_catalog/jwst_source_catalog_miri_test/exec_jwst_source_catalog_miri_test.html">
+   JWST Pipeline Validation Notebook: calwebb_image3: source_catalog with MIRI
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../source_catalog/jwst_source_catalog_miri_test/jwst_source_catalog_miri_test.html">
+   JWST Pipeline Validation Notebook: calwebb_image3: source_catalog with MIRI
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../source_catalog/jwst_source_catalog_nircam_test/jwst_nircam_imaging_source_catalog.html">
+   JWST Pipeline Validation Notebook: NIRCam, calwebb_image3, source_catalog
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../source_catalog/jwst_source_catalog_nircam_test/exec_jwst_nircam_imaging_source_catalog.html">
+   JWST Pipeline Validation Notebook: NIRCam, calwebb_image3, source_catalog
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../lastframe/exec_jwst_lastframe_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, lastframe unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../lastframe/jwst_lastframe_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, lastframe unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../photom/jwst_photom_miri_test/exec_photom_miri_lrs_slitless.html">
+   JWST Pipeline Validation Testing Notebook: MIRI LRS Slitless spectroscopy
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../photom/jwst_photom_miri_test/photom_miri_mrs_test.html">
+   JWST Pipeline Validation Testing Notebook: Spec2, photom, MIRI
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../photom/jwst_photom_miri_test/exec_photom_miri_lrs_slit.html">
+   JWST Pipeline Validation Testing Notebook: MIRI LRS Slit spectroscopy
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../photom/jwst_photom_miri_test/exec_photom_miri_mrs_test.html">
+   JWST Pipeline Validation Testing Notebook: Spec2, photom, MIRI
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../photom/jwst_photom_miri_test/photom_miri_lrs_slit.html">
+   JWST Pipeline Validation Testing Notebook: MIRI LRS Slit spectroscopy
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../photom/jwst_photom_miri_test/photom_miri_lrs_slitless.html">
+   JWST Pipeline Validation Testing Notebook: MIRI LRS Slitless spectroscopy
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../photom/jwst_photom_miri_test/exec_jwst_photom_miri_test.html">
+   JWST Pipeline Validation Notebook: photom with MIRI Imager
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../photom/jwst_photom_miri_test/jwst_photom_miri_test.html">
+   JWST Pipeline Validation Notebook: photom with MIRI Imager
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../ami3/run_ami_pipeline.html">
+   JWST Pipeline Validation Notebook:  AMI3, AMI3 Pipeline
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../ami3/exec_ami_analyze_verify.html">
+   JWST Pipeline Validation Notebook: AMI3, AmiAnalyze
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../ami3/exec_ami_average.html">
+   JWST Pipeline Validation Notebook:  calwebb_ami3, ami_average
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../ami3/exec_ami_normalize.html">
+   JWST Pipeline Validation Notebook: calwebb_ami3, ami_normalize
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../ami3/exec_run_ami_pipeline.html">
+   JWST Pipeline Validation Notebook:  AMI3, AMI3 Pipeline
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../ami3/ami_normalize.html">
+   JWST Pipeline Validation Notebook: calwebb_ami3, ami_normalize
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../ami3/ami_average.html">
+   JWST Pipeline Validation Notebook:  calwebb_ami3, ami_average
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../ami3/ami_analyze_verify.html">
+   JWST Pipeline Validation Notebook: AMI3, AmiAnalyze
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../jwst_assign_wcs_nirspec_test/jwst_assign_wcs_nirspec_test.html">
+   JWST Pipeline Validation Testing Notebook: NIRSpec, spec2, assign_wcs step
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../jwst_assign_wcs_nirspec_test/exec_jwst_assign_wcs_nirspec_test.html">
+   JWST Pipeline Validation Testing Notebook: NIRSpec, spec2, assign_wcs step
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   JWST Pipeline Validation Notebook: NIRISS, image2, assign_wcs
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="exec_jwst_assign_wcs_niriss_image.html">
+   JWST Pipeline Validation Notebook: NIRISS, image2, assign_wcs
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../jwst_assign_wcs_miri_test/exec_assign_wcs-miri-mrs.html">
+   JWST Pipeline Validation Testing Notebook: MIRI MRS Spec2: Assign_wcs()
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../jwst_assign_wcs_miri_test/exec_assign_wcs-miri-lrs-tso.html">
+   JWST Pipeline Validation Testing Notebook: MIRI LRS Time Series Observation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../jwst_assign_wcs_miri_test/assign_wcs-miri-lrs-slit.html">
+   JWST Pipeline Validation Testing Notebook: MIRI LRS Slit
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../jwst_assign_wcs_miri_test/assign_wcs-miri-mrs.html">
+   JWST Pipeline Validation Testing Notebook: MIRI MRS Spec2: Assign_wcs()
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../jwst_assign_wcs_miri_test/assign_wcs-miri-lrs-tso.html">
+   JWST Pipeline Validation Testing Notebook: MIRI LRS Time Series Observation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../jwst_assign_wcs_miri_test/exec_assign_wcs-miri-lrs-slit.html">
+   JWST Pipeline Validation Testing Notebook: MIRI LRS Slit
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../barshadow/jwst_barshadow_nirspec_test/jwst_barshadow_nirspec_test.html">
+   JWST Pipeline Validation Testing Notebook: spec2, barshadow step
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../barshadow/jwst_barshadow_nirspec_test/exec_jwst_barshadow_nirspec_test.html">
+   JWST Pipeline Validation Testing Notebook: spec2, barshadow step
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../reset/jwst_reset_miri_test/exec_jwst_reset_miri_testing.html">
+   JWST Pipeline Validation Testing Notebook: Calwebb_detector1, reset step for MIRI
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../reset/jwst_reset_miri_test/jwst_reset_miri_testing.html">
+   JWST Pipeline Validation Testing Notebook: Calwebb_detector1, reset step for MIRI
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../refpix/jwst_refpix_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, refpix unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../refpix/exec_jwst_refpix_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, refpix unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../flat_field/jwst_flat_field_nirspec_test/jwst_flat_field_nirspec_test.html">
+   JWST Pipeline Validation Testing Notebook: spec2, flat_field step
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../flat_field/jwst_flat_field_nirspec_test/exec_jwst_flat_field_nirspec_test.html">
+   JWST Pipeline Validation Testing Notebook: spec2, flat_field step
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../flat_field/jwst_flat_field_miri_test/exec_flatfield_analysis_slitless.html">
+   JWST Pipeline Validation Testing Notebook: MIRI LRS Slitless spectroscopy
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../flat_field/jwst_flat_field_miri_test/exec_jwst_flat_field_miri_test.html">
+   JWST Pipeline Validation Testing notebook: flat_field step with MIRI Imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../flat_field/jwst_flat_field_miri_test/exec_flat-miri-lrs-slit.html">
+   JWST Pipeline Validation Testing Notebook: MIRI LRS Slit spectroscopy
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../flat_field/jwst_flat_field_miri_test/flatfield_analysis_slitless.html">
+   JWST Pipeline Validation Testing Notebook: MIRI LRS Slitless spectroscopy
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../flat_field/jwst_flat_field_miri_test/exec_flat_miri_mrs_test.html">
+   JWST Pipeline Validation Testing Notebook: Spec2, flat_field, MIRI
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../flat_field/jwst_flat_field_miri_test/flat-miri-lrs-slit.html">
+   JWST Pipeline Validation Testing Notebook: MIRI LRS Slit spectroscopy
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../flat_field/jwst_flat_field_miri_test/jwst_flat_field_miri_test.html">
+   JWST Pipeline Validation Testing notebook: flat_field step with MIRI Imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../flat_field/jwst_flat_field_miri_test/flat_miri_mrs_test.html">
+   JWST Pipeline Validation Testing Notebook: Spec2, flat_field, MIRI
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../skymatch/jwst_skymatch_miri_test/jwst_skymatch_photom_miri_test.html">
+   JWST Pipeline Validation Notebook: skymatch and photometry with MIRI
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../skymatch/jwst_skymatch_miri_test/exec_jwst_skymatch_miri_test.html">
+   JWST Pipeline Validation Notebook: skymatch with MIRI
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../skymatch/jwst_skymatch_miri_test/exec_jwst_skymatch_photom_miri_test.html">
+   JWST Pipeline Validation Notebook: skymatch and photometry with MIRI
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../skymatch/jwst_skymatch_miri_test/jwst_skymatch_miri_test.html">
+   JWST Pipeline Validation Notebook: skymatch with MIRI
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../jump/jwst_jump_miri_test/jwst_jump_miri_testing.html">
+   JWST Pipeline Validation Testing Notebook: Calwebb_Detector1, Jump step
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../jump/jwst_jump_miri_test/exec_jwst_jump_miri_testing.html">
+   JWST Pipeline Validation Testing Notebook: Calwebb_Detector1, Jump step
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../jump/jwst_jump_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, jump unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../jump/exec_jwst_jump_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, jump unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../calwebb_image3/jwst_image3_nircam_test/jwst_image3_nircam_test.html">
+   JWST Pipeline Validation Notebook: calwebb_image3, NIRCam imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../calwebb_image3/jwst_image3_nircam_test/exec_jwst_image3_nircam_test.html">
+   JWST Pipeline Validation Notebook: calwebb_image3, NIRCam imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../calwebb_image3/jwst_image3_miri_test/exec_jwst_image3_miri_test.html">
+   JWST Pipeline Validation Notebook: calwebb_image3 with MIRI
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../calwebb_image3/jwst_image3_miri_test/jwst_image3_miri_test.html">
+   JWST Pipeline Validation Notebook: calwebb_image3 with MIRI
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../calwebb_detector1/jwst_detector1_nircam_test/jwst_detector1_nircam_test.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, NIRCam imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../calwebb_detector1/jwst_detector1_nircam_test/exec_jwst_detector1_nircam_test.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, NIRCam imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../calwebb_detector1/jwst_detector1_miri_test/exec_jwst_detector1_miri_imtso_testing.html">
+   JWST Pipeline Validation Testing Notebook: Calwebb_Detector1 for MIRI TSO imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../calwebb_detector1/jwst_detector1_miri_test/jwst_detector1_miri_imtso_testing.html">
+   JWST Pipeline Validation Testing Notebook: Calwebb_Detector1 for MIRI TSO imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../calwebb_detector1/jwst_detector1_miri_test/exec_caldetector1-miri-lrs-tso.html">
+   JWST Pipeline Validation Testing Notebook: MIRI LRS Time Series Observation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../calwebb_detector1/jwst_detector1_miri_test/caldetector1-miri-lrs-tso.html">
+   JWST Pipeline Validation Testing Notebook: MIRI LRS Time Series Observation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../rscd/jwst_rscd_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, rscd unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../rscd/exec_jwst_rscd_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, rscd unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../rscd/jwst_rscd_miri_test/exec_jwst_miri_rscd_testing.html">
+   JWST Pipeline Validation Testing Notebook: Calwebb_Detector1, RSCD step
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../rscd/jwst_rscd_miri_test/jwst_miri_rscd_testing.html">
+   JWST Pipeline Validation Testing Notebook: Calwebb_Detector1, RSCD step
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../calwebb_image2/jwst_image2_nircam_test/jwst_image2_nircam_test.html">
+   JWST Pipeline Validation Notebook: calwebb_image2, NIRCam imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../calwebb_image2/jwst_image2_nircam_test/exec_jwst_image2_nircam_test.html">
+   JWST Pipeline Validation Notebook: calwebb_image2, NIRCam imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../ramp_fitting/exec_jwst_ramp_fitting_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, ramp_fitting unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../ramp_fitting/jwst_ramp_fitting_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, ramp_fitting unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../firstframe/exec_jwst_firstframe_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, firstframe unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../firstframe/jwst_firstframe_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, firstframe unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../dq_init/exec_jwst_dq_init_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, dq_init unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../dq_init/jwst_dq_init_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, dq_init unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../cube_build/jwst_cube_build_miri_test/test_cube_build_spec3.html">
+   JWST Pipeline Validation Testing Notebook: Cube Build with MIRISIM Data
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../cube_build/jwst_cube_build_miri_test/exec_testing_point_source_flux_conservation_modeshep_all.html">
+   JWST Pipeline Validation Testing Notebook: Point Source Flux Conservation Modeshep
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../cube_build/jwst_cube_build_miri_test/testing_point_source_flux_conservation_modeshep_all.html">
+   JWST Pipeline Validation Testing Notebook: Point Source Flux Conservation Modeshep
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../cube_build/jwst_cube_build_miri_test/exec_test_cube_build_spec3.html">
+   JWST Pipeline Validation Testing Notebook: Cube Build with MIRISIM Data
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../saturation/exec_jwst_saturation_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, saturation unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../saturation/jwst_saturation_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, saturation unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../extract_2d/jwst_extract_2d_nirspec_test/jwst_extract_2d_nirspec_test.html">
+   JWST Pipeline Validation Testing Notebook: spec2, extract_2d step
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../extract_2d/jwst_extract_2d_nirspec_test/exec_jwst_extract_2d_nirspec_test.html">
+   JWST Pipeline Validation Testing Notebook: spec2, extract_2d step
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../persistence/exec_jwst_persistence_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, persistence unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../persistence/jwst_persistence_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, persistence unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../extract_1d/jwst_extract_1d_miri_test/exec_extract_1d-spec2-miri-lrs-slit.html">
+   JWST Pipeline Validation Testing Notebook: MIRI LRS Slit
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../extract_1d/jwst_extract_1d_miri_test/extract_1d-spec2-miri-lrs-slitless.html">
+   JWST Pipeline Validation Testing Notebook: MIRI LRS Slitless
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../extract_1d/jwst_extract_1d_miri_test/extract_1d-spec2-miri-lrs-slit.html">
+   JWST Pipeline Validation Testing Notebook: MIRI LRS Slit
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../extract_1d/jwst_extract_1d_miri_test/exec_extract_1d-spec2-miri-lrs-slitless.html">
+   JWST Pipeline Validation Testing Notebook: MIRI LRS Slitless
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../dark_current/exec_jwst_dark_current_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, dark_current unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../dark_current/jwst_dark_current_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, dark_current unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../templates/jwst_validation_notebook_template.html">
+   JWST Pipeline Validation Notebook:
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../templates/exec_jwst_validation_notebook_template.html">
+   JWST Pipeline Validation Notebook:
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../templates/validation_test_template.html">
+   JWST Pipeline Validation Testing Notebook: Descriptive Name of Test You Are Performing
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../templates/exec_validation_test_template.html">
+   JWST Pipeline Validation Testing Notebook: Descriptive Name of Test You Are Performing
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../ipc/exec_jwst_ipc_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, ipc unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../ipc/jwst_ipc_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, ipc unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/background/exec_jwst_background_unit_tests.html">
+   JWST calwebb_image2, background unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/background/jwst_background_unit_tests.html">
+   JWST calwebb_image2, background unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/jwst_nirspec_regression_tests.html">
+   JWST NIRSpec regression tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/flatfield/exec_jwst_flatfield_unit_tests.html">
+   JWST calwebb_image2 and calwebb_spec2, flatfield unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/flatfield/jwst_flatfield_unit_tests.html">
+   JWST calwebb_image2 and calwebb_spec2, flatfield unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/jwst_nircam_regression_tests.html">
+   JWST NIRCam regression tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/resample/exec_jwst_resample_unit_tests.html">
+   JWST calwebb_image2 and calwebb_spec2, resample unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/resample/jwst_resample_unit_tests.html">
+   JWST calwebb_image2 and calwebb_spec2, resample unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/jwst_niriss_regression_tests.html">
+   JWST NIRISS regression tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/source_catalog/jwst_source_catalog_unit_tests.html">
+   JWST calwebb_image3, source_catalog unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/source_catalog/exec_jwst_source_catalog_unit_tests.html">
+   JWST calwebb_image3, source_catalog unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/exec_jwst_fgs_regression_tests.html">
+   JWST FGS regression tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/photom/jwst_photom_unit_tests.html">
+   JWST calwebb_image2 and calwebb_spec2, photom unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/photom/exec_jwst_photom_unit_tests.html">
+   JWST calwebb_image2 and calwebb_spec2, photom unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/assign_wcs/jwst_assign_wcs_unit_tests.html">
+   JWST calwebb_image2 and calwebb_spec2, assign_wcs unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/assign_wcs/exec_jwst_assign_wcs_unit_tests.html">
+   JWST calwebb_image2 and calwebb_spec2, assign_wcs unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/skymatch/jwst_skymatch_unit_tests.html">
+   JWST calwebb_image3, skymatch unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/skymatch/exec_jwst_skymatch_unit_tests.html">
+   JWST calwebb_image3, skymatch unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/exec_jwst_niriss_regression_tests.html">
+   JWST NIRISS regression tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/exec_jwst_nirspec_regression_tests.html">
+   JWST NIRSpec regression tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/exec_jwst_nircam_regression_tests.html">
+   JWST NIRCam regression tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/jwst_fgs_regression_tests.html">
+   JWST FGS regression tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/exec_jwst_miri_regression_tests.html">
+   JWST MIRI regression tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/jwst_miri_regression_tests.html">
+   JWST MIRI regression tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/tweakreg/exec_jwst_tweakreg_unit_tests.html">
+   JWST calwebb_image3, tweakreg unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/tweakreg/jwst_tweakreg_unit_tests.html">
+   JWST calwebb_image3, tweakreg unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/outlier_detection/jwst_outlier_detection_unit_tests.html">
+   JWST calwebb_image3, calwebb_spec3, calwebb_coron3, calwebb_tso3, outlier_detection unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/outlier_detection/exec_jwst_outlier_detection_unit_tests.html">
+   JWST calwebb_image3, calwebb_spec3, calwebb_coron3, calwebb_tso3, outlier_detection unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../tweakreg/jwst_tweakreg_miri_test/exec_jwst_tweakreg_miri_test.html">
+   JWST Pipeline Validation Testing Notebook: Calwebb_Image3, Tweakreg step with MIRI imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../tweakreg/jwst_tweakreg_miri_test/jwst_tweakreg_miri_test.html">
+   JWST Pipeline Validation Testing Notebook: Calwebb_Image3, Tweakreg step with MIRI imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../outlier_detection/jwst_outlier_detection_miri_test/exec_jwst_outlier_detection_miri_test.html">
+   JWST Pipeline Validation Notebook: outlier_detection with MIRI
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../outlier_detection/jwst_outlier_detection_miri_test/exec_jwst_outlier_detection_view_miri_test.html">
+   JWST Pipeline Validation Notebook: MIRI view outlier_detection
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../outlier_detection/jwst_outlier_detection_miri_test/exec_out_det_test2.html">
+   JWST Pipeline Validation Notebook: Outlier Detection for MIRI MRS
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../outlier_detection/jwst_outlier_detection_miri_test/out_det_test2.html">
+   JWST Pipeline Validation Notebook: Outlier Detection for MIRI MRS
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../outlier_detection/jwst_outlier_detection_miri_test/jwst_outlier_detection_miri_test.html">
+   JWST Pipeline Validation Notebook: outlier_detection with MIRI
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../outlier_detection/jwst_outlier_detection_miri_test/jwst_outlier_detection_view_miri_test.html">
+   JWST Pipeline Validation Notebook: MIRI view outlier_detection
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../superbias/exec_jwst_superbias_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, superbias unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../superbias/jwst_superbias_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, superbias unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../calwebb_coron3/exec_MIRI_shared_calcoron3_testing.html">
+   JWST Pipeline Validation Testing Notebook: Calwebb_Coron3 for MIRI Coronagraphic Imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../calwebb_coron3/jwst_calcoron3_nircam_test.html">
+   JWST Pipeline Validation Notebook: calwebb_coron3 with NIRCam
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../calwebb_coron3/exec_jwst_calcoron3_nircam_test.html">
+   JWST Pipeline Validation Notebook: calwebb_coron3 with NIRCam
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../calwebb_coron3/MIRI_shared_calcoron3_testing.html">
+   JWST Pipeline Validation Testing Notebook: Calwebb_Coron3 for MIRI Coronagraphic Imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../fringe/JWST_fringe_miri_test/exec_fringe_miri_mrs_test.html">
+   JWST Pipeline Validation Testing Notebook: Spec2, fringe, MIRI
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../fringe/JWST_fringe_miri_test/fringe_miri_mrs_test.html">
+   JWST Pipeline Validation Testing Notebook: Spec2, fringe, MIRI
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../image3/jwst_image3_miri_test/exec_jwst_image3_miri_test.html">
+   JWST Pipeline Validation Notebook: calwebb_image3 with MIRI
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../image3/jwst_image3_miri_test/jwst_image3_miri_test.html">
+   JWST Pipeline Validation Notebook: calwebb_image3 with MIRI
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../linearity/jwst_linearity_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, linearity unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../linearity/exec_jwst_linearity_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, linearity unit tests
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/TheRealZoidberg/jwst_validation_test/main?urlpath=tree/notebooks/assign_wcs/jwst_assign_wcs_niriss_test/jwst_assign_wcs_niriss_image.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../../../_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://colab.research.google.com/github/TheRealZoidberg/jwst_validation_test/blob/main/notebooks/assign_wcs/jwst_assign_wcs_niriss_test/jwst_assign_wcs_niriss_image.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Colab"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../../../_static/images/logo_colab.png">
+  </span>
+<span class="headerbtn__text-container">Colab</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="initThebeSBT()"
+  class="headerbtn headerbtn-launch-thebe"
+  data-toggle="tooltip"
+data-placement="left"
+title="Launch Thebe"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-play"></i>
+  </span>
+<span class="headerbtn__text-container">Live Code</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Source repositories">
+      <i class="fab fa-github"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://github.com/TheRealZoidberg/jwst_validation_test"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/TheRealZoidberg/jwst_validation_test/issues/new?title=Issue%20on%20page%20%2Fnotebooks/assign_wcs/jwst_assign_wcs_niriss_test/jwst_assign_wcs_niriss_image.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="headerbtn__text-container">open issue</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../../../_sources/notebooks/assign_wcs/jwst_assign_wcs_niriss_test/jwst_assign_wcs_niriss_image.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   JWST Pipeline Validation Notebook: NIRISS, image2, assign_wcs
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#table-of-contents">
+     Table of Contents
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#introduction">
+   Introduction
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#jwst-calwg-algorithm">
+   JWST CalWG Algorithm
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#defining-terms">
+   Defining Terms
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#test-description">
+   Test Description
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#data-description">
+   Data Description
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#imports">
+   Imports
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#loading-the-data">
+   Loading the Data
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#run-detector-1-stage-of-the-pipeline">
+   Run Detector 1 Stage of the Pipeline
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#perform-tests">
+   Perform Tests
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#round-trip-conversion-test">
+     Round Trip Conversion Test
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#define-routines-to-do-the-checking">
+       Define routines to do the checking
+      </a>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#check-round-trip-conversions">
+       Check round trip conversions
+      </a>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#pass-fail-test-report">
+       Pass/Fail test report
+      </a>
+      <ul class="nav section-nav flex-column">
+       <li class="toc-h4 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#run-cell-below-if-interested-in-seeing-the-fractional-differences-between-input-and-output-coordinates-for-all-observations">
+         Run cell below if interested in seeing the fractional differences between input and output coordinates for all observations
+        </a>
+       </li>
+      </ul>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#input-source-catalog-test">
+     Input Source Catalog Test
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#routine-for-plotting-image-to-visualize-sources-on-detector">
+       Routine for plotting image to visualize sources on detector
+      </a>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#check-difference-between-output-and-input-pixel-coordinates">
+       Check difference between output and input pixel coordinates
+      </a>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id1">
+       Pass/Fail test report
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#about-this-notebook">
+     About this Notebook
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>JWST Pipeline Validation Notebook: NIRISS, image2, assign_wcs</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   JWST Pipeline Validation Notebook: NIRISS, image2, assign_wcs
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#table-of-contents">
+     Table of Contents
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#introduction">
+   Introduction
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#jwst-calwg-algorithm">
+   JWST CalWG Algorithm
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#defining-terms">
+   Defining Terms
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#test-description">
+   Test Description
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#data-description">
+   Data Description
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#imports">
+   Imports
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#loading-the-data">
+   Loading the Data
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#run-detector-1-stage-of-the-pipeline">
+   Run Detector 1 Stage of the Pipeline
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#perform-tests">
+   Perform Tests
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#round-trip-conversion-test">
+     Round Trip Conversion Test
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#define-routines-to-do-the-checking">
+       Define routines to do the checking
+      </a>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#check-round-trip-conversions">
+       Check round trip conversions
+      </a>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#pass-fail-test-report">
+       Pass/Fail test report
+      </a>
+      <ul class="nav section-nav flex-column">
+       <li class="toc-h4 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#run-cell-below-if-interested-in-seeing-the-fractional-differences-between-input-and-output-coordinates-for-all-observations">
+         Run cell below if interested in seeing the fractional differences between input and output coordinates for all observations
+        </a>
+       </li>
+      </ul>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#input-source-catalog-test">
+     Input Source Catalog Test
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#routine-for-plotting-image-to-visualize-sources-on-detector">
+       Routine for plotting image to visualize sources on detector
+      </a>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#check-difference-between-output-and-input-pixel-coordinates">
+       Check difference between output and input pixel coordinates
+      </a>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id1">
+       Pass/Fail test report
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#about-this-notebook">
+     About this Notebook
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <p><a id="title_ID"></a></p>
+<section class="tex2jax_ignore mathjax_ignore" id="jwst-pipeline-validation-notebook-niriss-image2-assign-wcs">
+<h1>JWST Pipeline Validation Notebook: NIRISS, image2, assign_wcs<a class="headerlink" href="#jwst-pipeline-validation-notebook-niriss-image2-assign-wcs" title="Permalink to this headline">#</a></h1>
+<p><span style="color:red"> <strong>Instruments Affected</strong></span>: NIRISS</p>
+<section id="table-of-contents">
+<h2>Table of Contents<a class="headerlink" href="#table-of-contents" title="Permalink to this headline">#</a></h2>
+<div style="text-align: left"> 
+<p><br> <a class="reference external" href="#intro">Introduction</a>
+<br> <a class="reference external" href="#algorithm">JWST CalWG Algorithm</a>
+<br> <a class="reference external" href="#terms">Defining Terms</a>
+<br> <a class="reference external" href="#description">Test Description</a>
+<br> <a class="reference external" href="#data_descr">Data Description</a>
+<br> <a class="reference external" href="#imports">Imports</a>
+<br> <a class="reference external" href="#data_load">Loading the Data</a>
+<br> <a class="reference external" href="#pipeline">Run the Pipeline</a>
+<br> <a class="reference external" href="#testing">Perform Tests</a>
+<br> <a class="reference external" href="#about">About This Notebook</a>
+<br></p>
+</div><p><a id="intro"></a></p>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="introduction">
+<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">#</a></h1>
+<p>This is the validation notebook for the assign_wcs step in the image2 stage of the pipeline. The validation step does two checks:</p>
+<ol class="simple">
+<li><p>Round trip conversion between coordinate systems to test whether the output matches the input;</p></li>
+<li><p>Conversion from sky coordinates to detector coordinates for a catalog of sources to assess whether the originally inputted detector coordinates are recovered.</p></li>
+</ol>
+<p>For more information on the pipeline step visit the links below.</p>
+<blockquote>
+<div><p>Step description: <a class="reference external" href="https://jwst-pipeline.readthedocs.io/en/latest/jwst/assign_wcs/index.html">https://jwst-pipeline.readthedocs.io/en/latest/jwst/assign_wcs/index.html</a></p>
+</div></blockquote>
+<blockquote>
+<div><p>Pipeline code: <a class="reference external" href="https://github.com/spacetelescope/jwst/tree/master/jwst/assign_wcs">https://github.com/spacetelescope/jwst/tree/master/jwst/assign_wcs</a></p>
+</div></blockquote>
+<p><a class="reference external" href="#title_ID">Top of Page</a></p>
+<p><a id="algorithm"></a></p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="jwst-calwg-algorithm">
+<h1>JWST CalWG Algorithm<a class="headerlink" href="#jwst-calwg-algorithm" title="Permalink to this headline">#</a></h1>
+<p>A description of the assign_wcs algorithm from the JWST CalWG: <a class="reference external" href="https://outerspace.stsci.edu/display/JWSTCC/Vanilla+Imaging+GWCS+Information">https://outerspace.stsci.edu/display/JWSTCC/Vanilla+Imaging+GWCS+Information</a></p>
+<p><a class="reference external" href="#title_ID">Top of Page</a></p>
+<p><a id="terms"></a></p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="defining-terms">
+<h1>Defining Terms<a class="headerlink" href="#defining-terms" title="Permalink to this headline">#</a></h1>
+<p>GWCS: Generalized World Coordinate System</p>
+<p>V1, V2, V3: Defines Observatory Coordinate System (see Figure 1 on <a class="reference external" href="https://jwst-docs.stsci.edu/jwst-observatory-functionality/jwst-position-angles-ranges-and-offsets">JWST Position Angles, Ranges, and Offsets JDox article</a>)</p>
+<p><a class="reference external" href="#title_ID">Top of Page</a></p>
+<p><a id="description"></a></p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="test-description">
+<h1>Test Description<a class="headerlink" href="#test-description" title="Permalink to this headline">#</a></h1>
+<ul class="simple">
+<li><p>Calibrate data through Detector1 stage of the pipeline.</p></li>
+<li><p><strong>Round trip conversion test</strong> - check the level of agreement between the input and output values of the following coordinate systems:</p>
+<ul>
+<li><p>World –&gt; Detector –&gt; World</p></li>
+<li><p>Detector –&gt; World –&gt; Detector</p></li>
+<li><p>World –&gt; V2 V3 –&gt; World</p></li>
+<li><p>Detector –&gt; V2 V3 –&gt; Detector</p></li>
+</ul>
+</li>
+<li><p><strong>Round trip conversion test</strong> is done for two sets of input coordinates:</p>
+<ul>
+<li><p>Reference pixels at which the transform is anchored:</p>
+<ul>
+<li><p>crpix1, crpix2 (detector units)</p></li>
+<li><p>crval1, crval2 (world coordinate system units)</p></li>
+</ul>
+</li>
+<li><p>Coordinates at the edge of the input subarray:</p>
+<ul>
+<li><p>xpix=10, ypix=10</p></li>
+</ul>
+</li>
+<li><p>The tolerance for pass/fail (fractional difference between input and output values) is stricter for transforms at the reference pixels compared with the edge of the subarray. For the reference pixel test, the tolerance is stricter for full frame readout compared with subarrays. The tolerances can be updated in the code. Currently, they are set to the following:</p>
+<ul>
+<li><p>tolerance reference pixel, full frame: 1e-4</p></li>
+<li><p>tolerance reference pixel, subarray: 1e-3</p></li>
+<li><p>tolerance edge of subarray: 1e-2</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>Input source catalog test</strong> - use an input list of sources arranged along a grid that have known input detector coordinates from a Mirage simulation. The simulation produces a catalog of sources with world coordinate system units (i.e., RA and Dec). The test converts these coordinates to detector units and produces the following:</p>
+<ul>
+<li><p>Calculations <span class="math notranslate nohighlight">\(\Delta\)</span>x and <span class="math notranslate nohighlight">\(\Delta\)</span>y (difference between input and output pixels) for each source and RMS<span class="math notranslate nohighlight">\(_{\Delta x}\)</span> and RMS <span class="math notranslate nohighlight">\(_{\Delta y}\)</span>;</p></li>
+<li><p>Histograms of <span class="math notranslate nohighlight">\(\Delta\)</span>x and <span class="math notranslate nohighlight">\(\Delta\)</span>y for inspection;</p></li>
+<li><p>Plots of <span class="math notranslate nohighlight">\(\Delta\)</span>x as function of x position and <span class="math notranslate nohighlight">\(\Delta\)</span>y as function of y position for inspection;</p></li>
+<li><p>The pass/fail test: is RMS<span class="math notranslate nohighlight">\(_{\Delta x}\)</span> and RMS<span class="math notranslate nohighlight">\(_{\Delta y}\)</span> within the tolerance? The tolerance can be updated in the code. Currently, it is set to 1e-2 pixels.</p></li>
+</ul>
+</li>
+</ul>
+<p><a class="reference external" href="#title_ID">Top of Page</a></p>
+<p><a id="data_descr"></a></p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="data-description">
+<h1>Data Description<a class="headerlink" href="#data-description" title="Permalink to this headline">#</a></h1>
+<p>All data were generated with <a class="reference external" href="https://github.com/spacetelescope/mirage">MIRaGe</a> version 1.3.3 on date May 25, 2021</p>
+<p><strong>Round trip conversion test</strong>: 10 blank field simulations (spanning a range of RAs and Decs) with all available subarray options:</p>
+<ul class="simple">
+<li><p>CLEAR/F200W SUB128</p></li>
+<li><p>CLEAR/F200W SUB256</p></li>
+<li><p>CLEAR/F200W SUB64</p></li>
+<li><p>CLEAR/F200W SUB80</p></li>
+<li><p>CLEAR/F200W WFSS128C</p></li>
+<li><p>CLEAR/F200W WFSS128R</p></li>
+<li><p>CLEAR/F200W WFSS64C</p></li>
+<li><p>CLEAR/F200W WFSS64R</p></li>
+<li><p>F480M/NRM FULL</p></li>
+<li><p>F480/NRM SUB80</p></li>
+</ul>
+<p>This test also includes the simulation in the below <strong>Input source catalog test</strong>.</p>
+<p><strong>Input source catalog test</strong>: Simulation of a grid of 50 sources with Clear/F200W combination, full frame readout. MIRaGe catalog (<code class="docutils literal notranslate"><span class="pre">*_pointsources.list</span></code>) is also needed.</p>
+<p>Data are stored in temporary directory which is created below.</p>
+<p><a class="reference external" href="#title_ID">Top of Page</a></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">use_tempdir</span> <span class="o">=</span> <span class="kc">True</span>
+
+<span class="c1"># Create a temporary directory to hold notebook output, and change the working directory to that directory.</span>
+<span class="kn">from</span> <span class="nn">tempfile</span> <span class="kn">import</span> <span class="n">TemporaryDirectory</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">shutil</span>
+
+<span class="k">if</span> <span class="n">use_tempdir</span><span class="p">:</span>
+    <span class="n">data_dir</span> <span class="o">=</span> <span class="n">TemporaryDirectory</span><span class="p">()</span>
+
+    <span class="c1"># Save original directory</span>
+    <span class="n">orig_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
+
+    <span class="c1"># Move to new directory</span>
+    <span class="n">outdir</span> <span class="o">=</span> <span class="n">data_dir</span><span class="o">.</span><span class="n">name</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">data_dir</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+<span class="c1"># For info, print out where the script is running</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Running in </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Running in /tmp/tmpxq56ol1k
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="k">if</span> <span class="s1">&#39;CRDS_CACHE_TYPE&#39;</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;CRDS_CACHE_TYPE&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;local&#39;</span><span class="p">:</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;CRDS_PATH&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;HOME&#39;</span><span class="p">],</span> <span class="s1">&#39;crds&#39;</span><span class="p">,</span> <span class="s1">&#39;cache&#39;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;CRDS_CACHE_TYPE&#39;</span><span class="p">]):</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;CRDS_PATH&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;CRDS_CACHE_TYPE&#39;</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;CRDS cache location: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;CRDS_PATH&#39;</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">KeyError</span><span class="g g-Whitespace">                                  </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span> <span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">line</span> <span class="mi">7</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span>     <span class="k">elif</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;CRDS_CACHE_TYPE&#39;</span><span class="p">]):</span>
+<span class="g g-Whitespace">      </span><span class="mi">6</span>         <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;CRDS_PATH&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;CRDS_CACHE_TYPE&#39;</span><span class="p">]</span>
+<span class="ne">----&gt; </span><span class="mi">7</span> <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;CRDS cache location: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;CRDS_PATH&#39;</span><span class="p">]))</span>
+
+<span class="nn">File /usr/share/miniconda/lib/python3.9/os.py:679,</span> in <span class="ni">_Environ.__getitem__</span><span class="nt">(self, key)</span>
+<span class="g g-Whitespace">    </span><span class="mi">676</span>     <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">encodekey</span><span class="p">(</span><span class="n">key</span><span class="p">)]</span>
+<span class="g g-Whitespace">    </span><span class="mi">677</span> <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">678</span>     <span class="c1"># raise KeyError with the original key value</span>
+<span class="ne">--&gt; </span><span class="mi">679</span>     <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="kn">from</span> <span class="bp">None</span>
+<span class="g g-Whitespace">    </span><span class="mi">680</span> <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">decodevalue</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+<span class="ne">KeyError</span>: &#39;CRDS_PATH&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<p><a id="imports"></a></p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="imports">
+<h1>Imports<a class="headerlink" href="#imports" title="Permalink to this headline">#</a></h1>
+<ul class="simple">
+<li><p><a class="reference external" href="http://astropy.io">astropy.io</a> for opening fits and ascii files</p></li>
+<li><p>glob for retrieving fits files</p></li>
+<li><p>numpy for mathematical computation</p></li>
+<li><p>ci_watson.artifactory_helpers to read in simulations from artifactory</p></li>
+<li><p>jwst pipeline steps to process data through stage 1 of the pipeline, use image data model, and access convenience functions in from AssignWcsStep</p></li>
+<li><p>matplotlib.pyplot.plt to generate plots</p></li>
+</ul>
+<p><a class="reference external" href="#title_ID">Top of Page</a></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">astropy.io</span> <span class="kn">import</span> <span class="n">fits</span><span class="p">,</span><span class="n">ascii</span>
+<span class="kn">import</span> <span class="nn">glob</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">ci_watson.artifactory_helpers</span> <span class="kn">import</span> <span class="n">get_bigdata</span>
+<span class="kn">from</span> <span class="nn">jwst.pipeline</span> <span class="kn">import</span> <span class="n">calwebb_detector1</span>
+<span class="kn">from</span> <span class="nn">jwst.assign_wcs</span> <span class="kn">import</span> <span class="n">AssignWcsStep</span>
+<span class="kn">from</span> <span class="nn">jwst.datamodels</span> <span class="kn">import</span> <span class="n">image</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><a id="data_load"></a></p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="loading-the-data">
+<h1>Loading the Data<a class="headerlink" href="#loading-the-data" title="Permalink to this headline">#</a></h1>
+<p>Data are stored on Artifactory. The list of simulated datasets and the Mirage catalog list are provided below. The simulated datasets are ready in when running the pipeline to process the data.</p>
+<p><a class="reference external" href="#title_ID">Top of Page</a></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create list of simulated data files:</span>
+<span class="n">sim_files</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="s1">&#39;jw00042001001_01101_00001_nis_uncal.fits&#39;</span><span class="p">,</span>
+                      <span class="s1">&#39;jw00042002001_01101_00001_nis_uncal.fits&#39;</span><span class="p">,</span>
+                      <span class="s1">&#39;jw00042003001_01101_00001_nis_uncal.fits&#39;</span><span class="p">,</span>
+                      <span class="s1">&#39;jw00042004001_01101_00001_nis_uncal.fits&#39;</span><span class="p">,</span>
+                      <span class="s1">&#39;jw00042005001_01101_00001_nis_uncal.fits&#39;</span><span class="p">,</span>
+                      <span class="s1">&#39;jw00042006001_01101_00001_nis_uncal.fits&#39;</span><span class="p">,</span>
+                      <span class="s1">&#39;jw00042007001_01101_00001_nis_uncal.fits&#39;</span><span class="p">,</span>
+                      <span class="s1">&#39;jw00042008001_01101_00001_nis_uncal.fits&#39;</span><span class="p">,</span>
+                      <span class="s1">&#39;jw00042009001_01101_00001_nis_uncal.fits&#39;</span><span class="p">,</span>
+                      <span class="s1">&#39;jw00042010001_01101_00001_nis_uncal.fits&#39;</span><span class="p">,</span>
+                      <span class="s1">&#39;jw00042011001_01101_00001_nis_uncal.fits&#39;</span><span class="p">])</span>
+
+<span class="c1"># read MIRaGe&#39;s point source list from Artifactory</span>
+<span class="n">ptsrc_list_f</span> <span class="o">=</span> <span class="n">get_bigdata</span><span class="p">(</span><span class="s1">&#39;jwst_validation_notebooks&#39;</span><span class="p">,</span>
+                           <span class="s1">&#39;validation_data&#39;</span><span class="p">,</span>
+                           <span class="s1">&#39;assign_wcs&#39;</span><span class="p">,</span>
+                           <span class="s1">&#39;assign_wcs_niriss_test&#39;</span><span class="p">,</span>
+                           <span class="s1">&#39;jw00042001001_01101_00001_nis_uncal_pointsources.list&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><a id="pipeline"></a></p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="run-detector-1-stage-of-the-pipeline">
+<h1>Run Detector 1 Stage of the Pipeline<a class="headerlink" href="#run-detector-1-stage-of-the-pipeline" title="Permalink to this headline">#</a></h1>
+<p>Run simulations through calwebb_detector1 to produce rate images to test assign_wcs step</p>
+<p><a class="reference external" href="#title_ID">Top of Page</a></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Initialize Detector 1 stage</span>
+<span class="n">det1</span> <span class="o">=</span> <span class="n">calwebb_detector1</span><span class="o">.</span><span class="n">Detector1Pipeline</span><span class="p">()</span>
+<span class="n">det1</span><span class="o">.</span><span class="n">save_results</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="n">det1</span><span class="o">.</span><span class="n">output_dir</span> <span class="o">=</span> <span class="n">outdir</span>
+
+<span class="c1"># Run pipeline on simulations to produce *_rate.fits files</span>
+
+<span class="k">for</span> <span class="n">sfile</span> <span class="ow">in</span> <span class="n">sim_files</span><span class="p">:</span>
+    
+    <span class="c1"># strip out prefix of file name to use for output file</span>
+    <span class="n">prefix</span> <span class="o">=</span> <span class="p">(</span><span class="n">sfile</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;uncal&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span><span class="c1">#.split(&#39;/&#39;)[-1]</span>
+    <span class="n">det1</span><span class="o">.</span><span class="n">output_file</span> <span class="o">=</span> <span class="n">prefix</span><span class="o">+</span><span class="s1">&#39;rate.fits&#39;</span>
+
+    <span class="c1"># Read in the data files from Artifactory</span>
+    <span class="n">uncal_file</span> <span class="o">=</span> <span class="n">get_bigdata</span><span class="p">(</span><span class="s1">&#39;jwst_validation_notebooks&#39;</span><span class="p">,</span>
+                             <span class="s1">&#39;validation_data&#39;</span><span class="p">,</span>
+                             <span class="s1">&#39;assign_wcs&#39;</span><span class="p">,</span>
+                             <span class="s1">&#39;assign_wcs_niriss_test&#39;</span><span class="p">,</span>
+                             <span class="n">sfile</span><span class="p">)</span>
+
+    <span class="c1"># Run pipeline</span>
+
+    <span class="n">det1</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">uncal_file</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><a id="testing"></a></p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="perform-tests">
+<h1>Perform Tests<a class="headerlink" href="#perform-tests" title="Permalink to this headline">#</a></h1>
+<p><a class="reference external" href="#title_ID">Top of Page</a></p>
+<section id="round-trip-conversion-test">
+<h2>Round Trip Conversion Test<a class="headerlink" href="#round-trip-conversion-test" title="Permalink to this headline">#</a></h2>
+<section id="define-routines-to-do-the-checking">
+<h3>Define routines to do the checking<a class="headerlink" href="#define-routines-to-do-the-checking" title="Permalink to this headline">#</a></h3>
+<p>Routine to check whether test passed or failed (is fractional difference between output and input within pre-defined tolerance?)</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">ck_pass_fail</span><span class="p">(</span><span class="n">in_frac_x</span><span class="p">,</span><span class="n">in_frac_y</span><span class="p">,</span><span class="n">tol</span><span class="p">):</span>
+    
+    <span class="k">if</span> <span class="p">(</span><span class="n">in_frac_x</span> <span class="o">&lt;</span> <span class="n">tol</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">in_frac_y</span> <span class="o">&lt;</span> <span class="n">tol</span><span class="p">):</span>
+        <span class="n">pass_or_fail</span> <span class="o">=</span> <span class="s1">&#39;PASS&#39;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">pass_or_fail</span> <span class="o">=</span> <span class="s1">&#39;FAIL&#39;</span>
+        
+    <span class="k">return</span><span class="p">(</span><span class="n">pass_or_fail</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Routine to populate dictionary to store results</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">populate_dict</span><span class="p">(</span><span class="n">input_dict</span><span class="p">,</span><span class="n">obs_info</span><span class="p">,</span><span class="n">targ_ra_dec</span><span class="p">,</span><span class="n">frac_ra_x</span><span class="p">,</span><span class="n">frac_dec_y</span><span class="p">,</span><span class="n">conv</span><span class="p">,</span><span class="n">pass_or_fail</span><span class="p">):</span>
+    
+    <span class="n">input_dict</span><span class="p">[</span><span class="s1">&#39;obs_info&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">obs_info</span><span class="p">)</span>
+    <span class="n">input_dict</span><span class="p">[</span><span class="s1">&#39;RA_Dec&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">targ_ra_dec</span><span class="p">)</span>
+    <span class="n">input_dict</span><span class="p">[</span><span class="s1">&#39;frac_ra_x&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">frac_ra_x</span><span class="p">)</span>
+    <span class="n">input_dict</span><span class="p">[</span><span class="s1">&#39;frac_dec_y&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">frac_dec_y</span><span class="p">)</span>
+    <span class="n">input_dict</span><span class="p">[</span><span class="s1">&#39;conversion&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">conv</span><span class="p">)</span>
+    <span class="n">input_dict</span><span class="p">[</span><span class="s1">&#39;pass_fail&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pass_or_fail</span><span class="p">)</span>
+    
+    <span class="k">return</span><span class="p">(</span><span class="n">input_dict</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Routine to transform from World –&gt; Detector –&gt; World coordinates</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">world_det_world</span><span class="p">(</span><span class="n">in_ra</span><span class="p">,</span><span class="n">in_dec</span><span class="p">,</span><span class="n">input_dict</span><span class="p">,</span><span class="n">obs_info</span><span class="p">,</span><span class="n">targ_ra_dec</span><span class="p">,</span><span class="n">conv</span><span class="p">,</span><span class="n">tol</span><span class="p">):</span>
+    
+    <span class="c1"># Convert from RA, Dec to detector coordinates</span>
+    <span class="n">det</span> <span class="o">=</span> <span class="n">world_to_detector</span><span class="p">(</span><span class="n">in_ra</span><span class="p">,</span><span class="n">in_dec</span><span class="p">)</span>
+
+    <span class="c1"># Convert back to RA, Dec</span>
+    <span class="n">world</span> <span class="o">=</span> <span class="n">detector_to_world</span><span class="p">(</span><span class="n">det</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">det</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    
+    <span class="c1"># Calculate fractional difference between input and output World coordinates</span>
+    <span class="n">frac_ra</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">((</span><span class="n">RA</span><span class="o">-</span><span class="n">world</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">/</span><span class="n">RA</span><span class="p">)</span>
+    <span class="n">frac_dec</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">((</span><span class="n">Dec</span><span class="o">-</span><span class="n">world</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="o">/</span><span class="n">Dec</span><span class="p">)</span>
+    
+    <span class="c1"># Check whether difference is within tolerance</span>
+    <span class="n">pass_or_fail</span> <span class="o">=</span> <span class="n">ck_pass_fail</span><span class="p">(</span><span class="n">frac_ra</span><span class="p">,</span><span class="n">frac_dec</span><span class="p">,</span><span class="n">tol</span><span class="p">)</span>
+    
+    <span class="c1"># Store results in dictionary</span>
+    <span class="n">out_dict</span> <span class="o">=</span> <span class="n">populate_dict</span><span class="p">(</span><span class="n">input_dict</span><span class="p">,</span><span class="n">obs_info</span><span class="p">,</span><span class="n">targ_ra_dec</span><span class="p">,</span><span class="n">frac_ra</span><span class="p">,</span><span class="n">frac_dec</span><span class="p">,</span><span class="n">conv</span><span class="p">,</span><span class="n">pass_or_fail</span><span class="p">)</span>
+    
+    <span class="c1"># Return dictionary</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">out_dict</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Routine to transform from Detector –&gt; World –&gt; Detector coordinates</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">det_world_det</span><span class="p">(</span><span class="n">in_xpix</span><span class="p">,</span><span class="n">in_ypix</span><span class="p">,</span><span class="n">input_dict</span><span class="p">,</span><span class="n">obs_info</span><span class="p">,</span><span class="n">targ_ra_dec</span><span class="p">,</span><span class="n">conv</span><span class="p">,</span><span class="n">tol</span><span class="p">):</span>
+    
+    <span class="c1"># Convert from detector coordinates to RA, Dec</span>
+    <span class="n">world</span> <span class="o">=</span> <span class="n">detector_to_world</span><span class="p">(</span><span class="n">in_xpix</span><span class="p">,</span> <span class="n">in_ypix</span><span class="p">)</span>
+
+    <span class="c1"># Convert from RA, Dec back to detector</span>
+    <span class="n">det</span> <span class="o">=</span> <span class="n">world_to_detector</span><span class="p">(</span><span class="n">world</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">world</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    
+    <span class="c1"># Calculate fractional difference between input and output detector coordinates</span>
+    <span class="n">frac_x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">((</span><span class="n">in_xpix</span><span class="o">-</span><span class="n">det</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">/</span><span class="n">in_xpix</span><span class="p">)</span>
+    <span class="n">frac_y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">((</span><span class="n">in_ypix</span><span class="o">-</span><span class="n">det</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="o">/</span><span class="n">in_ypix</span><span class="p">)</span>
+    
+    <span class="c1"># Check whether difference is within tolerance</span>
+    <span class="n">pass_or_fail</span> <span class="o">=</span> <span class="n">ck_pass_fail</span><span class="p">(</span><span class="n">frac_x</span><span class="p">,</span><span class="n">frac_y</span><span class="p">,</span><span class="n">tol</span><span class="p">)</span>
+    
+    <span class="c1"># Store results in dictionary</span>
+    <span class="n">out_dict</span> <span class="o">=</span> <span class="n">populate_dict</span><span class="p">(</span><span class="n">input_dict</span><span class="p">,</span><span class="n">obs_info</span><span class="p">,</span><span class="n">targ_ra_dec</span><span class="p">,</span><span class="n">frac_x</span><span class="p">,</span><span class="n">frac_y</span><span class="p">,</span><span class="n">conv</span><span class="p">,</span><span class="n">pass_or_fail</span><span class="p">)</span>
+    
+    <span class="k">return</span><span class="p">(</span><span class="n">out_dict</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Routine to transform from World –&gt; V2 V3 –&gt; World coordinates</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">world_v2v3_world</span><span class="p">(</span><span class="n">in_ra</span><span class="p">,</span><span class="n">in_dec</span><span class="p">,</span><span class="n">input_dict</span><span class="p">,</span><span class="n">obs_info</span><span class="p">,</span><span class="n">targ_ra_dec</span><span class="p">,</span><span class="n">conv</span><span class="p">,</span><span class="n">tol</span><span class="p">):</span>
+    
+    <span class="c1"># Convert from World coordinates to V2 V3</span>
+    <span class="n">v2v3</span> <span class="o">=</span> <span class="n">world_to_v2v3</span><span class="p">(</span><span class="n">RA</span><span class="p">,</span> <span class="n">Dec</span><span class="p">)</span>
+
+    <span class="c1"># Convert from V2, V3 back to world</span>
+    <span class="n">world</span> <span class="o">=</span> <span class="n">v2v3_to_world</span><span class="p">(</span><span class="n">v2v3</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">v2v3</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    
+    <span class="c1"># Calculate fractional difference between input and output World coordinates</span>
+    <span class="n">frac_ra</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">((</span><span class="n">in_ra</span><span class="o">-</span><span class="n">world</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">/</span><span class="n">in_ra</span><span class="p">)</span>
+    <span class="n">frac_dec</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">((</span><span class="n">in_dec</span><span class="o">-</span><span class="n">world</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="o">/</span><span class="n">in_dec</span><span class="p">)</span>
+    
+    <span class="c1"># Check whether difference is within tolerance</span>
+    <span class="n">pass_or_fail</span> <span class="o">=</span> <span class="n">ck_pass_fail</span><span class="p">(</span><span class="n">frac_ra</span><span class="p">,</span><span class="n">frac_dec</span><span class="p">,</span><span class="n">tol</span><span class="p">)</span>
+    
+    <span class="c1"># Store results in dictionary</span>
+    <span class="n">out_dict</span> <span class="o">=</span> <span class="n">populate_dict</span><span class="p">(</span><span class="n">input_dict</span><span class="p">,</span><span class="n">obs_info</span><span class="p">,</span><span class="n">targ_ra_dec</span><span class="p">,</span><span class="n">frac_ra</span><span class="p">,</span><span class="n">frac_dec</span><span class="p">,</span><span class="n">conv</span><span class="p">,</span><span class="n">pass_or_fail</span><span class="p">)</span>
+    
+    <span class="k">return</span><span class="p">(</span><span class="n">out_dict</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Routine to transform from Detector –&gt; V2 V3 –&gt; Detector</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">det_v2v3_det</span><span class="p">(</span><span class="n">in_xpix</span><span class="p">,</span><span class="n">in_ypix</span><span class="p">,</span><span class="n">input_dict</span><span class="p">,</span><span class="n">obs_info</span><span class="p">,</span><span class="n">targ_ra_dec</span><span class="p">,</span><span class="n">conv</span><span class="p">,</span><span class="n">tol</span><span class="p">):</span>
+    
+    <span class="c1"># Convert from detector coordinates to V2 V3</span>
+    <span class="n">v2v3</span> <span class="o">=</span> <span class="n">detector_to_v2v3</span><span class="p">(</span><span class="n">in_xpix</span><span class="p">,</span> <span class="n">in_ypix</span><span class="p">)</span>
+
+    <span class="c1"># Convert from V2, V3 to detector</span>
+    <span class="n">det</span> <span class="o">=</span> <span class="n">v2v3_to_detector</span><span class="p">(</span><span class="n">v2v3</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">v2v3</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    
+    <span class="c1"># Calculate fractional difference between input and output detector coordinates</span>
+    <span class="n">frac_x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">((</span><span class="n">in_xpix</span><span class="o">-</span><span class="n">det</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">/</span><span class="n">in_xpix</span><span class="p">)</span>
+    <span class="n">frac_y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">((</span><span class="n">in_ypix</span><span class="o">-</span><span class="n">det</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="o">/</span><span class="n">in_ypix</span><span class="p">)</span>
+    
+    <span class="c1"># Check whether difference is within tolerance</span>
+    <span class="n">pass_or_fail</span> <span class="o">=</span> <span class="n">ck_pass_fail</span><span class="p">(</span><span class="n">frac_x</span><span class="p">,</span><span class="n">frac_y</span><span class="p">,</span><span class="n">tol</span><span class="p">)</span>
+    
+    <span class="c1"># Store results in dictionary</span>
+    <span class="n">out_dict</span> <span class="o">=</span> <span class="n">populate_dict</span><span class="p">(</span><span class="n">input_dict</span><span class="p">,</span><span class="n">obs_info</span><span class="p">,</span><span class="n">targ_ra_dec</span><span class="p">,</span><span class="n">frac_x</span><span class="p">,</span><span class="n">frac_y</span><span class="p">,</span><span class="n">conv</span><span class="p">,</span><span class="n">pass_or_fail</span><span class="p">)</span>
+    
+    <span class="k">return</span><span class="p">(</span><span class="n">out_dict</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Routine that checks following conversions for input world and detector coordinates:</p>
+<ul class="simple">
+<li><p>World –&gt; Detector –&gt; World</p></li>
+<li><p>Detector –&gt; World –&gt; Detector</p></li>
+<li><p>World –&gt; V2 V3 –&gt; World</p></li>
+<li><p>Detector –&gt; V2 V3 –&gt; Detector</p></li>
+</ul>
+<p>This routine calls the routines defined above and stores results in dictionary.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">do_all_the_transforms</span><span class="p">(</span><span class="n">RA</span><span class="p">,</span><span class="n">Dec</span><span class="p">,</span><span class="n">xpix</span><span class="p">,</span><span class="n">ypix</span><span class="p">,</span><span class="n">info_dict</span><span class="p">,</span><span class="n">obs_info</span><span class="p">,</span><span class="n">targ_ra_dec</span><span class="p">,</span><span class="n">pos</span><span class="p">,</span><span class="n">tol</span><span class="p">):</span>
+    
+    <span class="c1"># Check World --&gt; Detector --&gt; World</span>
+    <span class="n">info_dict</span> <span class="o">=</span> <span class="n">world_det_world</span><span class="p">(</span><span class="n">RA</span><span class="p">,</span><span class="n">Dec</span><span class="p">,</span><span class="n">info_dict</span><span class="p">,</span><span class="n">obs_info</span><span class="p">,</span><span class="n">targ_ra_dec</span><span class="p">,</span>
+                                <span class="n">pos</span><span class="o">+</span><span class="s1">&#39;: world --&gt; detector --&gt; world&#39;</span><span class="p">,</span><span class="n">tol</span><span class="p">)</span>
+
+    <span class="c1"># Check Detector --&gt; World --&gt; Detector</span>
+    <span class="n">info_dict</span> <span class="o">=</span> <span class="n">det_world_det</span><span class="p">(</span><span class="n">xpix</span><span class="p">,</span><span class="n">ypix</span><span class="p">,</span><span class="n">info_dict</span><span class="p">,</span><span class="n">obs_info</span><span class="p">,</span><span class="n">targ_ra_dec</span><span class="p">,</span>
+                             <span class="n">pos</span><span class="o">+</span><span class="s1">&#39;: detector --&gt; world --&gt; detector&#39;</span><span class="p">,</span><span class="n">tol</span><span class="p">)</span>
+
+    <span class="c1"># Check World --&gt; V2 V3 --&gt; Detector</span>
+    <span class="n">info_dict</span> <span class="o">=</span> <span class="n">world_v2v3_world</span><span class="p">(</span><span class="n">RA</span><span class="p">,</span><span class="n">Dec</span><span class="p">,</span><span class="n">info_dict</span><span class="p">,</span><span class="n">obs_info</span><span class="p">,</span><span class="n">targ_ra_dec</span><span class="p">,</span>
+                                <span class="n">pos</span><span class="o">+</span><span class="s1">&#39;: world --&gt; V2 V3 --&gt; world&#39;</span><span class="p">,</span><span class="n">tol</span><span class="p">)</span>
+
+    <span class="c1"># Check Detector --&gt; V2 V3 --&gt; Detector</span>
+    <span class="n">info_dict</span> <span class="o">=</span> <span class="n">det_v2v3_det</span><span class="p">(</span><span class="n">xpix</span><span class="p">,</span><span class="n">ypix</span><span class="p">,</span><span class="n">info_dict</span><span class="p">,</span><span class="n">obs_info</span><span class="p">,</span><span class="n">targ_ra_dec</span><span class="p">,</span>
+                             <span class="n">pos</span><span class="o">+</span><span class="s1">&#39;: detector --&gt; V2 V3 --&gt; detector&#39;</span><span class="p">,</span><span class="n">tol</span><span class="p">)</span>
+    
+    <span class="k">return</span><span class="p">(</span><span class="n">info_dict</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="check-round-trip-conversions">
+<h3>Check round trip conversions<a class="headerlink" href="#check-round-trip-conversions" title="Permalink to this headline">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># set tolerance for agreement</span>
+<span class="c1"># use different tolerance for edge of subarray (less accurate)</span>
+<span class="c1"># and reference pixels (more accurate)</span>
+<span class="c1"># For the reference pixels, have a stricter tolerance for full frame readout</span>
+<span class="c1"># which should be more accurate than subarrays</span>
+<span class="n">tol_ref_full</span> <span class="o">=</span> <span class="mf">1e-4</span>
+<span class="n">tol_ref_subarray</span> <span class="o">=</span> <span class="mf">1e-3</span>
+<span class="n">tol_edge</span> <span class="o">=</span> <span class="mf">1e-2</span>
+
+<span class="c1"># Initiate AssignWcsStep instance</span>
+<span class="n">awcs</span> <span class="o">=</span> <span class="n">AssignWcsStep</span><span class="p">()</span>
+
+<span class="c1"># Select _*rate.fits files</span>
+<span class="n">rate_files</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">outdir</span><span class="p">,</span><span class="s1">&#39;*rate.fits&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Cycle through simulations to perform conversions and assess agreement between input and output coordinates</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Set up dictionary to store results</span>
+<span class="n">info_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;obs_info&#39;</span><span class="p">:[],</span>
+             <span class="s1">&#39;RA_Dec&#39;</span><span class="p">:[],</span>
+             <span class="s1">&#39;frac_ra_x&#39;</span><span class="p">:[],</span>
+             <span class="s1">&#39;frac_dec_y&#39;</span><span class="p">:[],</span>
+             <span class="s1">&#39;conversion&#39;</span><span class="p">:[],</span>
+             <span class="s1">&#39;pass_fail&#39;</span><span class="p">:[]}</span>
+
+<span class="c1"># Cycle through observations</span>
+<span class="k">for</span> <span class="n">r_file</span> <span class="ow">in</span> <span class="p">(</span><span class="n">rate_files</span><span class="p">):</span>
+
+    <span class="c1"># Open image as datamodel</span>
+    <span class="n">im</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">ImageModel</span><span class="p">(</span><span class="n">r_file</span><span class="p">)</span>
+
+    <span class="c1"># Create observing info string</span>
+    <span class="n">exp</span> <span class="o">=</span> <span class="n">im</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">exposure</span><span class="o">.</span><span class="n">type</span>
+    <span class="nb">filter</span> <span class="o">=</span> <span class="n">im</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">instrument</span><span class="o">.</span><span class="n">filter</span>
+    <span class="n">pupil</span> <span class="o">=</span> <span class="n">im</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">instrument</span><span class="o">.</span><span class="n">pupil</span>
+    <span class="n">subarray</span> <span class="o">=</span> <span class="n">im</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">subarray</span><span class="o">.</span><span class="n">name</span>
+    <span class="n">targ_ra</span> <span class="o">=</span> <span class="n">im</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">target</span><span class="o">.</span><span class="n">ra</span>
+    <span class="n">targ_dec</span> <span class="o">=</span> <span class="n">im</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">target</span><span class="o">.</span><span class="n">dec</span>
+
+    <span class="n">obs_info</span> <span class="o">=</span> <span class="n">exp</span><span class="o">+</span><span class="s1">&#39; &#39;</span><span class="o">+</span><span class="nb">filter</span><span class="o">+</span><span class="s1">&#39; &#39;</span><span class="o">+</span><span class="n">pupil</span><span class="o">+</span><span class="s1">&#39; subarray:&#39;</span><span class="o">+</span><span class="n">subarray</span>
+    <span class="n">targ_ra_dec</span> <span class="o">=</span> <span class="s1">&#39;RA: </span><span class="si">{}</span><span class="s1">, Dec: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">targ_ra</span><span class="p">,</span><span class="n">targ_dec</span><span class="p">)</span>
+
+    <span class="c1"># Call Assign WCS Step</span>
+    <span class="n">gwcs</span> <span class="o">=</span> <span class="n">awcs</span><span class="p">(</span><span class="n">im</span><span class="p">)</span>
+
+    <span class="c1"># Set up transforms we&#39;ll use:</span>
+    <span class="n">world_to_detector</span> <span class="o">=</span> <span class="n">gwcs</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">wcs</span><span class="o">.</span><span class="n">get_transform</span><span class="p">(</span><span class="s1">&#39;world&#39;</span><span class="p">,</span> <span class="s1">&#39;detector&#39;</span><span class="p">)</span>
+    <span class="n">detector_to_world</span> <span class="o">=</span> <span class="n">gwcs</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">wcs</span><span class="o">.</span><span class="n">get_transform</span><span class="p">(</span><span class="s1">&#39;detector&#39;</span><span class="p">,</span> <span class="s1">&#39;world&#39;</span><span class="p">)</span>
+
+    <span class="n">world_to_v2v3</span> <span class="o">=</span> <span class="n">gwcs</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">wcs</span><span class="o">.</span><span class="n">get_transform</span><span class="p">(</span><span class="s1">&#39;world&#39;</span><span class="p">,</span> <span class="s1">&#39;v2v3&#39;</span><span class="p">)</span>
+    <span class="n">v2v3_to_world</span> <span class="o">=</span> <span class="n">gwcs</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">wcs</span><span class="o">.</span><span class="n">get_transform</span><span class="p">(</span><span class="s1">&#39;v2v3&#39;</span><span class="p">,</span> <span class="s1">&#39;world&#39;</span><span class="p">)</span>
+
+    <span class="n">detector_to_v2v3</span> <span class="o">=</span> <span class="n">gwcs</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">wcs</span><span class="o">.</span><span class="n">get_transform</span><span class="p">(</span><span class="s1">&#39;detector&#39;</span><span class="p">,</span><span class="s1">&#39;v2v3&#39;</span><span class="p">)</span>
+    <span class="n">v2v3_to_detector</span> <span class="o">=</span> <span class="n">gwcs</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">wcs</span><span class="o">.</span><span class="n">get_transform</span><span class="p">(</span><span class="s1">&#39;v2v3&#39;</span><span class="p">,</span><span class="s1">&#39;detector&#39;</span><span class="p">)</span>
+
+    <span class="c1"># Transform at pixel values close to the edge of the subarray</span>
+    <span class="n">xpix</span> <span class="o">=</span> <span class="mi">9</span>
+    <span class="n">ypix</span> <span class="o">=</span> <span class="mi">9</span>
+
+    <span class="n">RA</span><span class="p">,</span><span class="n">Dec</span> <span class="o">=</span> <span class="n">gwcs</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">wcs</span><span class="p">(</span><span class="n">xpix</span><span class="p">,</span> <span class="n">ypix</span><span class="p">)</span>
+
+    <span class="c1"># Do the transforms at edge of defined subarray</span>
+    <span class="n">info_dict</span> <span class="o">=</span> <span class="n">do_all_the_transforms</span><span class="p">(</span><span class="n">RA</span><span class="p">,</span><span class="n">Dec</span><span class="p">,</span><span class="n">xpix</span><span class="p">,</span><span class="n">ypix</span><span class="p">,</span><span class="n">info_dict</span><span class="p">,</span><span class="n">obs_info</span><span class="p">,</span><span class="n">targ_ra_dec</span><span class="p">,</span><span class="s1">&#39;subarray edge&#39;</span><span class="p">,</span><span class="n">tol_edge</span><span class="p">)</span>
+
+    <span class="c1"># Transform at reference pixels</span>
+    <span class="n">xpix</span> <span class="o">=</span> <span class="n">gwcs</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">wcsinfo</span><span class="o">.</span><span class="n">crpix1</span>
+    <span class="n">ypix</span> <span class="o">=</span> <span class="n">gwcs</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">wcsinfo</span><span class="o">.</span><span class="n">crpix2</span>
+
+    <span class="n">RA</span> <span class="o">=</span> <span class="n">gwcs</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">wcsinfo</span><span class="o">.</span><span class="n">crval1</span>
+    <span class="n">Dec</span> <span class="o">=</span> <span class="n">gwcs</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">wcsinfo</span><span class="o">.</span><span class="n">crval2</span>
+
+    <span class="c1"># Do the transforms at reference pixels</span>
+    <span class="c1"># Check whether full frame readout or subarray</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">subarray</span> <span class="o">==</span> <span class="s1">&#39;FULL&#39;</span><span class="p">):</span>
+        <span class="n">tol_ref</span> <span class="o">=</span> <span class="n">tol_ref_full</span>
+    <span class="k">else</span><span class="p">:</span> 
+        <span class="n">tol_ref</span> <span class="o">=</span> <span class="n">tol_ref_subarray</span>
+    <span class="n">info_dict</span> <span class="o">=</span> <span class="n">do_all_the_transforms</span><span class="p">(</span><span class="n">RA</span><span class="p">,</span><span class="n">Dec</span><span class="p">,</span><span class="n">xpix</span><span class="p">,</span><span class="n">ypix</span><span class="p">,</span><span class="n">info_dict</span><span class="p">,</span><span class="n">obs_info</span><span class="p">,</span><span class="n">targ_ra_dec</span><span class="p">,</span><span class="s1">&#39;reference pixels&#39;</span><span class="p">,</span><span class="n">tol_ref</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="pass-fail-test-report">
+<h3>Pass/Fail test report<a class="headerlink" href="#pass-fail-test-report" title="Permalink to this headline">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Check whether any observations failed</span>
+<span class="n">fail_ind</span><span class="p">,</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">info_dict</span><span class="p">[</span><span class="s1">&#39;pass_fail&#39;</span><span class="p">])</span> <span class="o">==</span> <span class="s1">&#39;FAIL&#39;</span><span class="p">)</span>
+
+<span class="c1"># if any of the tests failed, print out which observations failed, and by how much</span>
+<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">fail_ind</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;TEST FAILED for following observations:&#39;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">fail_ind</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">info_dict</span><span class="p">[</span><span class="s1">&#39;obs_info&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">])</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">info_dict</span><span class="p">[</span><span class="s1">&#39;RA_Dec&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">])</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Failed test at </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">info_dict</span><span class="p">[</span><span class="s1">&#39;conversion&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Fractional difference between input &amp; output RA/xpix = </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">info_dict</span><span class="p">[</span><span class="s1">&#39;frac_ra_x&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Fractional difference between input &amp; output Dec/ypix = </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">info_dict</span><span class="p">[</span><span class="s1">&#39;frac_dec_y&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]))</span>
+        <span class="nb">print</span><span class="p">()</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;ALL TESTS PASSED - HUZZAH!&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Fractional differences between input &amp; output coordinates were all &#39;</span>\
+          <span class="s1">&#39;within pre-defined tolerances of:&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1"> (reference pixels, full frame), </span><span class="si">{}</span><span class="s1"> (reference pixels, subarray) or </span><span class="si">{}</span><span class="s1"> (edge of subarray)&#39;</span><span class="o">.</span>
+          <span class="nb">format</span><span class="p">(</span><span class="n">tol_ref_full</span><span class="p">,</span> <span class="n">tol_ref_subarray</span><span class="p">,</span> <span class="n">tol_edge</span><span class="p">))</span>    
+</pre></div>
+</div>
+</div>
+</div>
+<section id="run-cell-below-if-interested-in-seeing-the-fractional-differences-between-input-and-output-coordinates-for-all-observations">
+<h4>Run cell below if interested in seeing the fractional differences between input and output coordinates for all observations<a class="headerlink" href="#run-cell-below-if-interested-in-seeing-the-fractional-differences-between-input-and-output-coordinates-for-all-observations" title="Permalink to this headline">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">info_dict</span><span class="p">[</span><span class="s1">&#39;obs_info&#39;</span><span class="p">])):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">info_dict</span><span class="p">[</span><span class="s1">&#39;obs_info&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">])</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">info_dict</span><span class="p">[</span><span class="s1">&#39;RA_Dec&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">])</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Test at </span><span class="si">{}</span><span class="s1">: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">info_dict</span><span class="p">[</span><span class="s1">&#39;conversion&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">],</span><span class="n">info_dict</span><span class="p">[</span><span class="s1">&#39;pass_fail&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Fractional difference between input &amp; output RA/xpix = </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">info_dict</span><span class="p">[</span><span class="s1">&#39;frac_ra_x&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Fractional difference between input &amp; output Dec/ypix = </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">info_dict</span><span class="p">[</span><span class="s1">&#39;frac_dec_y&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]))</span>
+    <span class="nb">print</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="input-source-catalog-test">
+<h2>Input Source Catalog Test<a class="headerlink" href="#input-source-catalog-test" title="Permalink to this headline">#</a></h2>
+<p><a class="reference external" href="#title_ID">Top of Page</a></p>
+<section id="routine-for-plotting-image-to-visualize-sources-on-detector">
+<h3>Routine for plotting image to visualize sources on detector<a class="headerlink" href="#routine-for-plotting-image-to-visualize-sources-on-detector" title="Permalink to this headline">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">show_image</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="nb">min</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span> <span class="n">plt_srcs</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">12</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">clim</span><span class="o">=</span><span class="p">(</span><span class="nb">min</span><span class="p">,</span> <span class="nb">max</span><span class="p">))</span>
+    
+    <span class="k">if</span> <span class="p">(</span><span class="n">plt_srcs</span><span class="p">):</span>
+        
+        <span class="n">x_pix</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;x_pix&#39;</span><span class="p">]</span>
+        <span class="n">y_pix</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;y_pix&#39;</span><span class="p">]</span>
+
+        <span class="n">box_size</span> <span class="o">=</span> <span class="mi">20</span>
+                    
+        <span class="c1"># plot box around each source</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x_pix</span><span class="p">)):</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">x_pix</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">box_size</span><span class="p">,</span> <span class="n">x_pix</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">box_size</span><span class="p">],</span>
+                     <span class="p">[</span><span class="n">y_pix</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">box_size</span><span class="p">,</span> <span class="n">y_pix</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">box_size</span><span class="p">],</span> 
+                     <span class="n">color</span><span class="o">=</span><span class="s1">&#39;white&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>   
+            <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">x_pix</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">box_size</span><span class="p">,</span> <span class="n">x_pix</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">box_size</span><span class="p">],</span>
+                     <span class="p">[</span><span class="n">y_pix</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">box_size</span><span class="p">,</span> <span class="n">y_pix</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">box_size</span><span class="p">],</span> 
+                     <span class="n">color</span><span class="o">=</span><span class="s1">&#39;white&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">x_pix</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">box_size</span><span class="p">,</span> <span class="n">x_pix</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">box_size</span><span class="p">],</span>
+                     <span class="p">[</span><span class="n">y_pix</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">box_size</span><span class="p">,</span> <span class="n">y_pix</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">box_size</span><span class="p">],</span> 
+                     <span class="n">color</span><span class="o">=</span><span class="s1">&#39;white&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">x_pix</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">box_size</span><span class="p">,</span> <span class="n">x_pix</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">box_size</span><span class="p">],</span>
+                     <span class="p">[</span><span class="n">y_pix</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">box_size</span><span class="p">,</span> <span class="n">y_pix</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">box_size</span><span class="p">],</span> 
+                     <span class="n">color</span><span class="o">=</span><span class="s1">&#39;white&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+            
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="check-difference-between-output-and-input-pixel-coordinates">
+<h3>Check difference between output and input pixel coordinates<a class="headerlink" href="#check-difference-between-output-and-input-pixel-coordinates" title="Permalink to this headline">#</a></h3>
+<p>Read in simulated image and input source catalog from MIRaGe</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># set up tolerance</span>
+<span class="n">tol_pix_diff</span> <span class="o">=</span> <span class="mf">1e-2</span>
+
+<span class="c1"># Read in image with point sources that was processed through the DETECTOR1 stage of the pipeline</span>
+<span class="n">rate_img</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">outdir</span><span class="p">,</span><span class="s1">&#39;jw00042001001_01101_00001_nis_rate.fits&#39;</span><span class="p">)</span>
+
+<span class="c1"># Save image as data model</span>
+<span class="n">image_dm</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">ImageModel</span><span class="p">(</span><span class="n">rate_img</span><span class="p">)</span>
+
+<span class="c1"># Initialize AssignWcsStep</span>
+<span class="n">awcs</span> <span class="o">=</span> <span class="n">AssignWcsStep</span><span class="p">()</span>
+<span class="n">gwcs</span> <span class="o">=</span> <span class="n">awcs</span><span class="p">(</span><span class="n">image_dm</span><span class="p">)</span>
+
+<span class="c1"># Read in Mirage catalog of input source list</span>
+<span class="n">ptsrc_list</span> <span class="o">=</span> <span class="n">ascii</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">ptsrc_list_f</span><span class="p">,</span> <span class="n">header_start</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="c1"># See column names of input source catalog</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">ptsrc_list</span><span class="o">.</span><span class="n">colnames</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Show calibrated image and where sources fell</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Display image</span>
+
+<span class="n">show_image</span><span class="p">(</span><span class="n">image_dm</span><span class="o">.</span><span class="n">data</span><span class="p">,</span><span class="n">plt_srcs</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">x_pix</span><span class="o">=</span><span class="n">ptsrc_list</span><span class="p">[</span><span class="s1">&#39;pixel_x&#39;</span><span class="p">],</span> <span class="n">y_pix</span><span class="o">=</span><span class="n">ptsrc_list</span><span class="p">[</span><span class="s1">&#39;pixel_y&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Convert from World to detector coordinates and compare with input detector coordinates</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">world_to_detector</span> <span class="o">=</span> <span class="n">gwcs</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">wcs</span><span class="o">.</span><span class="n">get_transform</span><span class="p">(</span><span class="s1">&#39;world&#39;</span><span class="p">,</span> <span class="s1">&#39;detector&#39;</span><span class="p">)</span>
+
+<span class="n">det</span> <span class="o">=</span> <span class="n">world_to_detector</span><span class="p">(</span><span class="n">ptsrc_list</span><span class="p">[</span><span class="s1">&#39;RA_degrees&#39;</span><span class="p">],</span> <span class="n">ptsrc_list</span><span class="p">[</span><span class="s1">&#39;DEC_degrees&#39;</span><span class="p">])</span>
+
+<span class="n">del_x</span> <span class="o">=</span> <span class="n">det</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">ptsrc_list</span><span class="p">[</span><span class="s1">&#39;pixel_x&#39;</span><span class="p">]</span>
+<span class="n">del_y</span> <span class="o">=</span> <span class="n">det</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">ptsrc_list</span><span class="p">[</span><span class="s1">&#39;pixel_y&#39;</span><span class="p">]</span>
+
+<span class="n">del_x_rms</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">del_x</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span>
+<span class="n">del_y_rms</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">del_y</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;RMS of delta-x is </span><span class="si">{0:.4f}</span><span class="s1"> and RMS of delta-Dy is </span><span class="si">{1:.4f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+<span class="n">del_x_rms</span><span class="p">,</span> <span class="n">del_y_rms</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Plot distribution of <span class="math notranslate nohighlight">\(\Delta\)</span>x and <span class="math notranslate nohighlight">\(\Delta\)</span>y</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Set up plot</span>
+<span class="n">fig</span><span class="p">,(</span><span class="n">ax1</span><span class="p">,</span> <span class="n">ax2</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="c1"># Plot delta-x histogram</span>
+<span class="n">x_hist</span> <span class="o">=</span> <span class="n">ax1</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">del_x</span><span class="p">)</span>
+<span class="c1"># Label plot</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$\Delta$x&#39;</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;N&#39;</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="c1"># Set plot limits</span>
+<span class="n">ax1_yup</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">x_hist</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">ax1_yup</span><span class="p">)</span>
+<span class="c1"># plot line at zero</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="n">ax1_yup</span><span class="p">],</span> <span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">labelsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+
+<span class="c1"># Plot delta-Dec histogram</span>
+<span class="n">y_hist</span> <span class="o">=</span> <span class="n">ax2</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">del_y</span><span class="p">)</span>
+<span class="c1"># Label plot</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$\Delta$y&#39;</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;N&#39;</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="c1"># Set plot limits</span>
+<span class="n">ax2_yup</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">y_hist</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">ax2_yup</span><span class="p">)</span>
+<span class="c1"># plot line at zero</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="n">ax2_yup</span><span class="p">],</span> <span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">labelsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Plot <span class="math notranslate nohighlight">\(\Delta\)</span>x and <span class="math notranslate nohighlight">\(\Delta\)</span>y as function of inputted x and y. Symbol &amp; color-code based on detector position.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Set up plot</span>
+<span class="n">fig</span><span class="p">,(</span><span class="n">ax1</span><span class="p">,</span> <span class="n">ax2</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="c1"># Plot delta-x as function of input x</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">ptsrc_list</span><span class="p">[</span><span class="s1">&#39;pixel_x&#39;</span><span class="p">],</span> <span class="n">del_x</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;darkorchid&#39;</span><span class="p">)</span>
+
+<span class="c1"># Label plot</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$\Delta$x&#39;</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Input x&#39;</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="c1"># Set bounds on plot</span>
+<span class="n">xlo</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">ptsrc_list</span><span class="p">[</span><span class="s1">&#39;pixel_x&#39;</span><span class="p">])</span> <span class="o">-</span> <span class="mi">100</span>
+<span class="n">xhi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">ptsrc_list</span><span class="p">[</span><span class="s1">&#39;pixel_x&#39;</span><span class="p">])</span> <span class="o">+</span> <span class="mi">100</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">xlo</span><span class="p">,</span> <span class="n">xhi</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">del_x</span><span class="p">)</span> <span class="o">-</span> <span class="mf">0.005</span><span class="p">,</span>
+             <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">del_x</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.005</span><span class="p">)</span>
+
+<span class="c1"># Plot horizontal line at 0</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">xlo</span><span class="p">,</span> <span class="n">xhi</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">labelsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+
+
+<span class="c1"># Plot delta-y as function of input y</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">ptsrc_list</span><span class="p">[</span><span class="s1">&#39;pixel_y&#39;</span><span class="p">],</span> <span class="n">del_y</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;darkorchid&#39;</span><span class="p">)</span>
+
+<span class="c1"># Label plot</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$\Delta$y&#39;</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Input y&#39;</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="c1"># Set bounds on plot</span>
+<span class="n">xlo</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">ptsrc_list</span><span class="p">[</span><span class="s1">&#39;pixel_y&#39;</span><span class="p">])</span><span class="o">-</span><span class="mi">100</span>
+<span class="n">xhi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">ptsrc_list</span><span class="p">[</span><span class="s1">&#39;pixel_y&#39;</span><span class="p">])</span><span class="o">+</span><span class="mi">200</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">xlo</span><span class="p">,</span> <span class="n">xhi</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">del_y</span><span class="p">)</span><span class="o">-</span><span class="mf">0.005</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">del_y</span><span class="p">)</span><span class="o">+</span><span class="mf">0.005</span><span class="p">)</span>
+<span class="c1"># Plot horizontal line at 0</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">xlo</span><span class="p">,</span> <span class="n">xhi</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">labelsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id1">
+<h3>Pass/Fail test report<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span> <span class="p">((</span><span class="n">del_x_rms</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">tol_pix_diff</span><span class="p">)</span> <span class="o">&amp;</span>
+     <span class="p">((</span><span class="n">del_y_rms</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">tol_pix_diff</span><span class="p">)):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Test passed! HUZZAH!&#39;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;TEST FAILED&#39;</span><span class="p">)</span> 
+
+<span class="nb">print</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Tolerance for RMS of delta-x and delta-y is </span><span class="si">{}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tol_pix_diff</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;RMS of Del-x is: </span><span class="si">{0:0.4f}</span><span class="s1">,</span><span class="se">\n</span><span class="s1">maximum del-x: </span><span class="si">{1:0.4f}</span><span class="s1">, </span><span class="se">\n</span><span class="s1">minimum del-x: </span><span class="si">{2:0.6f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+    <span class="n">del_x_rms</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">del_x</span><span class="p">)),</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">del_x</span><span class="p">))))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">RMS of Del-y is: </span><span class="si">{0:0.4f}</span><span class="s1">, </span><span class="se">\n</span><span class="s1">maximum of del-y of </span><span class="si">{1:0.4f}</span><span class="s1">, </span><span class="se">\n</span><span class="s1">minium del-y: </span><span class="si">{2:0.6f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+    <span class="n">del_y_rms</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">del_y</span><span class="p">)),</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">del_y</span><span class="p">))))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><a id="about_ID"></a></p>
+</section>
+</section>
+<section id="about-this-notebook">
+<h2>About this Notebook<a class="headerlink" href="#about-this-notebook" title="Permalink to this headline">#</a></h2>
+<p><strong>Author:</strong> S. LaMassa, NIRISS
+<br><strong>Updated On:</strong> 05/26/2021</p>
+<p><a class="reference external" href="#title_ID">Top of Page</a>
+<img style="float: right;" src="./stsci_pri_combo_mark_horizonal_white_bkgd.png" alt="stsci_pri_combo_mark_horizonal_white_bkgd" width="200px"/></p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "TheRealZoidberg/jwst_validation_test",
+            ref: "main",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./notebooks/assign_wcs/jwst_assign_wcs_niriss_test"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="../jwst_assign_wcs_nirspec_test/exec_jwst_assign_wcs_nirspec_test.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">JWST Pipeline Validation Testing Notebook: NIRSpec, spec2, assign_wcs step</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="exec_jwst_assign_wcs_niriss_image.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">JWST Pipeline Validation Notebook: NIRISS, image2, assign_wcs</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By STScI<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>

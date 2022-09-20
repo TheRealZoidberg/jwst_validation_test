@@ -1,0 +1,2012 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>JWST Pipeline Validation Testing Notebook: Cube Build with MIRISIM Data &#8212; Notebook repository template</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/main.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/clipboard.min.js"></script>
+    <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../../_static/sphinx-thebe.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.1/dist/embed-amd.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="JWST Pipeline Validation Testing Notebook: Point Source Flux Conservation Modeshep" href="exec_testing_point_source_flux_conservation_modeshep_all.html" />
+    <link rel="prev" title="JWST Pipeline Validation Notebook: calwebb_detector1, dq_init unit tests" href="../../dq_init/jwst_dq_init_unit_tests.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../../../_static/logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Notebook repository template</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../index.html">
+                    <no title>
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../background/jwst_background_miri_test/jwst_background_subtraction_miri_imaging_testing.html">
+   JWST Pipeline Validation Notebook: calwebb_image2, background subtraction for MIRI imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../background/jwst_background_miri_test/exec_jwst_background_subtraction_miri_imaging_testing.html">
+   JWST Pipeline Validation Notebook: calwebb_image2, background subtraction for MIRI imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../background/jwst_background_miri_test/exec_background_sub-miri-lrs-slit.html">
+   JWST Pipeline Validation Testing Notebook: Background_subtract() for MIRI LRS SLIT
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../background/jwst_background_miri_test/background_sub-miri-lrs-slit.html">
+   JWST Pipeline Validation Testing Notebook: Background_subtract() for MIRI LRS SLIT
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../pathloss/jwst_pathloss_nirspec_test/exec_jwst_pathloss_nirspec_test.html">
+   JWST Pipeline Validation Testing Notebook: spec2, pathloss step
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../pathloss/jwst_pathloss_nirspec_test/jwst_pathloss_nirspec_test.html">
+   JWST Pipeline Validation Testing Notebook: spec2, pathloss step
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../msaflagopen/jwst_msa_flagging_nirspec_test.html">
+   JWST Pipeline Validation Testing Notebook: spec2, msa_flagging step
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../msaflagopen/exec_jwst_msa_flagging_nirspec_test.html">
+   JWST Pipeline Validation Testing Notebook: spec2, msa_flagging step
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../resample/jwst_resample_miri_test/jwst_resample_miri_lrs_slit.html">
+   JWST Pipeline Validation Testing Notebook: Calwebb_Image3, Resample step
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../resample/jwst_resample_miri_test/exec_jwst_resample_miri_lrs_slit.html">
+   JWST Pipeline Validation Testing Notebook: Calwebb_Image3, Resample step
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../resample/jwst_resample_miri_test/jwst_resample_miri_testing.html">
+   JWST Pipeline Validation Testing Notebook: Calwebb_Image3, Resample step with MIRI imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../resample/jwst_resample_miri_test/exec_jwst_resample_miri_testing.html">
+   JWST Pipeline Validation Testing Notebook: Calwebb_Image3, Resample step with MIRI imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../example_notebook/example_notebook.html">
+   Draft: Notebook title
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../source_catalog/jwst_source_catalog_miri_test/exec_jwst_source_catalog_miri_test.html">
+   JWST Pipeline Validation Notebook: calwebb_image3: source_catalog with MIRI
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../source_catalog/jwst_source_catalog_miri_test/jwst_source_catalog_miri_test.html">
+   JWST Pipeline Validation Notebook: calwebb_image3: source_catalog with MIRI
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../source_catalog/jwst_source_catalog_nircam_test/jwst_nircam_imaging_source_catalog.html">
+   JWST Pipeline Validation Notebook: NIRCam, calwebb_image3, source_catalog
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../source_catalog/jwst_source_catalog_nircam_test/exec_jwst_nircam_imaging_source_catalog.html">
+   JWST Pipeline Validation Notebook: NIRCam, calwebb_image3, source_catalog
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../lastframe/exec_jwst_lastframe_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, lastframe unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../lastframe/jwst_lastframe_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, lastframe unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../photom/jwst_photom_miri_test/exec_photom_miri_lrs_slitless.html">
+   JWST Pipeline Validation Testing Notebook: MIRI LRS Slitless spectroscopy
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../photom/jwst_photom_miri_test/photom_miri_mrs_test.html">
+   JWST Pipeline Validation Testing Notebook: Spec2, photom, MIRI
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../photom/jwst_photom_miri_test/exec_photom_miri_lrs_slit.html">
+   JWST Pipeline Validation Testing Notebook: MIRI LRS Slit spectroscopy
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../photom/jwst_photom_miri_test/exec_photom_miri_mrs_test.html">
+   JWST Pipeline Validation Testing Notebook: Spec2, photom, MIRI
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../photom/jwst_photom_miri_test/photom_miri_lrs_slit.html">
+   JWST Pipeline Validation Testing Notebook: MIRI LRS Slit spectroscopy
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../photom/jwst_photom_miri_test/photom_miri_lrs_slitless.html">
+   JWST Pipeline Validation Testing Notebook: MIRI LRS Slitless spectroscopy
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../photom/jwst_photom_miri_test/exec_jwst_photom_miri_test.html">
+   JWST Pipeline Validation Notebook: photom with MIRI Imager
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../photom/jwst_photom_miri_test/jwst_photom_miri_test.html">
+   JWST Pipeline Validation Notebook: photom with MIRI Imager
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../ami3/run_ami_pipeline.html">
+   JWST Pipeline Validation Notebook:  AMI3, AMI3 Pipeline
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../ami3/exec_ami_analyze_verify.html">
+   JWST Pipeline Validation Notebook: AMI3, AmiAnalyze
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../ami3/exec_ami_average.html">
+   JWST Pipeline Validation Notebook:  calwebb_ami3, ami_average
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../ami3/exec_ami_normalize.html">
+   JWST Pipeline Validation Notebook: calwebb_ami3, ami_normalize
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../ami3/exec_run_ami_pipeline.html">
+   JWST Pipeline Validation Notebook:  AMI3, AMI3 Pipeline
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../ami3/ami_normalize.html">
+   JWST Pipeline Validation Notebook: calwebb_ami3, ami_normalize
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../ami3/ami_average.html">
+   JWST Pipeline Validation Notebook:  calwebb_ami3, ami_average
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../ami3/ami_analyze_verify.html">
+   JWST Pipeline Validation Notebook: AMI3, AmiAnalyze
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../assign_wcs/jwst_assign_wcs_nirspec_test/jwst_assign_wcs_nirspec_test.html">
+   JWST Pipeline Validation Testing Notebook: NIRSpec, spec2, assign_wcs step
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../assign_wcs/jwst_assign_wcs_nirspec_test/exec_jwst_assign_wcs_nirspec_test.html">
+   JWST Pipeline Validation Testing Notebook: NIRSpec, spec2, assign_wcs step
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../assign_wcs/jwst_assign_wcs_niriss_test/jwst_assign_wcs_niriss_image.html">
+   JWST Pipeline Validation Notebook: NIRISS, image2, assign_wcs
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../assign_wcs/jwst_assign_wcs_niriss_test/exec_jwst_assign_wcs_niriss_image.html">
+   JWST Pipeline Validation Notebook: NIRISS, image2, assign_wcs
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../assign_wcs/jwst_assign_wcs_miri_test/exec_assign_wcs-miri-mrs.html">
+   JWST Pipeline Validation Testing Notebook: MIRI MRS Spec2: Assign_wcs()
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../assign_wcs/jwst_assign_wcs_miri_test/exec_assign_wcs-miri-lrs-tso.html">
+   JWST Pipeline Validation Testing Notebook: MIRI LRS Time Series Observation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../assign_wcs/jwst_assign_wcs_miri_test/assign_wcs-miri-lrs-slit.html">
+   JWST Pipeline Validation Testing Notebook: MIRI LRS Slit
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../assign_wcs/jwst_assign_wcs_miri_test/assign_wcs-miri-mrs.html">
+   JWST Pipeline Validation Testing Notebook: MIRI MRS Spec2: Assign_wcs()
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../assign_wcs/jwst_assign_wcs_miri_test/assign_wcs-miri-lrs-tso.html">
+   JWST Pipeline Validation Testing Notebook: MIRI LRS Time Series Observation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../assign_wcs/jwst_assign_wcs_miri_test/exec_assign_wcs-miri-lrs-slit.html">
+   JWST Pipeline Validation Testing Notebook: MIRI LRS Slit
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../barshadow/jwst_barshadow_nirspec_test/jwst_barshadow_nirspec_test.html">
+   JWST Pipeline Validation Testing Notebook: spec2, barshadow step
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../barshadow/jwst_barshadow_nirspec_test/exec_jwst_barshadow_nirspec_test.html">
+   JWST Pipeline Validation Testing Notebook: spec2, barshadow step
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../reset/jwst_reset_miri_test/exec_jwst_reset_miri_testing.html">
+   JWST Pipeline Validation Testing Notebook: Calwebb_detector1, reset step for MIRI
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../reset/jwst_reset_miri_test/jwst_reset_miri_testing.html">
+   JWST Pipeline Validation Testing Notebook: Calwebb_detector1, reset step for MIRI
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../refpix/jwst_refpix_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, refpix unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../refpix/exec_jwst_refpix_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, refpix unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../flat_field/jwst_flat_field_nirspec_test/jwst_flat_field_nirspec_test.html">
+   JWST Pipeline Validation Testing Notebook: spec2, flat_field step
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../flat_field/jwst_flat_field_nirspec_test/exec_jwst_flat_field_nirspec_test.html">
+   JWST Pipeline Validation Testing Notebook: spec2, flat_field step
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../flat_field/jwst_flat_field_miri_test/exec_flatfield_analysis_slitless.html">
+   JWST Pipeline Validation Testing Notebook: MIRI LRS Slitless spectroscopy
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../flat_field/jwst_flat_field_miri_test/exec_jwst_flat_field_miri_test.html">
+   JWST Pipeline Validation Testing notebook: flat_field step with MIRI Imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../flat_field/jwst_flat_field_miri_test/exec_flat-miri-lrs-slit.html">
+   JWST Pipeline Validation Testing Notebook: MIRI LRS Slit spectroscopy
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../flat_field/jwst_flat_field_miri_test/flatfield_analysis_slitless.html">
+   JWST Pipeline Validation Testing Notebook: MIRI LRS Slitless spectroscopy
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../flat_field/jwst_flat_field_miri_test/exec_flat_miri_mrs_test.html">
+   JWST Pipeline Validation Testing Notebook: Spec2, flat_field, MIRI
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../flat_field/jwst_flat_field_miri_test/flat-miri-lrs-slit.html">
+   JWST Pipeline Validation Testing Notebook: MIRI LRS Slit spectroscopy
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../flat_field/jwst_flat_field_miri_test/jwst_flat_field_miri_test.html">
+   JWST Pipeline Validation Testing notebook: flat_field step with MIRI Imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../flat_field/jwst_flat_field_miri_test/flat_miri_mrs_test.html">
+   JWST Pipeline Validation Testing Notebook: Spec2, flat_field, MIRI
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../skymatch/jwst_skymatch_miri_test/jwst_skymatch_photom_miri_test.html">
+   JWST Pipeline Validation Notebook: skymatch and photometry with MIRI
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../skymatch/jwst_skymatch_miri_test/exec_jwst_skymatch_miri_test.html">
+   JWST Pipeline Validation Notebook: skymatch with MIRI
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../skymatch/jwst_skymatch_miri_test/exec_jwst_skymatch_photom_miri_test.html">
+   JWST Pipeline Validation Notebook: skymatch and photometry with MIRI
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../skymatch/jwst_skymatch_miri_test/jwst_skymatch_miri_test.html">
+   JWST Pipeline Validation Notebook: skymatch with MIRI
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../jump/jwst_jump_miri_test/jwst_jump_miri_testing.html">
+   JWST Pipeline Validation Testing Notebook: Calwebb_Detector1, Jump step
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../jump/jwst_jump_miri_test/exec_jwst_jump_miri_testing.html">
+   JWST Pipeline Validation Testing Notebook: Calwebb_Detector1, Jump step
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../jump/jwst_jump_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, jump unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../jump/exec_jwst_jump_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, jump unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../calwebb_image3/jwst_image3_nircam_test/jwst_image3_nircam_test.html">
+   JWST Pipeline Validation Notebook: calwebb_image3, NIRCam imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../calwebb_image3/jwst_image3_nircam_test/exec_jwst_image3_nircam_test.html">
+   JWST Pipeline Validation Notebook: calwebb_image3, NIRCam imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../calwebb_image3/jwst_image3_miri_test/exec_jwst_image3_miri_test.html">
+   JWST Pipeline Validation Notebook: calwebb_image3 with MIRI
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../calwebb_image3/jwst_image3_miri_test/jwst_image3_miri_test.html">
+   JWST Pipeline Validation Notebook: calwebb_image3 with MIRI
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../calwebb_detector1/jwst_detector1_nircam_test/jwst_detector1_nircam_test.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, NIRCam imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../calwebb_detector1/jwst_detector1_nircam_test/exec_jwst_detector1_nircam_test.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, NIRCam imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../calwebb_detector1/jwst_detector1_miri_test/exec_jwst_detector1_miri_imtso_testing.html">
+   JWST Pipeline Validation Testing Notebook: Calwebb_Detector1 for MIRI TSO imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../calwebb_detector1/jwst_detector1_miri_test/jwst_detector1_miri_imtso_testing.html">
+   JWST Pipeline Validation Testing Notebook: Calwebb_Detector1 for MIRI TSO imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../calwebb_detector1/jwst_detector1_miri_test/exec_caldetector1-miri-lrs-tso.html">
+   JWST Pipeline Validation Testing Notebook: MIRI LRS Time Series Observation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../calwebb_detector1/jwst_detector1_miri_test/caldetector1-miri-lrs-tso.html">
+   JWST Pipeline Validation Testing Notebook: MIRI LRS Time Series Observation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../rscd/jwst_rscd_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, rscd unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../rscd/exec_jwst_rscd_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, rscd unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../rscd/jwst_rscd_miri_test/exec_jwst_miri_rscd_testing.html">
+   JWST Pipeline Validation Testing Notebook: Calwebb_Detector1, RSCD step
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../rscd/jwst_rscd_miri_test/jwst_miri_rscd_testing.html">
+   JWST Pipeline Validation Testing Notebook: Calwebb_Detector1, RSCD step
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../calwebb_image2/jwst_image2_nircam_test/jwst_image2_nircam_test.html">
+   JWST Pipeline Validation Notebook: calwebb_image2, NIRCam imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../calwebb_image2/jwst_image2_nircam_test/exec_jwst_image2_nircam_test.html">
+   JWST Pipeline Validation Notebook: calwebb_image2, NIRCam imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../ramp_fitting/exec_jwst_ramp_fitting_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, ramp_fitting unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../ramp_fitting/jwst_ramp_fitting_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, ramp_fitting unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../firstframe/exec_jwst_firstframe_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, firstframe unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../firstframe/jwst_firstframe_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, firstframe unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../dq_init/exec_jwst_dq_init_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, dq_init unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../dq_init/jwst_dq_init_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, dq_init unit tests
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   JWST Pipeline Validation Testing Notebook: Cube Build with MIRISIM Data
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="exec_testing_point_source_flux_conservation_modeshep_all.html">
+   JWST Pipeline Validation Testing Notebook: Point Source Flux Conservation Modeshep
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="testing_point_source_flux_conservation_modeshep_all.html">
+   JWST Pipeline Validation Testing Notebook: Point Source Flux Conservation Modeshep
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="exec_test_cube_build_spec3.html">
+   JWST Pipeline Validation Testing Notebook: Cube Build with MIRISIM Data
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../saturation/exec_jwst_saturation_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, saturation unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../saturation/jwst_saturation_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, saturation unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../extract_2d/jwst_extract_2d_nirspec_test/jwst_extract_2d_nirspec_test.html">
+   JWST Pipeline Validation Testing Notebook: spec2, extract_2d step
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../extract_2d/jwst_extract_2d_nirspec_test/exec_jwst_extract_2d_nirspec_test.html">
+   JWST Pipeline Validation Testing Notebook: spec2, extract_2d step
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../persistence/exec_jwst_persistence_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, persistence unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../persistence/jwst_persistence_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, persistence unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../extract_1d/jwst_extract_1d_miri_test/exec_extract_1d-spec2-miri-lrs-slit.html">
+   JWST Pipeline Validation Testing Notebook: MIRI LRS Slit
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../extract_1d/jwst_extract_1d_miri_test/extract_1d-spec2-miri-lrs-slitless.html">
+   JWST Pipeline Validation Testing Notebook: MIRI LRS Slitless
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../extract_1d/jwst_extract_1d_miri_test/extract_1d-spec2-miri-lrs-slit.html">
+   JWST Pipeline Validation Testing Notebook: MIRI LRS Slit
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../extract_1d/jwst_extract_1d_miri_test/exec_extract_1d-spec2-miri-lrs-slitless.html">
+   JWST Pipeline Validation Testing Notebook: MIRI LRS Slitless
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../dark_current/exec_jwst_dark_current_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, dark_current unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../dark_current/jwst_dark_current_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, dark_current unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../templates/jwst_validation_notebook_template.html">
+   JWST Pipeline Validation Notebook:
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../templates/exec_jwst_validation_notebook_template.html">
+   JWST Pipeline Validation Notebook:
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../templates/validation_test_template.html">
+   JWST Pipeline Validation Testing Notebook: Descriptive Name of Test You Are Performing
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../templates/exec_validation_test_template.html">
+   JWST Pipeline Validation Testing Notebook: Descriptive Name of Test You Are Performing
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../ipc/exec_jwst_ipc_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, ipc unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../ipc/jwst_ipc_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, ipc unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/background/exec_jwst_background_unit_tests.html">
+   JWST calwebb_image2, background unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/background/jwst_background_unit_tests.html">
+   JWST calwebb_image2, background unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/jwst_nirspec_regression_tests.html">
+   JWST NIRSpec regression tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/flatfield/exec_jwst_flatfield_unit_tests.html">
+   JWST calwebb_image2 and calwebb_spec2, flatfield unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/flatfield/jwst_flatfield_unit_tests.html">
+   JWST calwebb_image2 and calwebb_spec2, flatfield unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/jwst_nircam_regression_tests.html">
+   JWST NIRCam regression tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/resample/exec_jwst_resample_unit_tests.html">
+   JWST calwebb_image2 and calwebb_spec2, resample unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/resample/jwst_resample_unit_tests.html">
+   JWST calwebb_image2 and calwebb_spec2, resample unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/jwst_niriss_regression_tests.html">
+   JWST NIRISS regression tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/source_catalog/jwst_source_catalog_unit_tests.html">
+   JWST calwebb_image3, source_catalog unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/source_catalog/exec_jwst_source_catalog_unit_tests.html">
+   JWST calwebb_image3, source_catalog unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/exec_jwst_fgs_regression_tests.html">
+   JWST FGS regression tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/photom/jwst_photom_unit_tests.html">
+   JWST calwebb_image2 and calwebb_spec2, photom unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/photom/exec_jwst_photom_unit_tests.html">
+   JWST calwebb_image2 and calwebb_spec2, photom unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/assign_wcs/jwst_assign_wcs_unit_tests.html">
+   JWST calwebb_image2 and calwebb_spec2, assign_wcs unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/assign_wcs/exec_jwst_assign_wcs_unit_tests.html">
+   JWST calwebb_image2 and calwebb_spec2, assign_wcs unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/skymatch/jwst_skymatch_unit_tests.html">
+   JWST calwebb_image3, skymatch unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/skymatch/exec_jwst_skymatch_unit_tests.html">
+   JWST calwebb_image3, skymatch unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/exec_jwst_niriss_regression_tests.html">
+   JWST NIRISS regression tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/exec_jwst_nirspec_regression_tests.html">
+   JWST NIRSpec regression tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/exec_jwst_nircam_regression_tests.html">
+   JWST NIRCam regression tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/jwst_fgs_regression_tests.html">
+   JWST FGS regression tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/exec_jwst_miri_regression_tests.html">
+   JWST MIRI regression tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/jwst_miri_regression_tests.html">
+   JWST MIRI regression tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/tweakreg/exec_jwst_tweakreg_unit_tests.html">
+   JWST calwebb_image3, tweakreg unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/tweakreg/jwst_tweakreg_unit_tests.html">
+   JWST calwebb_image3, tweakreg unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/outlier_detection/jwst_outlier_detection_unit_tests.html">
+   JWST calwebb_image3, calwebb_spec3, calwebb_coron3, calwebb_tso3, outlier_detection unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/outlier_detection/exec_jwst_outlier_detection_unit_tests.html">
+   JWST calwebb_image3, calwebb_spec3, calwebb_coron3, calwebb_tso3, outlier_detection unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../tweakreg/jwst_tweakreg_miri_test/exec_jwst_tweakreg_miri_test.html">
+   JWST Pipeline Validation Testing Notebook: Calwebb_Image3, Tweakreg step with MIRI imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../tweakreg/jwst_tweakreg_miri_test/jwst_tweakreg_miri_test.html">
+   JWST Pipeline Validation Testing Notebook: Calwebb_Image3, Tweakreg step with MIRI imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../outlier_detection/jwst_outlier_detection_miri_test/exec_jwst_outlier_detection_miri_test.html">
+   JWST Pipeline Validation Notebook: outlier_detection with MIRI
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../outlier_detection/jwst_outlier_detection_miri_test/exec_jwst_outlier_detection_view_miri_test.html">
+   JWST Pipeline Validation Notebook: MIRI view outlier_detection
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../outlier_detection/jwst_outlier_detection_miri_test/exec_out_det_test2.html">
+   JWST Pipeline Validation Notebook: Outlier Detection for MIRI MRS
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../outlier_detection/jwst_outlier_detection_miri_test/out_det_test2.html">
+   JWST Pipeline Validation Notebook: Outlier Detection for MIRI MRS
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../outlier_detection/jwst_outlier_detection_miri_test/jwst_outlier_detection_miri_test.html">
+   JWST Pipeline Validation Notebook: outlier_detection with MIRI
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../outlier_detection/jwst_outlier_detection_miri_test/jwst_outlier_detection_view_miri_test.html">
+   JWST Pipeline Validation Notebook: MIRI view outlier_detection
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../superbias/exec_jwst_superbias_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, superbias unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../superbias/jwst_superbias_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, superbias unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../calwebb_coron3/exec_MIRI_shared_calcoron3_testing.html">
+   JWST Pipeline Validation Testing Notebook: Calwebb_Coron3 for MIRI Coronagraphic Imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../calwebb_coron3/jwst_calcoron3_nircam_test.html">
+   JWST Pipeline Validation Notebook: calwebb_coron3 with NIRCam
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../calwebb_coron3/exec_jwst_calcoron3_nircam_test.html">
+   JWST Pipeline Validation Notebook: calwebb_coron3 with NIRCam
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../calwebb_coron3/MIRI_shared_calcoron3_testing.html">
+   JWST Pipeline Validation Testing Notebook: Calwebb_Coron3 for MIRI Coronagraphic Imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../fringe/JWST_fringe_miri_test/exec_fringe_miri_mrs_test.html">
+   JWST Pipeline Validation Testing Notebook: Spec2, fringe, MIRI
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../fringe/JWST_fringe_miri_test/fringe_miri_mrs_test.html">
+   JWST Pipeline Validation Testing Notebook: Spec2, fringe, MIRI
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../image3/jwst_image3_miri_test/exec_jwst_image3_miri_test.html">
+   JWST Pipeline Validation Notebook: calwebb_image3 with MIRI
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../image3/jwst_image3_miri_test/jwst_image3_miri_test.html">
+   JWST Pipeline Validation Notebook: calwebb_image3 with MIRI
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../linearity/jwst_linearity_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, linearity unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../linearity/exec_jwst_linearity_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, linearity unit tests
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/TheRealZoidberg/jwst_validation_test/main?urlpath=tree/notebooks/cube_build/jwst_cube_build_miri_test/test_cube_build_spec3.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../../../_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://colab.research.google.com/github/TheRealZoidberg/jwst_validation_test/blob/main/notebooks/cube_build/jwst_cube_build_miri_test/test_cube_build_spec3.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Colab"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../../../_static/images/logo_colab.png">
+  </span>
+<span class="headerbtn__text-container">Colab</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="initThebeSBT()"
+  class="headerbtn headerbtn-launch-thebe"
+  data-toggle="tooltip"
+data-placement="left"
+title="Launch Thebe"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-play"></i>
+  </span>
+<span class="headerbtn__text-container">Live Code</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Source repositories">
+      <i class="fab fa-github"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://github.com/TheRealZoidberg/jwst_validation_test"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/TheRealZoidberg/jwst_validation_test/issues/new?title=Issue%20on%20page%20%2Fnotebooks/cube_build/jwst_cube_build_miri_test/test_cube_build_spec3.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="headerbtn__text-container">open issue</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../../../_sources/notebooks/cube_build/jwst_cube_build_miri_test/test_cube_build_spec3.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#author-isha-nayak">
+   Author: Isha Nayak
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#update-crds-context">
+   Update CRDS Context
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#import-necessary-packages">
+   Import necessary packages
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#setup-box-files">
+   Setup Box Files
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#setup-box-urls">
+   Setup Box Urls
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#setup-loops">
+   Setup Loops
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#setup-detector-1-file-names">
+   Setup Detector 1 File Names
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#run-detector-1-and-skip-reference-pixel">
+   Run Detector 1 and Skip Reference Pixel
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#setup-spec-2-file-names">
+   Setup Spec 2 File Names
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#run-spec-2-and-skip-straylight-extract1d-and-cube-build">
+   Run Spec 2 and Skip Straylight, Extract1D, and Cube build
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#setup-spec-3-file-names">
+   Setup Spec 3 File Names
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#change-srctype-from-extended-to-point">
+   Change SRCTYPE from EXTENDED to POINT
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#run-spec-3-and-skip-master-background-mrs-imatch-and-outlier-detection">
+   Run Spec 3 and Skip Master Background, MRS imatch, and Outlier Detection
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#make-figures-from-extract-1d-output-which-uses-extended-as-the-default-source-type">
+   Make figures from extract 1D output which uses EXTENDED as the default source type.
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#make-figures-from-summing-up-the-flux-in-each-channel-of-the-3d-cube">
+   Make figures from summing up the flux in each channel of the 3D cube.
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#define-pass-fail-criteria-for-s3d">
+   Define Pass/Fail Criteria For S3D
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#summary">
+   Summary
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>JWST Pipeline Validation Testing Notebook: Cube Build with MIRISIM Data</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#author-isha-nayak">
+   Author: Isha Nayak
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#update-crds-context">
+   Update CRDS Context
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#import-necessary-packages">
+   Import necessary packages
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#setup-box-files">
+   Setup Box Files
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#setup-box-urls">
+   Setup Box Urls
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#setup-loops">
+   Setup Loops
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#setup-detector-1-file-names">
+   Setup Detector 1 File Names
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#run-detector-1-and-skip-reference-pixel">
+   Run Detector 1 and Skip Reference Pixel
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#setup-spec-2-file-names">
+   Setup Spec 2 File Names
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#run-spec-2-and-skip-straylight-extract1d-and-cube-build">
+   Run Spec 2 and Skip Straylight, Extract1D, and Cube build
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#setup-spec-3-file-names">
+   Setup Spec 3 File Names
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#change-srctype-from-extended-to-point">
+   Change SRCTYPE from EXTENDED to POINT
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#run-spec-3-and-skip-master-background-mrs-imatch-and-outlier-detection">
+   Run Spec 3 and Skip Master Background, MRS imatch, and Outlier Detection
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#make-figures-from-extract-1d-output-which-uses-extended-as-the-default-source-type">
+   Make figures from extract 1D output which uses EXTENDED as the default source type.
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#make-figures-from-summing-up-the-flux-in-each-channel-of-the-3d-cube">
+   Make figures from summing up the flux in each channel of the 3D cube.
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#define-pass-fail-criteria-for-s3d">
+   Define Pass/Fail Criteria For S3D
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#summary">
+   Summary
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <p><a id="title_ID"></a></p>
+<section class="tex2jax_ignore mathjax_ignore" id="jwst-pipeline-validation-testing-notebook-cube-build-with-mirisim-data">
+<h1>JWST Pipeline Validation Testing Notebook: Cube Build with MIRISIM Data<a class="headerlink" href="#jwst-pipeline-validation-testing-notebook-cube-build-with-mirisim-data" title="Permalink to this headline">#</a></h1>
+<p><span style="color:red"> <strong>Instruments Affected</strong></span>: MIRI</p>
+<p>Tested with simulated MIRI MRS data.</p>
+<section id="author-isha-nayak">
+<h2>Author: Isha Nayak<a class="headerlink" href="#author-isha-nayak" title="Permalink to this headline">#</a></h2>
+<p>This notebook is the second one that tests the cube build step of Spec3 of the JWST pipeline. The first notebook (<a class="reference external" href="https://github.com/spacetelescope/jwst_validation_notebooks/blob/master/jwst_validation_notebooks/cube_build/jwst_cube_build_miri_test/testing_point_source_flux_conservation_modeshep_all.ipynb">https://github.com/spacetelescope/jwst_validation_notebooks/blob/master/jwst_validation_notebooks/cube_build/jwst_cube_build_miri_test/testing_point_source_flux_conservation_modeshep_all.ipynb</a>) looks at data that bypasses MIRISim.</p>
+<p>In this notebook we use MIRISim data created with a 4 point dither and SLOW mode to see if a flat source with flux of 0.01 Jy is still flat after being processed by Detector 1, Spec 2, and Spec 3 steps of the pipeline. We skip outlier detection so there are outliers that do not get flagged, resulting in noise spikes in the spectrum.</p>
+<p>In the Detector 1 step we turn off reference pixels because reference pixels are not accounted for in a consistent manner. In the Spec 2 step we turn off straylight because it can sometimes cause problems, and we skip extract 1D and cube build and rely on Spec 3 for those steps instead. In Spec 3 we turn off master background because it does not work well for point sources and the extract 1D step does background subtraction, we turn off mrs imatch because it takes too much computational time, and we turn off outlier detection since that will be a separate notebook that tests the functionality of noise spikes and cosmic rays getting detected.</p>
+<p>In the first cube build notebook we inject a point source onto the MRS detector. We find that if we input a flat point source of 0.01 Jy, the standalone cube build function in Spec 3 will output a flat point source of 0.01 Jy within 2%. In each channel the spectrum is flat, but there is a mismatch of up to 2% within bands: i.e. the spectra is flat in Channel 1A and is flat is Channel 1B, but there is a small offset between Channel 1A and 1B.</p>
+<p>In this notebook the critera for passing in Channel/Band 1A through 3C is the median value in those channels has to be within 20% of the input flux of 0.01 Jy. Flux conservations is not perfect with mirisim data and the pipeline adds factors/corrections that cannot actually be tested until we get real data. Therefore the passing criteria in Channel/Band 1A through 3C is that the flux has to be conserved within 20% when using mirisim data and processing it through the pipeline, which is different from the 2% flux conservation criteria when we can bypass mirisim and test cube build.</p>
+<p>The critera for passing in 4A through 4C is the median value has to be within 160%. Channel 4 flux calibration is incorrect in mirisim and channel 4 data processes through the pipeline is also incorrect.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="k">if</span> <span class="s1">&#39;CRDS_CACHE_TYPE&#39;</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;CRDS_CACHE_TYPE&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;local&#39;</span><span class="p">:</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;CRDS_PATH&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;HOME&#39;</span><span class="p">],</span> <span class="s1">&#39;crds&#39;</span><span class="p">,</span> <span class="s1">&#39;cache&#39;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;CRDS_CACHE_TYPE&#39;</span><span class="p">]):</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;CRDS_PATH&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;CRDS_CACHE_TYPE&#39;</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;CRDS cache location: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;CRDS_PATH&#39;</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">KeyError</span><span class="g g-Whitespace">                                  </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span> <span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">7</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span>     <span class="k">elif</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;CRDS_CACHE_TYPE&#39;</span><span class="p">]):</span>
+<span class="g g-Whitespace">      </span><span class="mi">6</span>         <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;CRDS_PATH&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;CRDS_CACHE_TYPE&#39;</span><span class="p">]</span>
+<span class="ne">----&gt; </span><span class="mi">7</span> <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;CRDS cache location: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;CRDS_PATH&#39;</span><span class="p">]))</span>
+
+<span class="nn">File /usr/share/miniconda/lib/python3.9/os.py:679,</span> in <span class="ni">_Environ.__getitem__</span><span class="nt">(self, key)</span>
+<span class="g g-Whitespace">    </span><span class="mi">676</span>     <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">encodekey</span><span class="p">(</span><span class="n">key</span><span class="p">)]</span>
+<span class="g g-Whitespace">    </span><span class="mi">677</span> <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">678</span>     <span class="c1"># raise KeyError with the original key value</span>
+<span class="ne">--&gt; </span><span class="mi">679</span>     <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="kn">from</span> <span class="bp">None</span>
+<span class="g g-Whitespace">    </span><span class="mi">680</span> <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">decodevalue</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+<span class="ne">KeyError</span>: &#39;CRDS_PATH&#39;
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="update-crds-context">
+<h2>Update CRDS Context<a class="headerlink" href="#update-crds-context" title="Permalink to this headline">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#Update the context</span>
+<span class="c1">#%env CRDS_CONTEXT=jwst_0719.pmap</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="import-necessary-packages">
+<h2>Import necessary packages<a class="headerlink" href="#import-necessary-packages" title="Permalink to this headline">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Box download imports</span>
+<span class="kn">from</span> <span class="nn">astropy.utils.data</span> <span class="kn">import</span> <span class="n">download_file</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span> <span class="nn">shutil</span> <span class="kn">import</span> <span class="n">move</span>
+<span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">splitext</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#JWST functions</span>
+<span class="kn">import</span> <span class="nn">jwst</span>
+<span class="kn">from</span> <span class="nn">jwst.pipeline</span> <span class="kn">import</span> <span class="n">Detector1Pipeline</span>
+<span class="kn">from</span> <span class="nn">jwst.pipeline</span> <span class="kn">import</span> <span class="n">Spec2Pipeline</span>
+<span class="kn">from</span> <span class="nn">jwst.pipeline</span> <span class="kn">import</span> <span class="n">Spec3Pipeline</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#Mathematics and plotting functions</span>
+<span class="kn">from</span> <span class="nn">astropy.io</span> <span class="kn">import</span> <span class="n">fits</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">astropy.utils.data</span> <span class="kn">import</span> <span class="n">get_pkg_data_filename</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#Check JWST version</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">jwst</span><span class="o">.</span><span class="n">__version__</span> <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="setup-box-files">
+<h2>Setup Box Files<a class="headerlink" href="#setup-box-files" title="Permalink to this headline">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_box_files</span><span class="p">(</span><span class="n">file_list</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">box_url</span><span class="p">,</span><span class="n">file_name</span> <span class="ow">in</span> <span class="n">file_list</span><span class="p">:</span>
+        <span class="k">if</span> <span class="s1">&#39;https&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">box_url</span><span class="p">:</span>
+            <span class="n">box_url</span> <span class="o">=</span> <span class="s1">&#39;https://stsci.box.com/shared/static/&#39;</span> <span class="o">+</span> <span class="n">box_url</span>
+        <span class="n">downloaded_file</span> <span class="o">=</span> <span class="n">download_file</span><span class="p">(</span><span class="n">box_url</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">600</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">Path</span><span class="p">(</span><span class="n">file_name</span><span class="p">)</span><span class="o">.</span><span class="n">suffix</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+            <span class="n">ext</span> <span class="o">=</span> <span class="n">splitext</span><span class="p">(</span><span class="n">box_url</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">file_name</span> <span class="o">+=</span> <span class="n">ext</span>
+        <span class="n">move</span><span class="p">(</span><span class="n">downloaded_file</span><span class="p">,</span> <span class="n">file_name</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#****</span>
+<span class="c1">#</span>
+<span class="c1"># Set this variable to False to not use the temporary directory</span>
+<span class="c1">#</span>
+<span class="c1">#****</span>
+<span class="n">use_tempdir</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="c1"># Create a temporary directory to hold notebook output, and change the working directory to that directory.</span>
+<span class="kn">from</span> <span class="nn">tempfile</span> <span class="kn">import</span> <span class="n">TemporaryDirectory</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">shutil</span>
+<span class="k">if</span> <span class="n">use_tempdir</span><span class="p">:</span>
+    <span class="n">data_dir</span> <span class="o">=</span> <span class="n">TemporaryDirectory</span><span class="p">()</span>
+    <span class="c1"># If you have files that are in the notebook&#39;s directory, but that the notebook will need to use while</span>
+    <span class="c1"># running, copy them into the temporary directory here.</span>
+    <span class="c1">#</span>
+    <span class="c1"># files = [&#39;name_of_file&#39;]</span>
+    <span class="c1"># for file_name in files:</span>
+    <span class="c1">#     shutil.copy(file_name, os.path.join(data_dir.name, file_name))</span>
+    <span class="c1"># Save original directory</span>
+    <span class="n">orig_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
+    <span class="c1"># Move to new directory</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">data_dir</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+<span class="c1"># For info, print out where the script is running</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Running in </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()))</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="setup-box-urls">
+<h2>Setup Box Urls<a class="headerlink" href="#setup-box-urls" title="Permalink to this headline">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">seq1_file_urls</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;https://stsci.box.com/shared/static/bfdwxoi5d1bigpcrm8oax4gs7zvrx7jl.fits&#39;</span><span class="p">,</span>
+                 <span class="s1">&#39;https://stsci.box.com/shared/static/prkl3tr4tvi19f069kc0mdzfyrq9zqq9.fits&#39;</span><span class="p">,</span>
+                 <span class="s1">&#39;https://stsci.box.com/shared/static/tt81e5rp4325qn6qjndzr1tygwcd8mi3.fits&#39;</span><span class="p">,</span>
+                 <span class="s1">&#39;https://stsci.box.com/shared/static/oji8v81g5fvqnz2mplz7vrrxzf09j17i.fits&#39;</span><span class="p">,</span>
+                 <span class="s1">&#39;https://stsci.box.com/shared/static/qorfegleqsp47wk0c895xl0zzjlsc9za.fits&#39;</span><span class="p">,</span>
+                 <span class="s1">&#39;https://stsci.box.com/shared/static/55pcsp5867p7a5dg5qx8yazqkuamjwdb.fits&#39;</span><span class="p">]</span>
+
+<span class="n">seq1_file_names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;det_image_seq1_MIRIFULONG_34LONGexp1.fits&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;det_image_seq1_MIRIFULONG_34MEDIUMexp1.fits&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;det_image_seq1_MIRIFULONG_34SHORTexp1.fits&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;det_image_seq1_MIRIFUSHORT_12LONGexp1.fits&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;det_image_seq1_MIRIFUSHORT_12MEDIUMexp1.fits&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;det_image_seq1_MIRIFUSHORT_12SHORTexp1.fits&#39;</span><span class="p">]</span>
+
+<span class="n">box_download_list_seq1</span> <span class="o">=</span> <span class="p">[(</span><span class="n">url</span><span class="p">,</span><span class="n">name</span><span class="p">)</span> <span class="k">for</span> <span class="n">url</span><span class="p">,</span><span class="n">name</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">seq1_file_urls</span><span class="p">,</span><span class="n">seq1_file_names</span><span class="p">)]</span>
+
+<span class="n">get_box_files</span><span class="p">(</span><span class="n">box_download_list_seq1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">seq2_file_urls</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;https://stsci.box.com/shared/static/l0338f4vx7lbt6nacmu5e3qn0t63f0hg.fits&#39;</span><span class="p">,</span>
+                 <span class="s1">&#39;https://stsci.box.com/shared/static/zbeijqyendw0q3du7ttks4s3a88wulng.fits&#39;</span><span class="p">,</span>
+                 <span class="s1">&#39;https://stsci.box.com/shared/static/426lhx21n77hyaur9zzi8fclqj6brlnq.fits&#39;</span><span class="p">,</span>
+                 <span class="s1">&#39;https://stsci.box.com/shared/static/3h2dbj7xrmz0sqtqurmxqzoys48ccguf.fits&#39;</span><span class="p">,</span>
+                 <span class="s1">&#39;https://stsci.box.com/shared/static/954nenk3p81wes4uo0izvydmuq23pswi.fits&#39;</span><span class="p">,</span>
+                 <span class="s1">&#39;https://stsci.box.com/shared/static/b20bea8ymgk6gp4bj7i307dgwgyp6bj8.fits&#39;</span><span class="p">]</span>
+
+<span class="n">seq2_file_names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;det_image_seq2_MIRIFULONG_34LONGexp1.fits&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;det_image_seq2_MIRIFULONG_34MEDIUMexp1.fits&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;det_image_seq2_MIRIFULONG_34SHORTexp1.fits&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;det_image_seq2_MIRIFUSHORT_12LONGexp1.fits&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;det_image_seq2_MIRIFUSHORT_12MEDIUMexp1.fits&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;det_image_seq2_MIRIFUSHORT_12SHORTexp1.fits&#39;</span><span class="p">]</span>
+
+<span class="n">box_download_list_seq2</span> <span class="o">=</span> <span class="p">[(</span><span class="n">url</span><span class="p">,</span><span class="n">name</span><span class="p">)</span> <span class="k">for</span> <span class="n">url</span><span class="p">,</span><span class="n">name</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">seq2_file_urls</span><span class="p">,</span><span class="n">seq2_file_names</span><span class="p">)]</span>
+
+<span class="n">get_box_files</span><span class="p">(</span><span class="n">box_download_list_seq2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">seq3_file_urls</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;https://stsci.box.com/shared/static/jtaxk9nka3eiln5s583csvoujvkoim0h.fits&#39;</span><span class="p">,</span>
+                 <span class="s1">&#39;https://stsci.box.com/shared/static/mqvcswxmdermtj2keu979p35u9f4yten.fits&#39;</span><span class="p">,</span>
+                 <span class="s1">&#39;https://stsci.box.com/shared/static/nrxoryzu2vy264w5pr11ejeqktxicl7u.fits&#39;</span><span class="p">,</span>
+                 <span class="s1">&#39;https://stsci.box.com/shared/static/0zdaj8qxj5a2vovtejj15ba12gq4coio.fits&#39;</span><span class="p">,</span>
+                 <span class="s1">&#39;https://stsci.box.com/shared/static/x7rquwb5o9ncxsm550etnpig68bhqlxc.fits&#39;</span><span class="p">,</span>
+                 <span class="s1">&#39;https://stsci.box.com/shared/static/1vr3h1rmy7n7e9jq5rum13g496anqn39.fits&#39;</span><span class="p">]</span>
+
+<span class="n">seq3_file_names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;det_image_seq3_MIRIFULONG_34LONGexp1.fits&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;det_image_seq3_MIRIFULONG_34MEDIUMexp1.fits&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;det_image_seq3_MIRIFULONG_34SHORTexp1.fits&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;det_image_seq3_MIRIFUSHORT_12LONGexp1.fits&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;det_image_seq3_MIRIFUSHORT_12MEDIUMexp1.fits&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;det_image_seq3_MIRIFUSHORT_12SHORTexp1.fits&#39;</span><span class="p">]</span>
+
+<span class="n">box_download_list_seq3</span> <span class="o">=</span> <span class="p">[(</span><span class="n">url</span><span class="p">,</span><span class="n">name</span><span class="p">)</span> <span class="k">for</span> <span class="n">url</span><span class="p">,</span><span class="n">name</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">seq3_file_urls</span><span class="p">,</span><span class="n">seq3_file_names</span><span class="p">)]</span>
+
+<span class="n">get_box_files</span><span class="p">(</span><span class="n">box_download_list_seq3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">seq4_file_urls</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;https://stsci.box.com/shared/static/mj13u4iqlqp8altu47wief0pa4nie05z.fits&#39;</span><span class="p">,</span>
+                 <span class="s1">&#39;https://stsci.box.com/shared/static/9gca440lueo3yl5qwi4h72w1z4imkw07.fits&#39;</span><span class="p">,</span>
+                 <span class="s1">&#39;https://stsci.box.com/shared/static/4jp6trj5vcu957v7mgrk3x0xswspjsyp.fits&#39;</span><span class="p">,</span>
+                 <span class="s1">&#39;https://stsci.box.com/shared/static/o0sxswa1fcykbll7ynqobc6xj7pinr72.fits&#39;</span><span class="p">,</span>
+                 <span class="s1">&#39;https://stsci.box.com/shared/static/c8udg4depbxoha6m7vbntmq1j2vcqljj.fits&#39;</span><span class="p">,</span>
+                 <span class="s1">&#39;https://stsci.box.com/shared/static/sgp67c1gotmp4kyc4okzjkxpdxcvv2g8.fits&#39;</span><span class="p">,</span>
+                 <span class="s1">&#39;https://stsci.box.com/shared/static/csgnwqoos19wt9tkavpb0ml75p2j6m0q.json&#39;</span><span class="p">]</span>
+
+<span class="n">seq4_file_names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;det_image_seq4_MIRIFULONG_34LONGexp1.fits&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;det_image_seq4_MIRIFULONG_34MEDIUMexp1.fits&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;det_image_seq4_MIRIFULONG_34SHORTexp1.fits&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;det_image_seq4_MIRIFUSHORT_12LONGexp1.fits&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;det_image_seq4_MIRIFUSHORT_12MEDIUMexp1.fits&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;det_image_seq4_MIRIFUSHORT_12SHORTexp1.fits&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;spec3_updated.json&#39;</span><span class="p">]</span>
+
+<span class="n">box_download_list_seq4</span> <span class="o">=</span> <span class="p">[(</span><span class="n">url</span><span class="p">,</span><span class="n">name</span><span class="p">)</span> <span class="k">for</span> <span class="n">url</span><span class="p">,</span><span class="n">name</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">seq4_file_urls</span><span class="p">,</span><span class="n">seq4_file_names</span><span class="p">)]</span>
+
+<span class="n">get_box_files</span><span class="p">(</span><span class="n">box_download_list_seq4</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="setup-loops">
+<h2>Setup Loops<a class="headerlink" href="#setup-loops" title="Permalink to this headline">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#Band Loop 1</span>
+<span class="n">band_loop1</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;12SHORT&#39;</span><span class="p">,</span> <span class="s1">&#39;12MEDIUM&#39;</span><span class="p">,</span> <span class="s1">&#39;12LONG&#39;</span><span class="p">]</span>
+
+<span class="c1">#Band Loop 1</span>
+<span class="n">band_loop2</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;34SHORT&#39;</span><span class="p">,</span> <span class="s1">&#39;34MEDIUM&#39;</span><span class="p">,</span> <span class="s1">&#39;34LONG&#39;</span><span class="p">]</span>
+
+<span class="c1">#Dither Loop</span>
+<span class="n">dit_loop</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;seq1&#39;</span><span class="p">,</span> <span class="s1">&#39;seq2&#39;</span><span class="p">,</span> <span class="s1">&#39;seq3&#39;</span><span class="p">,</span> <span class="s1">&#39;seq4&#39;</span><span class="p">]</span>
+
+<span class="c1">#Channels</span>
+<span class="n">chan_type1</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;ch1-short&#39;</span><span class="p">,</span> <span class="s1">&#39;ch1-medium&#39;</span><span class="p">,</span> <span class="s1">&#39;ch1-long&#39;</span><span class="p">,</span> <span class="s1">&#39;ch2-short&#39;</span><span class="p">,</span> <span class="s1">&#39;ch2-medium&#39;</span><span class="p">,</span> <span class="s1">&#39;ch2-long&#39;</span><span class="p">,</span> <span class="s1">&#39;ch3-short&#39;</span><span class="p">,</span> <span class="s1">&#39;ch3-medium&#39;</span><span class="p">,</span> <span class="s1">&#39;ch3-long&#39;</span><span class="p">,</span> <span class="s1">&#39;ch4-short&#39;</span><span class="p">,</span> <span class="s1">&#39;ch4-medium&#39;</span><span class="p">,</span> <span class="s1">&#39;ch4-long&#39;</span><span class="p">]</span>
+<span class="n">chan_type2</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;1a&#39;</span><span class="p">,</span> <span class="s1">&#39;1b&#39;</span><span class="p">,</span> <span class="s1">&#39;1c&#39;</span><span class="p">,</span> <span class="s1">&#39;2a&#39;</span><span class="p">,</span> <span class="s1">&#39;2b&#39;</span><span class="p">,</span> <span class="s1">&#39;2c&#39;</span><span class="p">,</span> <span class="s1">&#39;3a&#39;</span><span class="p">,</span> <span class="s1">&#39;3b&#39;</span><span class="p">,</span> <span class="s1">&#39;3c&#39;</span><span class="p">,</span> <span class="s1">&#39;4a&#39;</span><span class="p">,</span> <span class="s1">&#39;4b&#39;</span><span class="p">,</span> <span class="s1">&#39;4c&#39;</span><span class="p">]</span>
+
+<span class="c1">#Colors</span>
+<span class="n">color_list</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="s1">&#39;blue&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="setup-detector-1-file-names">
+<h2>Setup Detector 1 File Names<a class="headerlink" href="#setup-detector-1-file-names" title="Permalink to this headline">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">name1</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39; &#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mi">12</span>
+<span class="n">count</span><span class="o">=</span><span class="mi">0</span>
+<span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">):</span>    
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">):</span>
+        <span class="n">name1</span><span class="p">[</span><span class="n">count</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;det_image_&#39;</span> <span class="o">+</span> <span class="n">dit_loop</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;_MIRIFUSHORT_&#39;</span> <span class="o">+</span> <span class="n">band_loop1</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;exp1.fits&#39;</span>
+        <span class="n">count</span><span class="o">=</span><span class="n">count</span><span class="o">+</span><span class="mi">1</span>
+
+<span class="n">name2</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39; &#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mi">12</span>
+<span class="n">count</span><span class="o">=</span><span class="mi">0</span>
+<span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">):</span>    
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">):</span>
+        <span class="n">name2</span><span class="p">[</span><span class="n">count</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;det_image_&#39;</span> <span class="o">+</span> <span class="n">dit_loop</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;_MIRIFULONG_&#39;</span> <span class="o">+</span> <span class="n">band_loop2</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;exp1.fits&#39;</span>
+        <span class="n">count</span><span class="o">=</span><span class="n">count</span><span class="o">+</span><span class="mi">1</span>
+        
+<span class="n">name_det1</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">name1</span><span class="p">,</span><span class="n">name2</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="run-detector-1-and-skip-reference-pixel">
+<h2>Run Detector 1 and Skip Reference Pixel<a class="headerlink" href="#run-detector-1-and-skip-reference-pixel" title="Permalink to this headline">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">24</span><span class="p">):</span>
+    <span class="n">result_det1</span> <span class="o">=</span> <span class="n">Detector1Pipeline</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">name_det1</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">save_results</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">steps</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;refpix&quot;</span> <span class="p">:</span> <span class="p">{</span><span class="s2">&quot;skip&quot;</span> <span class="p">:</span> <span class="kc">True</span><span class="p">}})</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="setup-spec-2-file-names">
+<h2>Setup Spec 2 File Names<a class="headerlink" href="#setup-spec-2-file-names" title="Permalink to this headline">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">name3</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39; &#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mi">12</span>
+<span class="n">count</span><span class="o">=</span><span class="mi">0</span>
+<span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">):</span>    
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">):</span>
+        <span class="n">name3</span><span class="p">[</span><span class="n">count</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;det_image_&#39;</span> <span class="o">+</span> <span class="n">dit_loop</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;_MIRIFUSHORT_&#39;</span> <span class="o">+</span> <span class="n">band_loop1</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;exp1_rate.fits&#39;</span>
+        <span class="n">count</span><span class="o">=</span><span class="n">count</span><span class="o">+</span><span class="mi">1</span>
+
+<span class="n">name4</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39; &#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mi">12</span>
+<span class="n">count</span><span class="o">=</span><span class="mi">0</span>
+<span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">):</span>    
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">):</span>
+        <span class="n">name4</span><span class="p">[</span><span class="n">count</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;det_image_&#39;</span> <span class="o">+</span> <span class="n">dit_loop</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;_MIRIFULONG_&#39;</span> <span class="o">+</span> <span class="n">band_loop2</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;exp1_rate.fits&#39;</span>
+        <span class="n">count</span><span class="o">=</span><span class="n">count</span><span class="o">+</span><span class="mi">1</span>
+        
+<span class="n">name_spec2</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">name3</span><span class="p">,</span><span class="n">name4</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="run-spec-2-and-skip-straylight-extract1d-and-cube-build">
+<h2>Run Spec 2 and Skip Straylight, Extract1D, and Cube build<a class="headerlink" href="#run-spec-2-and-skip-straylight-extract1d-and-cube-build" title="Permalink to this headline">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">24</span><span class="p">):</span>
+    <span class="n">result_spec2</span> <span class="o">=</span> <span class="n">Spec2Pipeline</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">name_spec2</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">save_results</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span><span class="n">steps</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;straylight&quot;</span> <span class="p">:</span> <span class="p">{</span><span class="s2">&quot;skip&quot;</span> <span class="p">:</span> <span class="kc">True</span><span class="p">},</span> <span class="s2">&quot;extract_1d&quot;</span> <span class="p">:</span> <span class="p">{</span><span class="s2">&quot;skip&quot;</span> <span class="p">:</span> <span class="kc">True</span><span class="p">},</span> <span class="s2">&quot;cube_build&quot;</span> <span class="p">:</span> <span class="p">{</span><span class="s2">&quot;skip&quot;</span> <span class="p">:</span> <span class="kc">True</span><span class="p">}})</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="setup-spec-3-file-names">
+<h2>Setup Spec 3 File Names<a class="headerlink" href="#setup-spec-3-file-names" title="Permalink to this headline">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">name5</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39; &#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mi">12</span>
+<span class="n">count</span><span class="o">=</span><span class="mi">0</span>
+<span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">):</span>    
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">):</span>
+        <span class="n">name5</span><span class="p">[</span><span class="n">count</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;det_image_&#39;</span> <span class="o">+</span> <span class="n">dit_loop</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;_MIRIFUSHORT_&#39;</span> <span class="o">+</span> <span class="n">band_loop1</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;exp1_cal.fits&#39;</span>
+        <span class="n">count</span><span class="o">=</span><span class="n">count</span><span class="o">+</span><span class="mi">1</span>
+
+<span class="n">name6</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39; &#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mi">12</span>
+<span class="n">count</span><span class="o">=</span><span class="mi">0</span>
+<span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">):</span>    
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">):</span>
+        <span class="n">name6</span><span class="p">[</span><span class="n">count</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;det_image_&#39;</span> <span class="o">+</span> <span class="n">dit_loop</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;_MIRIFULONG_&#39;</span> <span class="o">+</span> <span class="n">band_loop2</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;exp1_cal.fits&#39;</span>
+        <span class="n">count</span><span class="o">=</span><span class="n">count</span><span class="o">+</span><span class="mi">1</span>
+        
+<span class="n">name_spec3</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">name5</span><span class="p">,</span><span class="n">name6</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="change-srctype-from-extended-to-point">
+<h2>Change SRCTYPE from EXTENDED to POINT<a class="headerlink" href="#change-srctype-from-extended-to-point" title="Permalink to this headline">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">24</span><span class="p">):</span>
+    <span class="n">hdu</span><span class="o">=</span><span class="n">fits</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">name_spec3</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="n">hdu</span><span class="p">[</span><span class="s1">&#39;SCI&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s1">&#39;SRCTYPE&#39;</span><span class="p">]</span><span class="o">=</span><span class="s1">&#39;POINT&#39;</span>
+    <span class="n">hdu</span><span class="o">.</span><span class="n">writeto</span><span class="p">(</span><span class="n">name_spec3</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">hdu</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="run-spec-3-and-skip-master-background-mrs-imatch-and-outlier-detection">
+<h2>Run Spec 3 and Skip Master Background, MRS imatch, and Outlier Detection<a class="headerlink" href="#run-spec-3-and-skip-master-background-mrs-imatch-and-outlier-detection" title="Permalink to this headline">#</a></h2>
+<p>As an example, this step is called with an alternate method than Detector1 or Spec2. You use the ‘run’ option instead of the ‘call’ option to use Spec3.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">results_spec3</span> <span class="o">=</span> <span class="n">Spec3Pipeline</span><span class="p">()</span>
+<span class="n">results_spec3</span><span class="o">.</span><span class="n">master_background</span><span class="o">.</span><span class="n">skip</span><span class="o">=</span><span class="kc">True</span>
+<span class="n">results_spec3</span><span class="o">.</span><span class="n">mrs_imatch</span><span class="o">.</span><span class="n">skip</span><span class="o">=</span><span class="kc">True</span>
+<span class="n">results_spec3</span><span class="o">.</span><span class="n">outlier_detection</span><span class="o">.</span><span class="n">skip</span><span class="o">=</span><span class="kc">True</span>
+<span class="n">results_spec3</span><span class="o">.</span><span class="n">save_results</span><span class="o">=</span><span class="kc">True</span>
+<span class="n">results_spec3</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;spec3_updated.json&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="make-figures-from-extract-1d-output-which-uses-extended-as-the-default-source-type">
+<h2>Make figures from extract 1D output which uses EXTENDED as the default source type.<a class="headerlink" href="#make-figures-from-extract-1d-output-which-uses-extended-as-the-default-source-type" title="Permalink to this headline">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Open the FITS file</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">12</span><span class="p">):</span>
+    <span class="nb">globals</span><span class="p">()[</span><span class="s1">&#39;hdul_&#39;</span> <span class="o">+</span> <span class="n">chan_type2</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;spec3_results_&#39;</span> <span class="o">+</span> <span class="n">chan_type1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;_x1d.fits&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Find length of each channel</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">12</span><span class="p">):</span>
+    <span class="n">test</span> <span class="o">=</span> <span class="nb">globals</span><span class="p">()[</span><span class="s1">&#39;hdul_&#39;</span> <span class="o">+</span> <span class="n">chan_type2</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span>
+    <span class="nb">globals</span><span class="p">()[</span><span class="s1">&#39;length_&#39;</span> <span class="o">+</span> <span class="n">chan_type2</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">test</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Make empty array for wavelength and flux</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">12</span><span class="p">):</span>
+    <span class="nb">globals</span><span class="p">()[</span><span class="s1">&#39;wavelength_&#39;</span> <span class="o">+</span> <span class="n">chan_type2</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">]</span> <span class="o">*</span> <span class="nb">globals</span><span class="p">()[</span><span class="s1">&#39;length_&#39;</span> <span class="o">+</span> <span class="n">chan_type2</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span>
+    <span class="nb">globals</span><span class="p">()[</span><span class="s1">&#39;flux_&#39;</span> <span class="o">+</span> <span class="n">chan_type2</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">]</span> <span class="o">*</span> <span class="nb">globals</span><span class="p">()[</span><span class="s1">&#39;length_&#39;</span> <span class="o">+</span> <span class="n">chan_type2</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Read wavelength and flux</span>
+<span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">12</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">globals</span><span class="p">()[</span><span class="s1">&#39;length_&#39;</span> <span class="o">+</span> <span class="n">chan_type2</span><span class="p">[</span><span class="n">j</span><span class="p">]]):</span>
+        <span class="nb">globals</span><span class="p">()[</span><span class="s1">&#39;wavelength_&#39;</span> <span class="o">+</span> <span class="n">chan_type2</span><span class="p">[</span><span class="n">j</span><span class="p">]][</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="nb">globals</span><span class="p">()[</span><span class="s1">&#39;hdul_&#39;</span> <span class="o">+</span> <span class="n">chan_type2</span><span class="p">[</span><span class="n">j</span><span class="p">]][</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+        <span class="nb">globals</span><span class="p">()[</span><span class="s1">&#39;flux_&#39;</span> <span class="o">+</span> <span class="n">chan_type2</span><span class="p">[</span><span class="n">j</span><span class="p">]][</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="nb">globals</span><span class="p">()[</span><span class="s1">&#39;hdul_&#39;</span> <span class="o">+</span> <span class="n">chan_type2</span><span class="p">[</span><span class="n">j</span><span class="p">]][</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Make plot</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">12</span><span class="p">):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="nb">globals</span><span class="p">()[</span><span class="s1">&#39;wavelength_&#39;</span> <span class="o">+</span> <span class="n">chan_type2</span><span class="p">[</span><span class="n">i</span><span class="p">]],</span> <span class="nb">globals</span><span class="p">()[</span><span class="s1">&#39;flux_&#39;</span> <span class="o">+</span> <span class="n">chan_type2</span><span class="p">[</span><span class="n">i</span><span class="p">]],</span> <span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="n">color_list</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">30</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mf">0.15</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="make-figures-from-summing-up-the-flux-in-each-channel-of-the-3d-cube">
+<h2>Make figures from summing up the flux in each channel of the 3D cube.<a class="headerlink" href="#make-figures-from-summing-up-the-flux-in-each-channel-of-the-3d-cube" title="Permalink to this headline">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Make figure and keep track of mediam value in each band</span>
+<span class="n">median_s3d</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">12</span>
+
+<span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">12</span><span class="p">):</span>
+    <span class="n">image3</span><span class="p">,</span> <span class="n">header3</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">getdata</span><span class="p">(</span><span class="s1">&#39;spec3_results_&#39;</span> <span class="o">+</span> <span class="n">chan_type1</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;_s3d.fits&#39;</span><span class="p">,</span> <span class="n">header</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+    
+    <span class="n">num_x3</span> <span class="o">=</span> <span class="n">header3</span><span class="p">[</span><span class="s2">&quot;NAXIS2&quot;</span><span class="p">]</span>
+    <span class="n">num_y3</span> <span class="o">=</span> <span class="n">header3</span><span class="p">[</span><span class="s2">&quot;NAXIS1&quot;</span><span class="p">]</span>
+    <span class="n">num_chan3</span> <span class="o">=</span> <span class="n">header3</span><span class="p">[</span><span class="s2">&quot;NAXIS3&quot;</span><span class="p">]</span>
+    <span class="n">start_wavelength3</span> <span class="o">=</span> <span class="n">header3</span><span class="p">[</span><span class="s2">&quot;CRVAL3&quot;</span><span class="p">]</span>
+    <span class="n">step_wavelength3</span> <span class="o">=</span> <span class="n">header3</span><span class="p">[</span><span class="s2">&quot;CDELT3&quot;</span><span class="p">]</span>
+    <span class="n">pix_size3</span> <span class="o">=</span> <span class="n">header3</span><span class="p">[</span><span class="s2">&quot;CDELT1&quot;</span><span class="p">]</span>
+    
+    <span class="n">a3</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">]</span> <span class="o">*</span> <span class="n">num_chan3</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">num_chan3</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">num_x3</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">num_y3</span><span class="p">):</span>
+                <span class="n">a3</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">image3</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="p">]</span> <span class="o">+</span> <span class="n">a3</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+
+    <span class="n">d3</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">]</span> <span class="o">*</span> <span class="n">num_chan3</span>
+    <span class="n">d3</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">start_wavelength3</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_chan3</span><span class="p">):</span>
+        <span class="n">d3</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">d3</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">step_wavelength3</span>
+        
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">num_chan3</span><span class="p">):</span>
+        <span class="n">a3</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">a3</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">pix_size3</span> <span class="o">*</span> <span class="mi">3600</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">pix_size3</span> <span class="o">*</span> <span class="mi">3600</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">10</span><span class="o">**</span><span class="mi">6</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="mf">4.25</span> <span class="o">*</span> <span class="mi">10</span><span class="o">**</span><span class="mi">10</span><span class="p">)</span>
+    
+    <span class="n">median_s3d</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">a3</span><span class="p">)</span>
+    
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">d3</span><span class="p">,</span> <span class="n">a3</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="n">color_list</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">lw</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> 
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.15</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="define-pass-fail-criteria-for-s3d">
+<h2>Define Pass/Fail Criteria For S3D<a class="headerlink" href="#define-pass-fail-criteria-for-s3d" title="Permalink to this headline">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Check median is off by less than 20% of expected flux in channel/band 1a though 3c</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">8</span><span class="p">):</span>
+    <span class="k">if</span> <span class="p">(</span><span class="mi">100</span> <span class="o">*</span> <span class="p">((</span><span class="n">median_s3d</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">-</span> <span class="p">(</span><span class="mf">0.01</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="mf">0.01</span><span class="p">))</span> <span class="o">&lt;</span> <span class="mi">20</span><span class="p">:</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="p">(</span><span class="mi">100</span> <span class="o">*</span> <span class="p">((</span><span class="n">median_s3d</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">-</span> <span class="p">(</span><span class="mf">0.01</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="mf">0.01</span><span class="p">))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">chan_type2</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;: pass&#39;</span> <span class="o">+</span> <span class="s1">&#39;,&#39;</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">str</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">a</span><span class="p">))</span> <span class="o">+</span> <span class="s1">&#39;%&#39;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="p">(</span><span class="mi">100</span> <span class="o">*</span> <span class="p">((</span><span class="n">median_s3d</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">-</span> <span class="p">(</span><span class="mf">0.01</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="mf">0.01</span><span class="p">))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">chan_type2</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;: fail&#39;</span> <span class="o">+</span> <span class="s1">&#39;,&#39;</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">str</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">a</span><span class="p">))</span> <span class="o">+</span> <span class="s1">&#39;%&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Check median is off by less than 160% of expected flux in channel/band 4a though 4c</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">12</span><span class="p">):</span>
+    <span class="k">if</span> <span class="p">(</span><span class="mi">100</span> <span class="o">*</span> <span class="p">((</span><span class="n">median_s3d</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">-</span> <span class="p">(</span><span class="mf">0.01</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="mf">0.01</span><span class="p">))</span> <span class="o">&lt;</span> <span class="mi">160</span><span class="p">:</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="p">(</span><span class="mi">100</span> <span class="o">*</span> <span class="p">((</span><span class="n">median_s3d</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">-</span> <span class="p">(</span><span class="mf">0.01</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="mf">0.01</span><span class="p">))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">chan_type2</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;: pass&#39;</span> <span class="o">+</span> <span class="s1">&#39;,&#39;</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">str</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">a</span><span class="p">))</span> <span class="o">+</span> <span class="s1">&#39;%&#39;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="p">(</span><span class="mi">100</span> <span class="o">*</span> <span class="p">((</span><span class="n">median_s3d</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">-</span> <span class="p">(</span><span class="mf">0.01</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="mf">0.01</span><span class="p">))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">chan_type2</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;: fail&#39;</span> <span class="o">+</span> <span class="s1">&#39;,&#39;</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">str</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">a</span><span class="p">))</span> <span class="o">+</span> <span class="s1">&#39;%&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">#</a></h2>
+<p>We plot below the pass/fail criteria. In Channel/Band 1a through 3c, the criteria is that the expected median output after Spec 3 step of the pipeline is within 20% of the 0.01 Jy flat flux that was input. The output from the pipeline ranges from 9%-16% from the expected flux.</p>
+<p>The flux output from channel 4a through 4c is off by a factor ranging from 36% to 153% off from the input flux. Therefore the set the pass/fail criterial in channel 4 such that the output should be within 160% from the input. Both the data made by mirisim and then processed by the pipeline lead to such a high discrepancy in this particular channel. MIRISim simulations in Channel 4 do not represent the data we expect to get in flight.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Band 1A through 3C</span>
+<span class="n">x_limit</span> <span class="o">=</span> <span class="p">[</span><span class="mf">4.89</span><span class="p">,</span> <span class="mf">18.04</span><span class="p">]</span>
+<span class="n">y_limit</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">]</span>
+
+<span class="c1">#Set 20% Pass/Fail Criteria</span>
+<span class="n">y_20_upper</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.01</span> <span class="o">+</span> <span class="p">(</span><span class="mf">0.01</span> <span class="o">*</span> <span class="p">(</span><span class="mf">0.2</span><span class="p">)),</span> <span class="mf">0.01</span> <span class="o">+</span> <span class="p">(</span><span class="mf">0.01</span> <span class="o">*</span> <span class="p">(</span><span class="mf">0.2</span><span class="p">))]</span>
+<span class="n">y_20_lower</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.01</span> <span class="o">-</span> <span class="p">(</span><span class="mf">0.01</span> <span class="o">*</span> <span class="p">(</span><span class="mf">0.2</span><span class="p">)),</span> <span class="mf">0.01</span> <span class="o">-</span> <span class="p">(</span><span class="mf">0.01</span> <span class="o">*</span> <span class="p">(</span><span class="mf">0.2</span><span class="p">))]</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_limit</span><span class="p">,</span> <span class="n">y_limit</span><span class="p">,</span> <span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;expected&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_limit</span><span class="p">,</span> <span class="n">y_20_upper</span><span class="p">,</span> <span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;cyan&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;20</span><span class="si">% li</span><span class="s1">mit&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_limit</span><span class="p">,</span> <span class="n">y_20_lower</span><span class="p">,</span> <span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;cyan&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">,)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="nb">globals</span><span class="p">()[</span><span class="s1">&#39;wavelength_&#39;</span> <span class="o">+</span> <span class="n">chan_type2</span><span class="p">[</span><span class="mi">0</span><span class="p">]][</span><span class="mi">0</span><span class="p">],</span> <span class="p">(</span><span class="n">median_s3d</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="n">color_list</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;1A, 2A, 3A&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="nb">globals</span><span class="p">()[</span><span class="s1">&#39;wavelength_&#39;</span> <span class="o">+</span> <span class="n">chan_type2</span><span class="p">[</span><span class="mi">1</span><span class="p">]][</span><span class="mi">0</span><span class="p">],</span> <span class="p">(</span><span class="n">median_s3d</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="n">color_list</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;1B, 2B, 3B&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="nb">globals</span><span class="p">()[</span><span class="s1">&#39;wavelength_&#39;</span> <span class="o">+</span> <span class="n">chan_type2</span><span class="p">[</span><span class="mi">2</span><span class="p">]][</span><span class="mi">0</span><span class="p">],</span> <span class="p">(</span><span class="n">median_s3d</span><span class="p">[</span><span class="mi">2</span><span class="p">]),</span> <span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="n">color_list</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;1C, 2C, 3C&#39;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">9</span><span class="p">):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="nb">globals</span><span class="p">()[</span><span class="s1">&#39;wavelength_&#39;</span> <span class="o">+</span> <span class="n">chan_type2</span><span class="p">[</span><span class="n">i</span><span class="p">]][</span><span class="mi">0</span><span class="p">],</span> <span class="p">(</span><span class="n">median_s3d</span><span class="p">[</span><span class="n">i</span><span class="p">]),</span> <span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="n">color_list</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Band 4A through 4C</span>
+<span class="n">x_limit</span> <span class="o">=</span> <span class="p">[</span><span class="mf">17.66</span><span class="p">,</span> <span class="mf">28.31</span><span class="p">]</span>
+<span class="n">y_limit</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">]</span>
+
+<span class="c1">#Set 160% Pass/Fail Criteria</span>
+<span class="n">y_160_upper</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.01</span> <span class="o">+</span> <span class="p">(</span><span class="mf">0.01</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.6</span><span class="p">)),</span> <span class="mf">0.01</span> <span class="o">+</span> <span class="p">(</span><span class="mf">0.01</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.6</span><span class="p">))]</span>
+<span class="n">y_160_lower</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.01</span> <span class="o">-</span> <span class="p">(</span><span class="mf">0.01</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.6</span><span class="p">)),</span> <span class="mf">0.01</span> <span class="o">-</span> <span class="p">(</span><span class="mf">0.01</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.6</span><span class="p">))]</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_limit</span><span class="p">,</span> <span class="n">y_limit</span><span class="p">,</span> <span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;expected&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_limit</span><span class="p">,</span> <span class="n">y_160_upper</span><span class="p">,</span> <span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;cyan&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;160</span><span class="si">% li</span><span class="s1">mit&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_limit</span><span class="p">,</span> <span class="n">y_160_lower</span><span class="p">,</span> <span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;cyan&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="nb">globals</span><span class="p">()[</span><span class="s1">&#39;wavelength_&#39;</span> <span class="o">+</span> <span class="n">chan_type2</span><span class="p">[</span><span class="mi">9</span><span class="p">]][</span><span class="mi">0</span><span class="p">],</span> <span class="p">(</span><span class="n">median_s3d</span><span class="p">[</span><span class="mi">9</span><span class="p">]),</span> <span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="n">color_list</span><span class="p">[</span><span class="mi">9</span><span class="p">],</span> <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;4A&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="nb">globals</span><span class="p">()[</span><span class="s1">&#39;wavelength_&#39;</span> <span class="o">+</span> <span class="n">chan_type2</span><span class="p">[</span><span class="mi">10</span><span class="p">]][</span><span class="mi">0</span><span class="p">],</span> <span class="p">(</span><span class="n">median_s3d</span><span class="p">[</span><span class="mi">10</span><span class="p">]),</span> <span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="n">color_list</span><span class="p">[</span><span class="mi">10</span><span class="p">],</span> <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;4B&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="nb">globals</span><span class="p">()[</span><span class="s1">&#39;wavelength_&#39;</span> <span class="o">+</span> <span class="n">chan_type2</span><span class="p">[</span><span class="mi">11</span><span class="p">]][</span><span class="mi">0</span><span class="p">],</span> <span class="p">(</span><span class="n">median_s3d</span><span class="p">[</span><span class="mi">11</span><span class="p">]),</span> <span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="n">color_list</span><span class="p">[</span><span class="mi">11</span><span class="p">],</span> <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;4C&#39;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">12</span><span class="p">):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="nb">globals</span><span class="p">()[</span><span class="s1">&#39;wavelength_&#39;</span> <span class="o">+</span> <span class="n">chan_type2</span><span class="p">[</span><span class="n">i</span><span class="p">]][</span><span class="mi">0</span><span class="p">],</span> <span class="p">(</span><span class="n">median_s3d</span><span class="p">[</span><span class="n">i</span><span class="p">]),</span> <span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="n">color_list</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "TheRealZoidberg/jwst_validation_test",
+            ref: "main",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./notebooks/cube_build/jwst_cube_build_miri_test"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="../../dq_init/jwst_dq_init_unit_tests.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">JWST Pipeline Validation Notebook: calwebb_detector1, dq_init unit tests</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="exec_testing_point_source_flux_conservation_modeshep_all.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">JWST Pipeline Validation Testing Notebook: Point Source Flux Conservation Modeshep</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By STScI<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>

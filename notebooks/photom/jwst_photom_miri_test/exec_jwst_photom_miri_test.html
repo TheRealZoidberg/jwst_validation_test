@@ -1,0 +1,2225 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>JWST Pipeline Validation Notebook: photom with MIRI Imager &#8212; Notebook repository template</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/main.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/clipboard.min.js"></script>
+    <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../../_static/sphinx-thebe.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.1/dist/embed-amd.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="JWST Pipeline Validation Notebook: photom with MIRI Imager" href="jwst_photom_miri_test.html" />
+    <link rel="prev" title="JWST Pipeline Validation Testing Notebook: MIRI LRS Slitless spectroscopy" href="photom_miri_lrs_slitless.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../../../_static/logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Notebook repository template</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../index.html">
+                    <no title>
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../background/jwst_background_miri_test/jwst_background_subtraction_miri_imaging_testing.html">
+   JWST Pipeline Validation Notebook: calwebb_image2, background subtraction for MIRI imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../background/jwst_background_miri_test/exec_jwst_background_subtraction_miri_imaging_testing.html">
+   JWST Pipeline Validation Notebook: calwebb_image2, background subtraction for MIRI imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../background/jwst_background_miri_test/exec_background_sub-miri-lrs-slit.html">
+   JWST Pipeline Validation Testing Notebook: Background_subtract() for MIRI LRS SLIT
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../background/jwst_background_miri_test/background_sub-miri-lrs-slit.html">
+   JWST Pipeline Validation Testing Notebook: Background_subtract() for MIRI LRS SLIT
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../pathloss/jwst_pathloss_nirspec_test/exec_jwst_pathloss_nirspec_test.html">
+   JWST Pipeline Validation Testing Notebook: spec2, pathloss step
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../pathloss/jwst_pathloss_nirspec_test/jwst_pathloss_nirspec_test.html">
+   JWST Pipeline Validation Testing Notebook: spec2, pathloss step
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../msaflagopen/jwst_msa_flagging_nirspec_test.html">
+   JWST Pipeline Validation Testing Notebook: spec2, msa_flagging step
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../msaflagopen/exec_jwst_msa_flagging_nirspec_test.html">
+   JWST Pipeline Validation Testing Notebook: spec2, msa_flagging step
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../resample/jwst_resample_miri_test/jwst_resample_miri_lrs_slit.html">
+   JWST Pipeline Validation Testing Notebook: Calwebb_Image3, Resample step
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../resample/jwst_resample_miri_test/exec_jwst_resample_miri_lrs_slit.html">
+   JWST Pipeline Validation Testing Notebook: Calwebb_Image3, Resample step
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../resample/jwst_resample_miri_test/jwst_resample_miri_testing.html">
+   JWST Pipeline Validation Testing Notebook: Calwebb_Image3, Resample step with MIRI imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../resample/jwst_resample_miri_test/exec_jwst_resample_miri_testing.html">
+   JWST Pipeline Validation Testing Notebook: Calwebb_Image3, Resample step with MIRI imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../example_notebook/example_notebook.html">
+   Draft: Notebook title
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../source_catalog/jwst_source_catalog_miri_test/exec_jwst_source_catalog_miri_test.html">
+   JWST Pipeline Validation Notebook: calwebb_image3: source_catalog with MIRI
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../source_catalog/jwst_source_catalog_miri_test/jwst_source_catalog_miri_test.html">
+   JWST Pipeline Validation Notebook: calwebb_image3: source_catalog with MIRI
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../source_catalog/jwst_source_catalog_nircam_test/jwst_nircam_imaging_source_catalog.html">
+   JWST Pipeline Validation Notebook: NIRCam, calwebb_image3, source_catalog
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../source_catalog/jwst_source_catalog_nircam_test/exec_jwst_nircam_imaging_source_catalog.html">
+   JWST Pipeline Validation Notebook: NIRCam, calwebb_image3, source_catalog
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../lastframe/exec_jwst_lastframe_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, lastframe unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../lastframe/jwst_lastframe_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, lastframe unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="exec_photom_miri_lrs_slitless.html">
+   JWST Pipeline Validation Testing Notebook: MIRI LRS Slitless spectroscopy
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="photom_miri_mrs_test.html">
+   JWST Pipeline Validation Testing Notebook: Spec2, photom, MIRI
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="exec_photom_miri_lrs_slit.html">
+   JWST Pipeline Validation Testing Notebook: MIRI LRS Slit spectroscopy
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="exec_photom_miri_mrs_test.html">
+   JWST Pipeline Validation Testing Notebook: Spec2, photom, MIRI
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="photom_miri_lrs_slit.html">
+   JWST Pipeline Validation Testing Notebook: MIRI LRS Slit spectroscopy
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="photom_miri_lrs_slitless.html">
+   JWST Pipeline Validation Testing Notebook: MIRI LRS Slitless spectroscopy
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   JWST Pipeline Validation Notebook: photom with MIRI Imager
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="jwst_photom_miri_test.html">
+   JWST Pipeline Validation Notebook: photom with MIRI Imager
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../ami3/run_ami_pipeline.html">
+   JWST Pipeline Validation Notebook:  AMI3, AMI3 Pipeline
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../ami3/exec_ami_analyze_verify.html">
+   JWST Pipeline Validation Notebook: AMI3, AmiAnalyze
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../ami3/exec_ami_average.html">
+   JWST Pipeline Validation Notebook:  calwebb_ami3, ami_average
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../ami3/exec_ami_normalize.html">
+   JWST Pipeline Validation Notebook: calwebb_ami3, ami_normalize
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../ami3/exec_run_ami_pipeline.html">
+   JWST Pipeline Validation Notebook:  AMI3, AMI3 Pipeline
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../ami3/ami_normalize.html">
+   JWST Pipeline Validation Notebook: calwebb_ami3, ami_normalize
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../ami3/ami_average.html">
+   JWST Pipeline Validation Notebook:  calwebb_ami3, ami_average
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../ami3/ami_analyze_verify.html">
+   JWST Pipeline Validation Notebook: AMI3, AmiAnalyze
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../assign_wcs/jwst_assign_wcs_nirspec_test/jwst_assign_wcs_nirspec_test.html">
+   JWST Pipeline Validation Testing Notebook: NIRSpec, spec2, assign_wcs step
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../assign_wcs/jwst_assign_wcs_nirspec_test/exec_jwst_assign_wcs_nirspec_test.html">
+   JWST Pipeline Validation Testing Notebook: NIRSpec, spec2, assign_wcs step
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../assign_wcs/jwst_assign_wcs_niriss_test/jwst_assign_wcs_niriss_image.html">
+   JWST Pipeline Validation Notebook: NIRISS, image2, assign_wcs
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../assign_wcs/jwst_assign_wcs_niriss_test/exec_jwst_assign_wcs_niriss_image.html">
+   JWST Pipeline Validation Notebook: NIRISS, image2, assign_wcs
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../assign_wcs/jwst_assign_wcs_miri_test/exec_assign_wcs-miri-mrs.html">
+   JWST Pipeline Validation Testing Notebook: MIRI MRS Spec2: Assign_wcs()
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../assign_wcs/jwst_assign_wcs_miri_test/exec_assign_wcs-miri-lrs-tso.html">
+   JWST Pipeline Validation Testing Notebook: MIRI LRS Time Series Observation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../assign_wcs/jwst_assign_wcs_miri_test/assign_wcs-miri-lrs-slit.html">
+   JWST Pipeline Validation Testing Notebook: MIRI LRS Slit
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../assign_wcs/jwst_assign_wcs_miri_test/assign_wcs-miri-mrs.html">
+   JWST Pipeline Validation Testing Notebook: MIRI MRS Spec2: Assign_wcs()
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../assign_wcs/jwst_assign_wcs_miri_test/assign_wcs-miri-lrs-tso.html">
+   JWST Pipeline Validation Testing Notebook: MIRI LRS Time Series Observation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../assign_wcs/jwst_assign_wcs_miri_test/exec_assign_wcs-miri-lrs-slit.html">
+   JWST Pipeline Validation Testing Notebook: MIRI LRS Slit
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../barshadow/jwst_barshadow_nirspec_test/jwst_barshadow_nirspec_test.html">
+   JWST Pipeline Validation Testing Notebook: spec2, barshadow step
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../barshadow/jwst_barshadow_nirspec_test/exec_jwst_barshadow_nirspec_test.html">
+   JWST Pipeline Validation Testing Notebook: spec2, barshadow step
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../reset/jwst_reset_miri_test/exec_jwst_reset_miri_testing.html">
+   JWST Pipeline Validation Testing Notebook: Calwebb_detector1, reset step for MIRI
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../reset/jwst_reset_miri_test/jwst_reset_miri_testing.html">
+   JWST Pipeline Validation Testing Notebook: Calwebb_detector1, reset step for MIRI
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../refpix/jwst_refpix_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, refpix unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../refpix/exec_jwst_refpix_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, refpix unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../flat_field/jwst_flat_field_nirspec_test/jwst_flat_field_nirspec_test.html">
+   JWST Pipeline Validation Testing Notebook: spec2, flat_field step
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../flat_field/jwst_flat_field_nirspec_test/exec_jwst_flat_field_nirspec_test.html">
+   JWST Pipeline Validation Testing Notebook: spec2, flat_field step
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../flat_field/jwst_flat_field_miri_test/exec_flatfield_analysis_slitless.html">
+   JWST Pipeline Validation Testing Notebook: MIRI LRS Slitless spectroscopy
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../flat_field/jwst_flat_field_miri_test/exec_jwst_flat_field_miri_test.html">
+   JWST Pipeline Validation Testing notebook: flat_field step with MIRI Imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../flat_field/jwst_flat_field_miri_test/exec_flat-miri-lrs-slit.html">
+   JWST Pipeline Validation Testing Notebook: MIRI LRS Slit spectroscopy
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../flat_field/jwst_flat_field_miri_test/flatfield_analysis_slitless.html">
+   JWST Pipeline Validation Testing Notebook: MIRI LRS Slitless spectroscopy
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../flat_field/jwst_flat_field_miri_test/exec_flat_miri_mrs_test.html">
+   JWST Pipeline Validation Testing Notebook: Spec2, flat_field, MIRI
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../flat_field/jwst_flat_field_miri_test/flat-miri-lrs-slit.html">
+   JWST Pipeline Validation Testing Notebook: MIRI LRS Slit spectroscopy
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../flat_field/jwst_flat_field_miri_test/jwst_flat_field_miri_test.html">
+   JWST Pipeline Validation Testing notebook: flat_field step with MIRI Imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../flat_field/jwst_flat_field_miri_test/flat_miri_mrs_test.html">
+   JWST Pipeline Validation Testing Notebook: Spec2, flat_field, MIRI
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../skymatch/jwst_skymatch_miri_test/jwst_skymatch_photom_miri_test.html">
+   JWST Pipeline Validation Notebook: skymatch and photometry with MIRI
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../skymatch/jwst_skymatch_miri_test/exec_jwst_skymatch_miri_test.html">
+   JWST Pipeline Validation Notebook: skymatch with MIRI
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../skymatch/jwst_skymatch_miri_test/exec_jwst_skymatch_photom_miri_test.html">
+   JWST Pipeline Validation Notebook: skymatch and photometry with MIRI
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../skymatch/jwst_skymatch_miri_test/jwst_skymatch_miri_test.html">
+   JWST Pipeline Validation Notebook: skymatch with MIRI
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../jump/jwst_jump_miri_test/jwst_jump_miri_testing.html">
+   JWST Pipeline Validation Testing Notebook: Calwebb_Detector1, Jump step
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../jump/jwst_jump_miri_test/exec_jwst_jump_miri_testing.html">
+   JWST Pipeline Validation Testing Notebook: Calwebb_Detector1, Jump step
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../jump/jwst_jump_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, jump unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../jump/exec_jwst_jump_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, jump unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../calwebb_image3/jwst_image3_nircam_test/jwst_image3_nircam_test.html">
+   JWST Pipeline Validation Notebook: calwebb_image3, NIRCam imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../calwebb_image3/jwst_image3_nircam_test/exec_jwst_image3_nircam_test.html">
+   JWST Pipeline Validation Notebook: calwebb_image3, NIRCam imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../calwebb_image3/jwst_image3_miri_test/exec_jwst_image3_miri_test.html">
+   JWST Pipeline Validation Notebook: calwebb_image3 with MIRI
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../calwebb_image3/jwst_image3_miri_test/jwst_image3_miri_test.html">
+   JWST Pipeline Validation Notebook: calwebb_image3 with MIRI
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../calwebb_detector1/jwst_detector1_nircam_test/jwst_detector1_nircam_test.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, NIRCam imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../calwebb_detector1/jwst_detector1_nircam_test/exec_jwst_detector1_nircam_test.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, NIRCam imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../calwebb_detector1/jwst_detector1_miri_test/exec_jwst_detector1_miri_imtso_testing.html">
+   JWST Pipeline Validation Testing Notebook: Calwebb_Detector1 for MIRI TSO imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../calwebb_detector1/jwst_detector1_miri_test/jwst_detector1_miri_imtso_testing.html">
+   JWST Pipeline Validation Testing Notebook: Calwebb_Detector1 for MIRI TSO imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../calwebb_detector1/jwst_detector1_miri_test/exec_caldetector1-miri-lrs-tso.html">
+   JWST Pipeline Validation Testing Notebook: MIRI LRS Time Series Observation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../calwebb_detector1/jwst_detector1_miri_test/caldetector1-miri-lrs-tso.html">
+   JWST Pipeline Validation Testing Notebook: MIRI LRS Time Series Observation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../rscd/jwst_rscd_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, rscd unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../rscd/exec_jwst_rscd_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, rscd unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../rscd/jwst_rscd_miri_test/exec_jwst_miri_rscd_testing.html">
+   JWST Pipeline Validation Testing Notebook: Calwebb_Detector1, RSCD step
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../rscd/jwst_rscd_miri_test/jwst_miri_rscd_testing.html">
+   JWST Pipeline Validation Testing Notebook: Calwebb_Detector1, RSCD step
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../calwebb_image2/jwst_image2_nircam_test/jwst_image2_nircam_test.html">
+   JWST Pipeline Validation Notebook: calwebb_image2, NIRCam imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../calwebb_image2/jwst_image2_nircam_test/exec_jwst_image2_nircam_test.html">
+   JWST Pipeline Validation Notebook: calwebb_image2, NIRCam imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../ramp_fitting/exec_jwst_ramp_fitting_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, ramp_fitting unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../ramp_fitting/jwst_ramp_fitting_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, ramp_fitting unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../firstframe/exec_jwst_firstframe_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, firstframe unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../firstframe/jwst_firstframe_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, firstframe unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../dq_init/exec_jwst_dq_init_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, dq_init unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../dq_init/jwst_dq_init_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, dq_init unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../cube_build/jwst_cube_build_miri_test/test_cube_build_spec3.html">
+   JWST Pipeline Validation Testing Notebook: Cube Build with MIRISIM Data
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../cube_build/jwst_cube_build_miri_test/exec_testing_point_source_flux_conservation_modeshep_all.html">
+   JWST Pipeline Validation Testing Notebook: Point Source Flux Conservation Modeshep
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../cube_build/jwst_cube_build_miri_test/testing_point_source_flux_conservation_modeshep_all.html">
+   JWST Pipeline Validation Testing Notebook: Point Source Flux Conservation Modeshep
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../cube_build/jwst_cube_build_miri_test/exec_test_cube_build_spec3.html">
+   JWST Pipeline Validation Testing Notebook: Cube Build with MIRISIM Data
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../saturation/exec_jwst_saturation_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, saturation unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../saturation/jwst_saturation_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, saturation unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../extract_2d/jwst_extract_2d_nirspec_test/jwst_extract_2d_nirspec_test.html">
+   JWST Pipeline Validation Testing Notebook: spec2, extract_2d step
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../extract_2d/jwst_extract_2d_nirspec_test/exec_jwst_extract_2d_nirspec_test.html">
+   JWST Pipeline Validation Testing Notebook: spec2, extract_2d step
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../persistence/exec_jwst_persistence_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, persistence unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../persistence/jwst_persistence_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, persistence unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../extract_1d/jwst_extract_1d_miri_test/exec_extract_1d-spec2-miri-lrs-slit.html">
+   JWST Pipeline Validation Testing Notebook: MIRI LRS Slit
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../extract_1d/jwst_extract_1d_miri_test/extract_1d-spec2-miri-lrs-slitless.html">
+   JWST Pipeline Validation Testing Notebook: MIRI LRS Slitless
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../extract_1d/jwst_extract_1d_miri_test/extract_1d-spec2-miri-lrs-slit.html">
+   JWST Pipeline Validation Testing Notebook: MIRI LRS Slit
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../extract_1d/jwst_extract_1d_miri_test/exec_extract_1d-spec2-miri-lrs-slitless.html">
+   JWST Pipeline Validation Testing Notebook: MIRI LRS Slitless
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../dark_current/exec_jwst_dark_current_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, dark_current unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../dark_current/jwst_dark_current_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, dark_current unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../templates/jwst_validation_notebook_template.html">
+   JWST Pipeline Validation Notebook:
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../templates/exec_jwst_validation_notebook_template.html">
+   JWST Pipeline Validation Notebook:
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../templates/validation_test_template.html">
+   JWST Pipeline Validation Testing Notebook: Descriptive Name of Test You Are Performing
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../templates/exec_validation_test_template.html">
+   JWST Pipeline Validation Testing Notebook: Descriptive Name of Test You Are Performing
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../ipc/exec_jwst_ipc_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, ipc unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../ipc/jwst_ipc_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, ipc unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/background/exec_jwst_background_unit_tests.html">
+   JWST calwebb_image2, background unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/background/jwst_background_unit_tests.html">
+   JWST calwebb_image2, background unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/jwst_nirspec_regression_tests.html">
+   JWST NIRSpec regression tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/flatfield/exec_jwst_flatfield_unit_tests.html">
+   JWST calwebb_image2 and calwebb_spec2, flatfield unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/flatfield/jwst_flatfield_unit_tests.html">
+   JWST calwebb_image2 and calwebb_spec2, flatfield unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/jwst_nircam_regression_tests.html">
+   JWST NIRCam regression tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/resample/exec_jwst_resample_unit_tests.html">
+   JWST calwebb_image2 and calwebb_spec2, resample unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/resample/jwst_resample_unit_tests.html">
+   JWST calwebb_image2 and calwebb_spec2, resample unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/jwst_niriss_regression_tests.html">
+   JWST NIRISS regression tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/source_catalog/jwst_source_catalog_unit_tests.html">
+   JWST calwebb_image3, source_catalog unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/source_catalog/exec_jwst_source_catalog_unit_tests.html">
+   JWST calwebb_image3, source_catalog unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/exec_jwst_fgs_regression_tests.html">
+   JWST FGS regression tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/photom/jwst_photom_unit_tests.html">
+   JWST calwebb_image2 and calwebb_spec2, photom unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/photom/exec_jwst_photom_unit_tests.html">
+   JWST calwebb_image2 and calwebb_spec2, photom unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/assign_wcs/jwst_assign_wcs_unit_tests.html">
+   JWST calwebb_image2 and calwebb_spec2, assign_wcs unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/assign_wcs/exec_jwst_assign_wcs_unit_tests.html">
+   JWST calwebb_image2 and calwebb_spec2, assign_wcs unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/skymatch/jwst_skymatch_unit_tests.html">
+   JWST calwebb_image3, skymatch unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/skymatch/exec_jwst_skymatch_unit_tests.html">
+   JWST calwebb_image3, skymatch unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/exec_jwst_niriss_regression_tests.html">
+   JWST NIRISS regression tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/exec_jwst_nirspec_regression_tests.html">
+   JWST NIRSpec regression tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/exec_jwst_nircam_regression_tests.html">
+   JWST NIRCam regression tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/jwst_fgs_regression_tests.html">
+   JWST FGS regression tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/exec_jwst_miri_regression_tests.html">
+   JWST MIRI regression tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/jwst_miri_regression_tests.html">
+   JWST MIRI regression tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/tweakreg/exec_jwst_tweakreg_unit_tests.html">
+   JWST calwebb_image3, tweakreg unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/tweakreg/jwst_tweakreg_unit_tests.html">
+   JWST calwebb_image3, tweakreg unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/outlier_detection/jwst_outlier_detection_unit_tests.html">
+   JWST calwebb_image3, calwebb_spec3, calwebb_coron3, calwebb_tso3, outlier_detection unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../regression_test/outlier_detection/exec_jwst_outlier_detection_unit_tests.html">
+   JWST calwebb_image3, calwebb_spec3, calwebb_coron3, calwebb_tso3, outlier_detection unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../tweakreg/jwst_tweakreg_miri_test/exec_jwst_tweakreg_miri_test.html">
+   JWST Pipeline Validation Testing Notebook: Calwebb_Image3, Tweakreg step with MIRI imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../tweakreg/jwst_tweakreg_miri_test/jwst_tweakreg_miri_test.html">
+   JWST Pipeline Validation Testing Notebook: Calwebb_Image3, Tweakreg step with MIRI imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../outlier_detection/jwst_outlier_detection_miri_test/exec_jwst_outlier_detection_miri_test.html">
+   JWST Pipeline Validation Notebook: outlier_detection with MIRI
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../outlier_detection/jwst_outlier_detection_miri_test/exec_jwst_outlier_detection_view_miri_test.html">
+   JWST Pipeline Validation Notebook: MIRI view outlier_detection
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../outlier_detection/jwst_outlier_detection_miri_test/exec_out_det_test2.html">
+   JWST Pipeline Validation Notebook: Outlier Detection for MIRI MRS
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../outlier_detection/jwst_outlier_detection_miri_test/out_det_test2.html">
+   JWST Pipeline Validation Notebook: Outlier Detection for MIRI MRS
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../outlier_detection/jwst_outlier_detection_miri_test/jwst_outlier_detection_miri_test.html">
+   JWST Pipeline Validation Notebook: outlier_detection with MIRI
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../outlier_detection/jwst_outlier_detection_miri_test/jwst_outlier_detection_view_miri_test.html">
+   JWST Pipeline Validation Notebook: MIRI view outlier_detection
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../superbias/exec_jwst_superbias_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, superbias unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../superbias/jwst_superbias_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, superbias unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../calwebb_coron3/exec_MIRI_shared_calcoron3_testing.html">
+   JWST Pipeline Validation Testing Notebook: Calwebb_Coron3 for MIRI Coronagraphic Imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../calwebb_coron3/jwst_calcoron3_nircam_test.html">
+   JWST Pipeline Validation Notebook: calwebb_coron3 with NIRCam
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../calwebb_coron3/exec_jwst_calcoron3_nircam_test.html">
+   JWST Pipeline Validation Notebook: calwebb_coron3 with NIRCam
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../calwebb_coron3/MIRI_shared_calcoron3_testing.html">
+   JWST Pipeline Validation Testing Notebook: Calwebb_Coron3 for MIRI Coronagraphic Imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../fringe/JWST_fringe_miri_test/exec_fringe_miri_mrs_test.html">
+   JWST Pipeline Validation Testing Notebook: Spec2, fringe, MIRI
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../fringe/JWST_fringe_miri_test/fringe_miri_mrs_test.html">
+   JWST Pipeline Validation Testing Notebook: Spec2, fringe, MIRI
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../image3/jwst_image3_miri_test/exec_jwst_image3_miri_test.html">
+   JWST Pipeline Validation Notebook: calwebb_image3 with MIRI
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../image3/jwst_image3_miri_test/jwst_image3_miri_test.html">
+   JWST Pipeline Validation Notebook: calwebb_image3 with MIRI
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../linearity/jwst_linearity_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, linearity unit tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../linearity/exec_jwst_linearity_unit_tests.html">
+   JWST Pipeline Validation Notebook: calwebb_detector1, linearity unit tests
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/TheRealZoidberg/jwst_validation_test/main?urlpath=tree/notebooks/photom/jwst_photom_miri_test/exec_jwst_photom_miri_test.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../../../_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://colab.research.google.com/github/TheRealZoidberg/jwst_validation_test/blob/main/notebooks/photom/jwst_photom_miri_test/exec_jwst_photom_miri_test.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Colab"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../../../_static/images/logo_colab.png">
+  </span>
+<span class="headerbtn__text-container">Colab</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="initThebeSBT()"
+  class="headerbtn headerbtn-launch-thebe"
+  data-toggle="tooltip"
+data-placement="left"
+title="Launch Thebe"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-play"></i>
+  </span>
+<span class="headerbtn__text-container">Live Code</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Source repositories">
+      <i class="fab fa-github"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://github.com/TheRealZoidberg/jwst_validation_test"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/TheRealZoidberg/jwst_validation_test/issues/new?title=Issue%20on%20page%20%2Fnotebooks/photom/jwst_photom_miri_test/exec_jwst_photom_miri_test.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="headerbtn__text-container">open issue</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../../../_sources/notebooks/photom/jwst_photom_miri_test/exec_jwst_photom_miri_test.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#introduction">
+   Introduction
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#documentation">
+     Documentation
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#test-description">
+   Test description
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#set-up-import-statements">
+     Set up import statements
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#print-pipeline-version-number">
+     Print pipeline version number
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#read-in-data-from-artifactory">
+     Read in data from artifactory
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#read-in-input-image-as-jwst-data-model">
+     Read in input image as JWST data model
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#run-input-data-through-calwebb-detector1">
+     Run input data through calwebb_detector1
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#run-output-of-calwebb-detector1-through-calwebb-image2-or-just-the-photom-step">
+     Run output of calwebb_detector1 through calwebb_image2 (or just the Photom step)
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#calculate-the-cal-rate-image-ratio">
+     Calculate the cal/rate image ratio
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#get-photom-reference-file">
+     Get photom reference file
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#print-photom-calibration-conversion-factor-for-image">
+     Print photom calibration conversion factor for image
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#check-that-same-value-has-been-applied-to-cal-image-three-values-should-be-the-same">
+     Check that same value has been applied to cal image (three values should be the same)
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#check-that-pixel-area-information-has-been-attached">
+     Check that pixel area information has been attached
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#look-at-the-pixel-area-extension-that-was-attached">
+       Look at the pixel area extension that was attached
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#check-that-pixar-sr-and-pixar-a2-keywords-have-been-populated">
+     Check that PIXAR_SR and PIXAR_A2 keywords have been populated
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#check-that-the-header-value-from-the-output-file-matches-the-one-from-the-reference-file-pixar-sr">
+       Check that the header value from the output file matches the one from the reference file (PIXAR_SR)
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#check-that-the-header-value-from-the-output-file-matches-the-one-from-the-reference-file-pixar-a2">
+       Check that the header value from the output file matches the one from the reference file (PIXAR_A2)
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#verify-that-pixel-area-in-steradians-is-consistent-with-the-pixel-area-in-arcseconds-squared">
+     Verify that pixel area in steradians is consistent with the pixel area in arcseconds squared
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#check-that-bunit-information-has-been-added-to-image-mjy-sr">
+     Check that bunit information has been added to image (‘MJy/sr’)
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#check-that-the-values-of-the-err-arrays-also-changed-by-the-expected-conversion-factor">
+     Check that the values of the ERR arrays also changed by the expected conversion factor
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#success-criteria">
+   Success criteria
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#about-this-notebook">
+   About this Notebook
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>JWST Pipeline Validation Notebook: photom with MIRI Imager</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#introduction">
+   Introduction
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#documentation">
+     Documentation
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#test-description">
+   Test description
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#set-up-import-statements">
+     Set up import statements
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#print-pipeline-version-number">
+     Print pipeline version number
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#read-in-data-from-artifactory">
+     Read in data from artifactory
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#read-in-input-image-as-jwst-data-model">
+     Read in input image as JWST data model
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#run-input-data-through-calwebb-detector1">
+     Run input data through calwebb_detector1
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#run-output-of-calwebb-detector1-through-calwebb-image2-or-just-the-photom-step">
+     Run output of calwebb_detector1 through calwebb_image2 (or just the Photom step)
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#calculate-the-cal-rate-image-ratio">
+     Calculate the cal/rate image ratio
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#get-photom-reference-file">
+     Get photom reference file
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#print-photom-calibration-conversion-factor-for-image">
+     Print photom calibration conversion factor for image
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#check-that-same-value-has-been-applied-to-cal-image-three-values-should-be-the-same">
+     Check that same value has been applied to cal image (three values should be the same)
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#check-that-pixel-area-information-has-been-attached">
+     Check that pixel area information has been attached
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#look-at-the-pixel-area-extension-that-was-attached">
+       Look at the pixel area extension that was attached
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#check-that-pixar-sr-and-pixar-a2-keywords-have-been-populated">
+     Check that PIXAR_SR and PIXAR_A2 keywords have been populated
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#check-that-the-header-value-from-the-output-file-matches-the-one-from-the-reference-file-pixar-sr">
+       Check that the header value from the output file matches the one from the reference file (PIXAR_SR)
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#check-that-the-header-value-from-the-output-file-matches-the-one-from-the-reference-file-pixar-a2">
+       Check that the header value from the output file matches the one from the reference file (PIXAR_A2)
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#verify-that-pixel-area-in-steradians-is-consistent-with-the-pixel-area-in-arcseconds-squared">
+     Verify that pixel area in steradians is consistent with the pixel area in arcseconds squared
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#check-that-bunit-information-has-been-added-to-image-mjy-sr">
+     Check that bunit information has been added to image (‘MJy/sr’)
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#check-that-the-values-of-the-err-arrays-also-changed-by-the-expected-conversion-factor">
+     Check that the values of the ERR arrays also changed by the expected conversion factor
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#success-criteria">
+   Success criteria
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#about-this-notebook">
+   About this Notebook
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <p><a id="title_ID"></a></p>
+<section class="tex2jax_ignore mathjax_ignore" id="jwst-pipeline-validation-notebook-photom-with-miri-imager">
+<h1>JWST Pipeline Validation Notebook: photom with MIRI Imager<a class="headerlink" href="#jwst-pipeline-validation-notebook-photom-with-miri-imager" title="Permalink to this headline">#</a></h1>
+<p><span style="color:red"> <strong>Instruments Affected</strong></span>: MIRI, NIRCam, NIRISS, NIRSpec</p>
+<section id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">#</a></h2>
+<p>This test is designed to test the photom step in the calwebb_image2 pipeline. This notebook processes an image through the photom step of calwebb_image2 (calwebb_detector1 is optional) and examines the output image of the photom step.</p>
+<p>The documentation of the step describes it as follows:</p>
+<p>The photom step applies flux (photometric) calibrations to a data product to convert the data from units of countrate to surface brightness. The calibration information is read from a photometric reference file. For imaging modes the PHOTOM reference file contains a table of exposure parameters that define various instrument configurations and the flux conversion data for each of those configurations. The table contains one row for each allowed combination of exposure parameters, such as detector and filter. The photom step searches the table for the row that matches the parameters of the science exposure and then loads the calibration information from that row of the table. The correction values are multiplied into the SCI and ERR arrays, and the square of the correction values are multiplied into the variance arrays.</p>
+<p>The scalar conversion constant is copied to the header keyword PHOTMJSR, which gives the conversion from DN/s to megaJy/steradian that was applied to the data. The step also computes the equivalent conversion factor to units of microJy/square-arcsecond (or microjanskys) and stores it in the header keyword PHOTUJA2.</p>
+<section id="documentation">
+<h3>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">#</a></h3>
+<p>The pipeline documentation can be found here: <a class="reference external" href="https://jwst-pipeline.readthedocs.io/en/latest/">https://jwst-pipeline.readthedocs.io/en/latest/</a></p>
+<p>The pipeline code is available on GitHub: <a class="reference external" href="https://github.com/spacetelescope/jwst">https://github.com/spacetelescope/jwst</a></p>
+</section>
+</section>
+<section id="test-description">
+<h2>Test description<a class="headerlink" href="#test-description" title="Permalink to this headline">#</a></h2>
+<p>The steps of the test in this notebook are as follow:</p>
+<ol class="simple">
+<li><p>Read in data.</p></li>
+<li><p>Run input data through calwebb_detector1. (if not reading in a rate or rateints file)</p></li>
+<li><p>Run output of calwebb_detector1 through the photom step in calwebb_image2.</p></li>
+<li><p>Get photom reference file.</p></li>
+<li><p>Compare the flat field reference file with the rate/cal image ratio and check that the correct conversion factor was applied.</p></li>
+<li><p>Check that the pixel area information has been attached and that PIXAR_SR, PIXAR_A2, and BUNIT keywords have been populated in the cal image.</p></li>
+</ol>
+<p>Author: T. Temim</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create a temporary directory to hold notebook output, and change the working directory to that directory.</span>
+<span class="kn">from</span> <span class="nn">tempfile</span> <span class="kn">import</span> <span class="n">TemporaryDirectory</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="n">data_dir</span> <span class="o">=</span> <span class="n">TemporaryDirectory</span><span class="p">()</span>
+<span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">data_dir</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="k">if</span> <span class="s1">&#39;CRDS_CACHE_TYPE&#39;</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;CRDS_CACHE_TYPE&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;local&#39;</span><span class="p">:</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;CRDS_PATH&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;HOME&#39;</span><span class="p">],</span> <span class="s1">&#39;crds&#39;</span><span class="p">,</span> <span class="s1">&#39;cache&#39;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;CRDS_CACHE_TYPE&#39;</span><span class="p">]):</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;CRDS_PATH&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;CRDS_CACHE_TYPE&#39;</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;CRDS cache location: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;CRDS_PATH&#39;</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">KeyError</span><span class="g g-Whitespace">                                  </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span> <span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">line</span> <span class="mi">7</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span>     <span class="k">elif</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;CRDS_CACHE_TYPE&#39;</span><span class="p">]):</span>
+<span class="g g-Whitespace">      </span><span class="mi">6</span>         <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;CRDS_PATH&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;CRDS_CACHE_TYPE&#39;</span><span class="p">]</span>
+<span class="ne">----&gt; </span><span class="mi">7</span> <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;CRDS cache location: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;CRDS_PATH&#39;</span><span class="p">]))</span>
+
+<span class="nn">File /usr/share/miniconda/lib/python3.9/os.py:679,</span> in <span class="ni">_Environ.__getitem__</span><span class="nt">(self, key)</span>
+<span class="g g-Whitespace">    </span><span class="mi">676</span>     <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">encodekey</span><span class="p">(</span><span class="n">key</span><span class="p">)]</span>
+<span class="g g-Whitespace">    </span><span class="mi">677</span> <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">678</span>     <span class="c1"># raise KeyError with the original key value</span>
+<span class="ne">--&gt; </span><span class="mi">679</span>     <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="kn">from</span> <span class="bp">None</span>
+<span class="g g-Whitespace">    </span><span class="mi">680</span> <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">decodevalue</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+<span class="ne">KeyError</span>: &#39;CRDS_PATH&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<section id="set-up-import-statements">
+<h3>Set up import statements<a class="headerlink" href="#set-up-import-statements" title="Permalink to this headline">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">jwst</span>
+<span class="kn">from</span> <span class="nn">jwst.pipeline</span> <span class="kn">import</span> <span class="n">Detector1Pipeline</span><span class="p">,</span> <span class="n">Image2Pipeline</span>
+<span class="kn">from</span> <span class="nn">jwst.photom</span> <span class="kn">import</span> <span class="n">PhotomStep</span>
+<span class="kn">from</span> <span class="nn">jwst.datamodels</span> <span class="kn">import</span> <span class="n">RampModel</span><span class="p">,</span> <span class="n">ImageModel</span><span class="p">,</span> <span class="n">MirImgPhotomModel</span><span class="p">,</span> <span class="n">dqflags</span>
+
+<span class="kn">from</span> <span class="nn">astropy.io</span> <span class="kn">import</span> <span class="n">fits</span>
+<span class="kn">from</span> <span class="nn">astropy.utils.data</span> <span class="kn">import</span> <span class="n">get_pkg_data_filename</span>
+<span class="kn">from</span> <span class="nn">astropy</span> <span class="kn">import</span> <span class="n">table</span>
+
+<span class="kn">import</span> <span class="nn">matplotlib</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">ci_watson.artifactory_helpers</span> <span class="kn">import</span> <span class="n">get_bigdata</span>
+<span class="kn">import</span> <span class="nn">crds</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="print-pipeline-version-number">
+<h3>Print pipeline version number<a class="headerlink" href="#print-pipeline-version-number" title="Permalink to this headline">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">jwst</span><span class="o">.</span><span class="n">__version__</span> 
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;1.5.3&#39;
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="read-in-data-from-artifactory">
+<h3>Read in data from artifactory<a class="headerlink" href="#read-in-data-from-artifactory" title="Permalink to this headline">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">input_file</span> <span class="o">=</span> <span class="n">get_bigdata</span><span class="p">(</span><span class="s1">&#39;jwst_validation_notebooks&#39;</span><span class="p">,</span>
+                     <span class="s1">&#39;validation_data&#39;</span><span class="p">,</span>
+                     <span class="s1">&#39;flat_field&#39;</span><span class="p">,</span>
+                     <span class="s1">&#39;flat_field_miri_test&#39;</span><span class="p">,</span> 
+                     <span class="s1">&#39;car007_seq1_MIRIMAGE_F770Wexp1_b771_rate.fits&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="read-in-input-image-as-jwst-data-model">
+<h3>Read in input image as JWST data model<a class="headerlink" href="#read-in-input-image-as-jwst-data-model" title="Permalink to this headline">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">jwst</span> <span class="kn">import</span> <span class="n">datamodels</span>
+
+<span class="n">im</span> <span class="o">=</span> <span class="n">ImageModel</span><span class="p">(</span><span class="n">input_file</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="run-input-data-through-calwebb-detector1">
+<h3>Run input data through calwebb_detector1<a class="headerlink" href="#run-input-data-through-calwebb-detector1" title="Permalink to this headline">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># The data read in is an image file already processed through Detector1. This step should only be run </span>
+<span class="c1">#if we&#39;re starting with a ramp file.</span>
+
+<span class="c1">#det1 = Detector1Pipeline()</span>
+<span class="c1">#det1.save_results = True</span>
+<span class="c1">#det1.run(im)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="run-output-of-calwebb-detector1-through-calwebb-image2-or-just-the-photom-step">
+<h3>Run output of calwebb_detector1 through calwebb_image2 (or just the Photom step)<a class="headerlink" href="#run-output-of-calwebb-detector1-through-calwebb-image2-or-just-the-photom-step" title="Permalink to this headline">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#input_file = input_file.replace(&#39;rateint.fits&#39;, &#39;rate.fits)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">im2</span> <span class="o">=</span> <span class="n">PhotomStep</span><span class="p">()</span>
+<span class="n">im2</span><span class="o">.</span><span class="n">save_results</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="n">im2</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">im</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-07 07:38:47,942 - stpipe.PhotomStep - INFO - PhotomStep instance created.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-07 07:38:48,076 - stpipe.PhotomStep - INFO - Step PhotomStep running with args (&lt;ImageModel(1024, 1032) from car007_seq1_MIRIMAGE_F770Wexp1_b771_rate.fits&gt;,).
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-07 07:38:48,078 - stpipe.PhotomStep - INFO - Step PhotomStep parameters are: {&#39;pre_hooks&#39;: [], &#39;post_hooks&#39;: [], &#39;output_file&#39;: None, &#39;output_dir&#39;: None, &#39;output_ext&#39;: &#39;.fits&#39;, &#39;output_use_model&#39;: False, &#39;output_use_index&#39;: True, &#39;save_results&#39;: True, &#39;skip&#39;: False, &#39;suffix&#39;: None, &#39;search_output_file&#39;: True, &#39;input_dir&#39;: &#39;&#39;, &#39;inverse&#39;: False, &#39;source_type&#39;: None}
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-07 07:38:48,574 - stpipe.PhotomStep - INFO - Using photom reference file: /grp/crds/cache/references/jwst/jwst_miri_photom_0073.fits
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-07 07:38:48,576 - stpipe.PhotomStep - INFO - Using area reference file: /grp/crds/cache/references/jwst/jwst_miri_area_0004.fits
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-07 07:38:48,628 - stpipe.PhotomStep - INFO - Using instrument: MIRI
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-07 07:38:48,629 - stpipe.PhotomStep - INFO -  detector: MIRIMAGE
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-07 07:38:48,630 - stpipe.PhotomStep - INFO -  exp_type: MIR_IMAGE
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-07 07:38:48,630 - stpipe.PhotomStep - INFO -  filter: F770W
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-07 07:38:48,758 - stpipe.PhotomStep - INFO - Pixel area map copied to output.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-07 07:38:48,760 - stpipe.PhotomStep - INFO -  subarray: FULL
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-07 07:38:48,761 - stpipe.PhotomStep - WARNING - Expected to find one matching row in table, found 0.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-07 07:38:48,762 - stpipe.PhotomStep - INFO - PHOTMJSR value: 0.592788
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-07 07:38:48,796 - stpipe.PhotomStep - INFO - Results used CRDS context: jwst_0914.pmap
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-07 07:38:48,881 - stpipe.PhotomStep - INFO - Saved model in car007_seq1_MIRIMAGE_F770Wexp1_b771_photomstep.fits
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-07-07 07:38:48,882 - stpipe.PhotomStep - INFO - Step PhotomStep done
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;ImageModel(1024, 1032) from car007_seq1_MIRIMAGE_F770Wexp1_b771_photomstep.fits&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#im2 = Image2Pipeline()</span>
+<span class="c1">#im2.background.skip = True</span>
+<span class="c1">#im2.assign_wcs.skip = True</span>
+<span class="c1">#im2.flat_field.skip = True</span>
+<span class="c1">#im2.photom.skip=False</span>
+<span class="c1">#im2.resample.skip = True</span>
+<span class="c1">#im2.save_results = True</span>
+<span class="c1">#im2.run(im)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#input_file = input_file.replace(&#39;rate.fits&#39;, &#39;cal.fits&#39;)</span>
+<span class="n">input_file</span> <span class="o">=</span> <span class="n">input_file</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;rate.fits&#39;</span><span class="p">,</span> <span class="s1">&#39;photomstep.fits&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># read in the calibrated file</span>
+<span class="n">im_cal</span> <span class="o">=</span> <span class="n">ImageModel</span><span class="p">(</span><span class="n">input_file</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="calculate-the-cal-rate-image-ratio">
+<h3>Calculate the cal/rate image ratio<a class="headerlink" href="#calculate-the-cal-rate-image-ratio" title="Permalink to this headline">#</a></h3>
+<p>The ratio of the photom processed file divided by the rate file should equal the conversion factor read from the reference file (comparison below). Look at the ratio file.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ratio_im</span> <span class="o">=</span> <span class="n">im_cal</span><span class="o">.</span><span class="n">data</span><span class="o">/</span><span class="n">im</span><span class="o">.</span><span class="n">data</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;min value of ratio image: &#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmin</span><span class="p">(</span><span class="n">ratio_im</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;max value of ratio image: &#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmax</span><span class="p">(</span><span class="n">ratio_im</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>min value of ratio image:  0.5927879
+max value of ratio image:  0.59278804
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">ratio_im</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[0.592788   0.592788   0.592788   ... 0.592788   0.592788   0.592788  ]
+ [0.592788   0.592788   0.592788   ... 0.592788   0.592788   0.592788  ]
+ [0.592788   0.59278804 0.592788   ... 0.592788   0.592788   0.592788  ]
+ ...
+ [0.592788   0.592788   0.592788   ... 0.592788   0.592788   0.5927879 ]
+ [0.592788   0.592788   0.592788   ... 0.592788   0.592788   0.592788  ]
+ [0.592788   0.592788   0.592788   ... 0.592788   0.592788   0.59278804]]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Look at the ratio image</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="mi">20</span><span class="p">))</span>
+
+<span class="c1"># mask out DO_NOT_USE values of 1</span>
+<span class="n">masked_ratio</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">masked_where</span><span class="p">((</span><span class="n">im_cal</span><span class="o">.</span><span class="n">dq</span> <span class="o">&amp;</span> <span class="n">dqflags</span><span class="o">.</span><span class="n">pixel</span><span class="p">[</span><span class="s1">&#39;DO_NOT_USE&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">),</span> <span class="n">ratio_im</span><span class="p">)</span>
+
+<span class="n">cmap</span> <span class="o">=</span> <span class="n">matplotlib</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">get_cmap</span><span class="p">(</span><span class="s2">&quot;Greys&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>  <span class="c1"># Can be any colormap that you want after the cm</span>
+<span class="n">cmap</span><span class="o">.</span><span class="n">set_bad</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;white&#39;</span><span class="p">)</span> <span class="c1"># color to mark all DO_NOT_USE pixels</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">masked_ratio</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="mf">0.55</span><span class="p">,</span><span class="n">vmax</span><span class="o">=</span><span class="mf">0.65</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/exec_jwst_photom_miri_test_23_0.png" src="../../../_images/exec_jwst_photom_miri_test_23_0.png" />
+</div>
+</div>
+</section>
+<section id="get-photom-reference-file">
+<h3>Get photom reference file<a class="headerlink" href="#get-photom-reference-file" title="Permalink to this headline">#</a></h3>
+<p>Look at the photom reference file being used and some parameters from the header.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">photomreffile</span> <span class="o">=</span> <span class="n">im_cal</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">ref_file</span><span class="o">.</span><span class="n">photom</span><span class="o">.</span><span class="n">name</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Photom reference file&#39;</span><span class="p">,</span> <span class="n">photomreffile</span><span class="p">)</span>
+<span class="c1"># find location of file</span>
+<span class="n">basename</span> <span class="o">=</span> <span class="n">crds</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">pop_crds_uri</span><span class="p">(</span><span class="n">photomreffile</span><span class="p">)</span>
+<span class="n">path</span> <span class="o">=</span> <span class="n">crds</span><span class="o">.</span><span class="n">locate_file</span><span class="p">(</span><span class="n">basename</span><span class="p">,</span> <span class="s2">&quot;jwst&quot;</span><span class="p">)</span>
+<span class="c1"># open reference file</span>
+
+<span class="n">photom_file</span> <span class="o">=</span> <span class="n">MirImgPhotomModel</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Photom reference file crds://jwst_miri_photom_0073.fits
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Print the contents of the phot table</span>
+
+<span class="n">photom_file</span><span class="o">.</span><span class="n">phot_table</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>FITS_rec([(&#39;F560W&#39;, &#39;GENERIC&#39;, 1.12701 , 0.111122 ),
+          (&#39;F770W&#39;, &#39;GENERIC&#39;, 0.592788, 0.041936 ),
+          (&#39;F1000W&#39;, &#39;GENERIC&#39;, 0.849523, 0.0507364),
+          (&#39;F1130W&#39;, &#39;GENERIC&#39;, 2.54947 , 0.184871 ),
+          (&#39;F1280W&#39;, &#39;GENERIC&#39;, 0.996933, 0.0706994),
+          (&#39;F1500W&#39;, &#39;GENERIC&#39;, 0.882691, 0.0424939),
+          (&#39;F1800W&#39;, &#39;GENERIC&#39;, 1.24199 , 0.0965052),
+          (&#39;F2100W&#39;, &#39;GENERIC&#39;, 0.967241, 0.0627728),
+          (&#39;F2550W&#39;, &#39;GENERIC&#39;, 1.98242 , 0.170253 ),
+          (&#39;F2550WR&#39;, &#39;GENERIC&#39;, 2.05569 , 0.101309 ),
+          (&#39;F1065C&#39;, &#39;GENERIC&#39;, 5.91792 , 0.436445 ),
+          (&#39;F1140C&#39;, &#39;GENERIC&#39;, 6.19264 , 0.469597 ),
+          (&#39;F1550C&#39;, &#39;GENERIC&#39;, 7.80314 , 0.561941 ),
+          (&#39;F2300C&#39;, &#39;GENERIC&#39;, 1.65474 , 0.0993   )],
+         dtype=(numpy.record, [(&#39;filter&#39;, &#39;S12&#39;), (&#39;subarray&#39;, &#39;S15&#39;), (&#39;photmjsr&#39;, &#39;&gt;f4&#39;), (&#39;uncertainty&#39;, &#39;&gt;f4&#39;)]))
+</pre></div>
+</div>
+</div>
+</div>
+<p>Look at the value of the pixel area in steradians from the reference file</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">photom_file</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">photometry</span><span class="o">.</span><span class="n">pixelarea_steradians</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2.84403609523084e-13
+</pre></div>
+</div>
+</div>
+</div>
+<p>Look at the value of the pixel area in arcseconds squared from the reference file</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">photom_file</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">photometry</span><span class="o">.</span><span class="n">pixelarea_arcsecsq</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.0121
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="print-photom-calibration-conversion-factor-for-image">
+<h3>Print photom calibration conversion factor for image<a class="headerlink" href="#print-photom-calibration-conversion-factor-for-image" title="Permalink to this headline">#</a></h3>
+<p>Look up the filter from the file header and the conversion factor from the table for that filter. Compare the value to that in the table printed above to be sure they match.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The filter for this data is:&#39;</span><span class="p">,</span> <span class="n">im_cal</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">instrument</span><span class="o">.</span><span class="n">filter</span><span class="p">)</span>
+
+<span class="n">conv_factor</span> <span class="o">=</span> <span class="n">photom_file</span><span class="o">.</span><span class="n">phot_table</span><span class="p">[</span><span class="s1">&#39;photmjsr&#39;</span><span class="p">][</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">photom_file</span><span class="o">.</span><span class="n">phot_table</span><span class="p">[</span><span class="s1">&#39;filter&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">im_cal</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">instrument</span><span class="o">.</span><span class="n">filter</span><span class="p">)][</span><span class="mi">0</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">conv_factor</span><span class="p">)</span>
+
+<span class="c1">#print(photom_file.phot_table[&#39;photmjsr&#39;][np.where(photom_file.phot_table[&#39;filter&#39;] == im_cal.meta.instrument.filter)][0])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The filter for this data is: F770W
+0.592788
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="check-that-same-value-has-been-applied-to-cal-image-three-values-should-be-the-same">
+<h3>Check that same value has been applied to cal image (three values should be the same)<a class="headerlink" href="#check-that-same-value-has-been-applied-to-cal-image-three-values-should-be-the-same" title="Permalink to this headline">#</a></h3>
+<p>The ratio image calculated previously should equal the value of the conversion factor from the table.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;image min&#39;</span><span class="p">,</span><span class="s1">&#39;image max&#39;</span><span class="p">,</span><span class="s1">&#39;ref file&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nanmin</span><span class="p">(</span><span class="n">ratio_im</span><span class="p">),</span><span class="n">np</span><span class="o">.</span><span class="n">nanmax</span><span class="p">(</span><span class="n">ratio_im</span><span class="p">),</span><span class="n">conv_factor</span><span class="p">)</span>
+
+<span class="k">try</span><span class="p">:</span> 
+    <span class="n">np</span><span class="o">.</span><span class="n">testing</span><span class="o">.</span><span class="n">assert_allclose</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nanmin</span><span class="p">(</span><span class="n">ratio_im</span><span class="p">),</span> <span class="n">conv_factor</span><span class="p">,</span> <span class="n">rtol</span> <span class="o">=</span> <span class="mf">0.01</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">AssertionError</span><span class="p">:</span> 
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;AssertionError: The minimum value is not within 1</span><span class="si">% o</span><span class="s2">f the conversion factor&quot;</span><span class="p">)</span>
+
+<span class="k">try</span><span class="p">:</span> 
+    <span class="n">np</span><span class="o">.</span><span class="n">testing</span><span class="o">.</span><span class="n">assert_allclose</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nanmax</span><span class="p">(</span><span class="n">ratio_im</span><span class="p">),</span> <span class="n">conv_factor</span><span class="p">,</span> <span class="n">rtol</span> <span class="o">=</span> <span class="mf">0.01</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">AssertionError</span><span class="p">:</span> 
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;AssertionError: The maximum value is not within 1</span><span class="si">% o</span><span class="s2">f the conversion factor&quot;</span><span class="p">)</span>    
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>image min image max ref file
+0.5927879 0.59278804 0.592788
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="check-that-pixel-area-information-has-been-attached">
+<h3>Check that pixel area information has been attached<a class="headerlink" href="#check-that-pixel-area-information-has-been-attached" title="Permalink to this headline">#</a></h3>
+<p>Check the extensions of the rate (input) and photom processed file to see if an AREA extension has been added.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Look at extensions of the rate file </span>
+<span class="n">uncal_filename</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">im</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">filename</span><span class="p">)</span>
+<span class="n">hdu</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">uncal_filename</span><span class="p">)</span>
+<span class="n">hdu</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+<span class="n">hdu</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Filename: car007_seq1_MIRIMAGE_F770Wexp1_b771_rate.fits
+No.    Name      Ver    Type      Cards   Dimensions   Format
+  0  PRIMARY       1 PrimaryHDU     128   ()      
+  1  SCI           1 ImageHDU        45   (1032, 1024)   float32   
+  2  ERR           1 ImageHDU        10   (1032, 1024)   float32   
+  3  DQ            1 ImageHDU        11   (1032, 1024)   int32 (rescales to uint32)   
+  4  VAR_POISSON    1 ImageHDU         9   (1032, 1024)   float32   
+  5  VAR_RNOISE    1 ImageHDU         9   (1032, 1024)   float32   
+  6  ASDF          1 BinTableHDU     11   1R x 1C   [3590B]   
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Look at extensions of the rate file </span>
+<span class="n">cal_filename</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">im_cal</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">filename</span><span class="p">)</span>
+<span class="n">hdu</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">cal_filename</span><span class="p">)</span>
+<span class="n">hdu</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+<span class="n">hdu</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="k">assert</span><span class="p">(</span><span class="n">im_cal</span><span class="o">.</span><span class="n">area</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="n">im_cal</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">AssertionError</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;AssertionError: AREA array is not the same shape as the data array&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Filename: car007_seq1_MIRIMAGE_F770Wexp1_b771_photomstep.fits
+No.    Name      Ver    Type      Cards   Dimensions   Format
+  0  PRIMARY       1 PrimaryHDU     136   ()      
+  1  SCI           1 ImageHDU        52   (1032, 1024)   float32   
+  2  ERR           1 ImageHDU        10   (1032, 1024)   float32   
+  3  DQ            1 ImageHDU        11   (1032, 1024)   int32 (rescales to uint32)   
+  4  AREA          1 ImageHDU         9   (1032, 1024)   float32   
+  5  VAR_POISSON    1 ImageHDU         9   (1032, 1024)   float32   
+  6  VAR_RNOISE    1 ImageHDU         9   (1032, 1024)   float32   
+  7  VAR_FLAT      1 ImageHDU         9   (1032, 1024)   float32   
+  8  ASDF          1 BinTableHDU     11   1R x 1C   [4113B]   
+</pre></div>
+</div>
+</div>
+</div>
+<section id="look-at-the-pixel-area-extension-that-was-attached">
+<h4>Look at the pixel area extension that was attached<a class="headerlink" href="#look-at-the-pixel-area-extension-that-was-attached" title="Permalink to this headline">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Look at stats of pixel area image </span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;pix_area_min&#39;</span><span class="p">,</span> <span class="s1">&#39;pix_area_max&#39;</span><span class="p">,</span><span class="s1">&#39;pix_area_mean&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nanmin</span><span class="p">(</span><span class="n">im_cal</span><span class="o">.</span><span class="n">area</span><span class="p">),</span><span class="n">np</span><span class="o">.</span><span class="n">nanmax</span><span class="p">(</span><span class="n">im_cal</span><span class="o">.</span><span class="n">area</span><span class="p">),</span><span class="n">np</span><span class="o">.</span><span class="n">nanmean</span><span class="p">(</span><span class="n">im_cal</span><span class="o">.</span><span class="n">area</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>pix_area_min pix_area_max pix_area_mean
+0.97582465 1.0159259 1.0058197
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Look at the area map image</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="mi">20</span><span class="p">))</span>
+
+<span class="c1"># mask out DO_NOT_USE values of 1</span>
+<span class="n">masked_area</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">masked_where</span><span class="p">((</span><span class="n">im_cal</span><span class="o">.</span><span class="n">dq</span> <span class="o">&amp;</span> <span class="n">dqflags</span><span class="o">.</span><span class="n">pixel</span><span class="p">[</span><span class="s1">&#39;DO_NOT_USE&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">),</span> <span class="n">im_cal</span><span class="o">.</span><span class="n">area</span><span class="p">)</span>
+
+<span class="n">cmap</span> <span class="o">=</span> <span class="n">matplotlib</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">get_cmap</span><span class="p">(</span><span class="s1">&#39;rainbow&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>  <span class="c1"># Can be any colormap that you want after the cm</span>
+<span class="n">cmap</span><span class="o">.</span><span class="n">set_bad</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;white&#39;</span><span class="p">)</span> <span class="c1"># color to mark all DO_NOT_USE pixels</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">masked_area</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span><span class="n">vmax</span><span class="o">=</span><span class="mf">1.2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/exec_jwst_photom_miri_test_40_0.png" src="../../../_images/exec_jwst_photom_miri_test_40_0.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="check-that-pixar-sr-and-pixar-a2-keywords-have-been-populated">
+<h3>Check that PIXAR_SR and PIXAR_A2 keywords have been populated<a class="headerlink" href="#check-that-pixar-sr-and-pixar-a2-keywords-have-been-populated" title="Permalink to this headline">#</a></h3>
+<p>The header values PIXAR_SR and PIXAR_A2 values in the header of your output file should be populated and match the values from the photom reference file header.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">im_cal</span><span class="o">.</span><span class="n">find_fits_keyword</span><span class="p">(</span><span class="s1">&#39;PIXAR_SR&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;meta.photometry.pixelarea_steradians&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">im_cal</span><span class="o">.</span><span class="n">find_fits_keyword</span><span class="p">(</span><span class="s1">&#39;PIXAR_A2&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;meta.photometry.pixelarea_arcsecsq&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<section id="check-that-the-header-value-from-the-output-file-matches-the-one-from-the-reference-file-pixar-sr">
+<h4>Check that the header value from the output file matches the one from the reference file (PIXAR_SR)<a class="headerlink" href="#check-that-the-header-value-from-the-output-file-matches-the-one-from-the-reference-file-pixar-sr" title="Permalink to this headline">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">photom_file</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">photometry</span><span class="o">.</span><span class="n">pixelarea_steradians</span><span class="p">,</span><span class="n">im_cal</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">photometry</span><span class="o">.</span><span class="n">pixelarea_steradians</span><span class="p">)</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="k">assert</span> <span class="n">photom_file</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">photometry</span><span class="o">.</span><span class="n">pixelarea_steradians</span> <span class="o">==</span> <span class="n">im_cal</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">photometry</span><span class="o">.</span><span class="n">pixelarea_steradians</span>
+<span class="k">except</span> <span class="ne">AssertionError</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;AssertionError: the header value PIXAR_SR in the output file header does not match the reference file.&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2.84403609523084e-13 2.84403609523084e-13
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="check-that-the-header-value-from-the-output-file-matches-the-one-from-the-reference-file-pixar-a2">
+<h4>Check that the header value from the output file matches the one from the reference file (PIXAR_A2)<a class="headerlink" href="#check-that-the-header-value-from-the-output-file-matches-the-one-from-the-reference-file-pixar-a2" title="Permalink to this headline">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">photom_file</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">photometry</span><span class="o">.</span><span class="n">pixelarea_arcsecsq</span><span class="p">,</span> <span class="n">im_cal</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">photometry</span><span class="o">.</span><span class="n">pixelarea_arcsecsq</span><span class="p">)</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="k">assert</span> <span class="n">photom_file</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">photometry</span><span class="o">.</span><span class="n">pixelarea_arcsecsq</span> <span class="o">==</span> <span class="n">im_cal</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">photometry</span><span class="o">.</span><span class="n">pixelarea_arcsecsq</span>
+<span class="k">except</span> <span class="ne">AssertionError</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;AssertionError: the header value PIXAR_A2 in the output file header does not match the reference file.&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.0121 0.0121
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="verify-that-pixel-area-in-steradians-is-consistent-with-the-pixel-area-in-arcseconds-squared">
+<h3>Verify that pixel area in steradians is consistent with the pixel area in arcseconds squared<a class="headerlink" href="#verify-that-pixel-area-in-steradians-is-consistent-with-the-pixel-area-in-arcseconds-squared" title="Permalink to this headline">#</a></h3>
+<p>1 steradian = 206265^2 arcsec^2, so the area in arcseconds squared * the unit conversion should equal the area in steradians.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">im_cal</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">photometry</span><span class="o">.</span><span class="n">pixelarea_arcsecsq</span><span class="o">/</span><span class="p">(</span><span class="mf">206265.0</span><span class="o">**</span><span class="mi">2</span><span class="p">),</span><span class="n">im_cal</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">photometry</span><span class="o">.</span><span class="n">pixelarea_steradians</span><span class="p">)</span>
+
+<span class="n">converted_steradians</span> <span class="o">=</span> <span class="n">im_cal</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">photometry</span><span class="o">.</span><span class="n">pixelarea_arcsecsq</span><span class="o">/</span><span class="p">(</span><span class="mf">206265.0</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+
+
+<span class="k">try</span><span class="p">:</span>
+     <span class="n">np</span><span class="o">.</span><span class="n">testing</span><span class="o">.</span><span class="n">assert_allclose</span><span class="p">(</span><span class="n">im_cal</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">photometry</span><span class="o">.</span><span class="n">pixelarea_steradians</span><span class="p">,</span> <span class="n">converted_steradians</span><span class="p">,</span> <span class="n">rtol</span> <span class="o">=</span> <span class="mf">0.01</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">AssertionError</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;AssertionError: the two area units do not match.&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2.844030752201317e-13 2.84403609523084e-13
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="check-that-bunit-information-has-been-added-to-image-mjy-sr">
+<h3>Check that bunit information has been added to image (‘MJy/sr’)<a class="headerlink" href="#check-that-bunit-information-has-been-added-to-image-mjy-sr" title="Permalink to this headline">#</a></h3>
+<p>Check that the units of the file have been updated to the correct ones, and that the numbers in the output file have changed to reflect the new units</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The units of the rate file are: &#39;</span><span class="p">,</span> <span class="n">im</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">bunit_data</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The units of the photom processed file are: &#39;</span><span class="p">,</span> <span class="n">im_cal</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">bunit_data</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The units of the rate file are:  DN/s
+The units of the photom processed file are:  MJy/sr
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">xval</span> <span class="o">=</span> <span class="mi">600</span>
+<span class="n">yval</span> <span class="o">=</span> <span class="mi">600</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The value of the specified pixel in the rate file is: &#39;</span><span class="p">,</span> <span class="n">im</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">yval</span><span class="p">,</span> <span class="n">xval</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The value of the specified pixel in the photom processed file is: &#39;</span><span class="p">,</span> <span class="n">im_cal</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">yval</span><span class="p">,</span> <span class="n">xval</span><span class="p">])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The ratio between these values is: &#39;</span><span class="p">,</span> <span class="n">im_cal</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">yval</span><span class="p">,</span> <span class="n">xval</span><span class="p">]</span> <span class="o">/</span> <span class="n">im</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">yval</span><span class="p">,</span> <span class="n">xval</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The conversion factor from the table is: &#39;</span><span class="p">,</span> <span class="n">conv_factor</span><span class="p">)</span>
+
+<span class="k">try</span><span class="p">:</span>
+     <span class="n">np</span><span class="o">.</span><span class="n">testing</span><span class="o">.</span><span class="n">assert_allclose</span><span class="p">(</span><span class="n">im_cal</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">yval</span><span class="p">,</span> <span class="n">xval</span><span class="p">]</span> <span class="o">/</span> <span class="n">im</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">yval</span><span class="p">,</span> <span class="n">xval</span><span class="p">],</span> <span class="n">conv_factor</span><span class="p">,</span> <span class="n">rtol</span> <span class="o">=</span> <span class="mf">0.01</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">AssertionError</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;AssertionError: the science ratio does not match the conversion factor.&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The value of the specified pixel in the rate file is:  6.3175173
+The value of the specified pixel in the photom processed file is:  3.7449484
+The ratio between these values is:  0.592788
+The conversion factor from the table is:  0.592788
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="check-that-the-values-of-the-err-arrays-also-changed-by-the-expected-conversion-factor">
+<h3>Check that the values of the ERR arrays also changed by the expected conversion factor<a class="headerlink" href="#check-that-the-values-of-the-err-arrays-also-changed-by-the-expected-conversion-factor" title="Permalink to this headline">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">xval</span> <span class="o">=</span> <span class="mi">600</span>
+<span class="n">yval</span> <span class="o">=</span> <span class="mi">600</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The value of the specified pixel in the rate file is: &#39;</span><span class="p">,</span> <span class="n">im</span><span class="o">.</span><span class="n">err</span><span class="p">[</span><span class="n">yval</span><span class="p">,</span> <span class="n">xval</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The value of the specified pixel in the photom processed file is: &#39;</span><span class="p">,</span> <span class="n">im_cal</span><span class="o">.</span><span class="n">err</span><span class="p">[</span><span class="n">yval</span><span class="p">,</span> <span class="n">xval</span><span class="p">])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The ratio between these values is: &#39;</span><span class="p">,</span> <span class="n">im_cal</span><span class="o">.</span><span class="n">err</span><span class="p">[</span><span class="n">yval</span><span class="p">,</span> <span class="n">xval</span><span class="p">]</span> <span class="o">/</span> <span class="n">im</span><span class="o">.</span><span class="n">err</span><span class="p">[</span><span class="n">yval</span><span class="p">,</span> <span class="n">xval</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The conversion factor from the table is: &#39;</span><span class="p">,</span> <span class="n">conv_factor</span><span class="p">)</span>
+
+<span class="k">try</span><span class="p">:</span>
+     <span class="n">np</span><span class="o">.</span><span class="n">testing</span><span class="o">.</span><span class="n">assert_allclose</span><span class="p">(</span><span class="n">im_cal</span><span class="o">.</span><span class="n">err</span><span class="p">[</span><span class="n">yval</span><span class="p">,</span> <span class="n">xval</span><span class="p">]</span> <span class="o">/</span> <span class="n">im</span><span class="o">.</span><span class="n">err</span><span class="p">[</span><span class="n">yval</span><span class="p">,</span> <span class="n">xval</span><span class="p">],</span> <span class="n">conv_factor</span><span class="p">,</span> <span class="n">rtol</span> <span class="o">=</span> <span class="mf">0.01</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">AssertionError</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;AssertionError: the error ratio does not match the conversion factor.&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The value of the specified pixel in the rate file is:  0.22237296
+The value of the specified pixel in the photom processed file is:  0.13182002
+The ratio between these values is:  0.592788
+The conversion factor from the table is:  0.592788
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="success-criteria">
+<h2>Success criteria<a class="headerlink" href="#success-criteria" title="Permalink to this headline">#</a></h2>
+<p>If there are no reported AssertionError messages and the images displayed look reasonable, this test passes.</p>
+</section>
+<section id="about-this-notebook">
+<h2>About this Notebook<a class="headerlink" href="#about-this-notebook" title="Permalink to this headline">#</a></h2>
+<p><strong>Author:</strong> T. Temim and M. Cracraft, INS/MIRI
+<br><strong>Updated On:</strong> 05/13/2021</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "TheRealZoidberg/jwst_validation_test",
+            ref: "main",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./notebooks/photom/jwst_photom_miri_test"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="photom_miri_lrs_slitless.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">JWST Pipeline Validation Testing Notebook: MIRI LRS Slitless spectroscopy</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="jwst_photom_miri_test.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">JWST Pipeline Validation Notebook: photom with MIRI Imager</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By STScI<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>

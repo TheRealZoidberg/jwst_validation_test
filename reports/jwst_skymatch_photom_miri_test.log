@@ -1,0 +1,371 @@
+Traceback (most recent call last):
+  File "/usr/share/miniconda/lib/python3.9/site-packages/jupyter_cache/executors/utils.py", line 51, in single_nb_execution
+    executenb(
+  File "/usr/share/miniconda/lib/python3.9/site-packages/nbclient/client.py", line 1204, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+  File "/usr/share/miniconda/lib/python3.9/site-packages/nbclient/util.py", line 84, in wrapped
+    return just_run(coro(*args, **kwargs))
+  File "/usr/share/miniconda/lib/python3.9/site-packages/nbclient/util.py", line 62, in just_run
+    return loop.run_until_complete(coro)
+  File "/usr/share/miniconda/lib/python3.9/asyncio/base_events.py", line 647, in run_until_complete
+    return future.result()
+  File "/usr/share/miniconda/lib/python3.9/site-packages/nbclient/client.py", line 663, in async_execute
+    await self.async_execute_cell(
+  File "/usr/share/miniconda/lib/python3.9/site-packages/nbclient/client.py", line 965, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "/usr/share/miniconda/lib/python3.9/site-packages/nbclient/client.py", line 862, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+# Run Calwebb_image2 on output files from detector1
+ratefiles = glob('*rate.fits')    
+    
+print('There are ', len(ratefiles), ' images.')
+    
+callist = []
+
+# cycle through files
+for im in ratefiles:
+    pipe2 = Image2Pipeline()
+    
+    rampfile = ImageModel(im)
+    filename = rampfile.meta.filename
+    # Set pipeline parameters
+
+    pipe2.save_results = True
+    pipe2.output_file = filename +'_cal.fits'
+    pipe2.resample.save_results = True
+    pipe2.suffix = None
+
+    calfile = pipe2.run(rampfile)
+
+    callist.append(calfile)
+
+print(callist)
+------------------
+
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mServiceError[0m                              Traceback (most recent call last)
+File [0;32m/usr/share/miniconda/lib/python3.9/site-packages/crds/client/api.py:387[0m, in [0;36m_get_server_info[0;34m()[0m
+[1;32m    386[0m config_uri [38;5;241m=[39m [38;5;124mf[39m[38;5;124m"[39m[38;5;124mJSON RPC service at [39m[38;5;124m'[39m[38;5;132;01m{[39;00mget_crds_server()[38;5;132;01m}[39;00m[38;5;124m'[39m[38;5;124m"[39m
+[0;32m--> 387[0m info [38;5;241m=[39m [43mS[49m[38;5;241;43m.[39;49m[43mget_server_info[49m[43m([49m[43m)[49m
+[1;32m    388[0m log[38;5;241m.[39mverbose([38;5;124m"[39m[38;5;124mConnected to server at[39m[38;5;124m"[39m, srepr(get_crds_server()))
+
+File [0;32m/usr/share/miniconda/lib/python3.9/site-packages/crds/client/proxy.py:157[0m, in [0;36mServiceCallBinding.__call__[0;34m(self, *args, **kwargs)[0m
+[1;32m    156[0m [38;5;28;01mdef[39;00m [38;5;21m__call__[39m([38;5;28mself[39m, [38;5;241m*[39margs, [38;5;241m*[39m[38;5;241m*[39mkwargs):
+[0;32m--> 157[0m     jsonrpc [38;5;241m=[39m [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43m_call[49m[43m([49m[38;5;241;43m*[39;49m[43margs[49m[43m,[49m[43m [49m[38;5;241;43m*[39;49m[38;5;241;43m*[39;49m[43mkwargs[49m[43m)[49m
+[1;32m    158[0m     [38;5;28;01mif[39;00m jsonrpc[[38;5;124m"[39m[38;5;124merror[39m[38;5;124m"[39m]:
+
+File [0;32m/usr/share/miniconda/lib/python3.9/site-packages/crds/client/proxy.py:121[0m, in [0;36mServiceCallBinding._call[0;34m(self, *args, **kwargs)[0m
+[1;32m    120[0m [38;5;28;01mif[39;00m [38;5;124m"[39m[38;5;124mserverless[39m[38;5;124m"[39m [38;5;129;01min[39;00m url [38;5;129;01mor[39;00m [38;5;124m"[39m[38;5;124mserver-less[39m[38;5;124m"[39m [38;5;129;01min[39;00m url:
+[0;32m--> 121[0m     [38;5;28;01mraise[39;00m exceptions[38;5;241m.[39mServiceError([38;5;124m"[39m[38;5;124mConfigured for server-less mode.  Skipping JSON RPC [39m[38;5;124m"[39m [38;5;241m+[39m [38;5;28mrepr[39m([38;5;28mself[39m[38;5;241m.[39m__service_name))
+[1;32m    123[0m [38;5;28;01mif[39;00m log[38;5;241m.[39mget_verbose() [38;5;241m<[39m[38;5;241m=[39m [38;5;241m50[39m:
+
+[0;31mServiceError[0m: Configured for server-less mode.  Skipping JSON RPC 'get_server_info'
+
+The above exception was the direct cause of the following exception:
+
+[0;31mCrdsNetworkError[0m                          Traceback (most recent call last)
+File [0;32m/usr/share/miniconda/lib/python3.9/site-packages/crds/core/heavy_client.py:513[0m, in [0;36mget_config_info[0;34m(observatory)[0m
+[1;32m    512[0m [38;5;28;01mtry[39;00m:
+[0;32m--> 513[0m     info [38;5;241m=[39m ConfigInfo([43mapi[49m[38;5;241;43m.[39;49m[43mget_server_info[49m[43m([49m[43m)[49m)
+[1;32m    514[0m     [38;5;28;01mif[39;00m info[38;5;241m.[39meffective_mode [38;5;241m!=[39m [38;5;124m"[39m[38;5;124mremote[39m[38;5;124m"[39m:
+
+File [0;32m/usr/share/miniconda/lib/python3.9/site-packages/crds/core/utils.py:306[0m, in [0;36mCachedFunction.__call__[0;34m(self, *args, **keys)[0m
+[1;32m    303[0m [38;5;124;03m"""Compute or fetch func(*args, **keys).  Add the result to the cache.[39;00m
+[1;32m    304[0m [38;5;124;03mreturn func(*args, **keys)[39;00m
+[1;32m    305[0m [38;5;124;03m"""[39;00m
+[0;32m--> 306[0m key, result [38;5;241m=[39m [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43m_readonly[49m[43m([49m[38;5;241;43m*[39;49m[43margs[49m[43m,[49m[43m [49m[38;5;241;43m*[39;49m[38;5;241;43m*[39;49m[43mkeys[49m[43m)[49m
+[1;32m    307[0m [38;5;28mself[39m[38;5;241m.[39mcache[key] [38;5;241m=[39m result
+
+File [0;32m/usr/share/miniconda/lib/python3.9/site-packages/crds/core/utils.py:293[0m, in [0;36mCachedFunction._readonly[0;34m(self, *args, **keys)[0m
+[1;32m    292[0m log[38;5;241m.[39mverbose([38;5;124m"[39m[38;5;124mUncached call[39m[38;5;124m"[39m, [38;5;28mself[39m[38;5;241m.[39muncached[38;5;241m.[39m[38;5;18m__name__[39m, [38;5;28mrepr[39m(key), verbosity[38;5;241m=[39m[38;5;241m80[39m)
+[0;32m--> 293[0m [38;5;28;01mreturn[39;00m key, [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43muncached[49m[43m([49m[38;5;241;43m*[39;49m[43margs[49m[43m,[49m[43m [49m[38;5;241;43m*[39;49m[38;5;241;43m*[39;49m[43mkeys[49m[43m)[49m
+
+File [0;32m/usr/share/miniconda/lib/python3.9/site-packages/crds/client/api.py:337[0m, in [0;36mget_server_info[0;34m()[0m
+[1;32m    324[0m [38;5;124;03m"""Return a dictionary of critical parameters about the server such as:[39;00m
+[1;32m    325[0m 
+[1;32m    326[0m [38;5;124;03moperational_context  - the context in use in the operational pipeline[39;00m
+[0;32m   (...)[0m
+[1;32m    335[0m [38;5;124;03mwhat context, software, and network mode should be used for processing.[39;00m
+[1;32m    336[0m [38;5;124;03m"""[39;00m
+[0;32m--> 337[0m info [38;5;241m=[39m [43m_get_server_info[49m[43m([49m[43m)[49m
+[1;32m    338[0m info[[38;5;124m"[39m[38;5;124mserver[39m[38;5;124m"[39m] [38;5;241m=[39m get_crds_server()
+
+File [0;32m/usr/share/miniconda/lib/python3.9/site-packages/crds/client/api.py:392[0m, in [0;36m_get_server_info[0;34m()[0m
+[1;32m    391[0m [38;5;28;01mexcept[39;00m [38;5;167;01mException[39;00m [38;5;28;01mas[39;00m exc:
+[0;32m--> 392[0m     [38;5;28;01mraise[39;00m CrdsNetworkError(
+[1;32m    393[0m         [38;5;124mf[39m[38;5;124m"[39m[38;5;124mFailed downloading cache config from: [39m[38;5;132;01m{[39;00mconfig_uri[38;5;132;01m}[39;00m[38;5;124m:[39m[38;5;124m"[39m,
+[1;32m    394[0m         srepr(exc)) [38;5;28;01mfrom[39;00m [38;5;21;01mexc[39;00m
+[1;32m    395[0m [38;5;28;01mreturn[39;00m info
+
+[0;31mCrdsNetworkError[0m: Failed downloading cache config from: JSON RPC service at 'https://crds-serverless-mode.stsci.edu': "Configured for server-less mode.  Skipping JSON RPC 'get_server_info'"
+
+During handling of the above exception, another exception occurred:
+
+[0;31mFileNotFoundError[0m                         Traceback (most recent call last)
+File [0;32m/usr/share/miniconda/lib/python3.9/site-packages/crds/core/log.py:366[0m, in [0;36mexception_trap_logger.<locals>.func_on_exception[0;34m(*args, **keys)[0m
+[1;32m    365[0m [38;5;28;01mtry[39;00m:
+[0;32m--> 366[0m     [38;5;28;01myield[39;00m
+[1;32m    367[0m [38;5;28;01mexcept[39;00m [38;5;167;01mException[39;00m [38;5;28;01mas[39;00m exc:
+
+File [0;32m/usr/share/miniconda/lib/python3.9/site-packages/crds/core/heavy_client.py:595[0m, in [0;36mload_server_info[0;34m(observatory)[0m
+[1;32m    594[0m     server_config [38;5;241m=[39m config[38;5;241m.[39mlocate_config([38;5;124m"[39m[38;5;124mserver_config[39m[38;5;124m"[39m, observatory)
+[0;32m--> 595[0m config_data [38;5;241m=[39m [43mutils[49m[38;5;241;43m.[39;49m[43mget_uri_content[49m[43m([49m[43mserver_config[49m[43m)[49m
+[1;32m    596[0m info [38;5;241m=[39m ConfigInfo(ast[38;5;241m.[39mliteral_eval(config_data))
+
+File [0;32m/usr/share/miniconda/lib/python3.9/site-packages/crds/core/utils.py:737[0m, in [0;36mget_uri_content[0;34m(uri, mode)[0m
+[1;32m    736[0m mode [38;5;241m=[39m [38;5;124m"[39m[38;5;124mr[39m[38;5;124m"[39m [38;5;28;01mif[39;00m (mode[38;5;241m==[39m[38;5;124m"[39m[38;5;124mtext[39m[38;5;124m"[39m) [38;5;28;01melse[39;00m [38;5;124m"[39m[38;5;124mrb[39m[38;5;124m"[39m
+[0;32m--> 737[0m [38;5;28;01mwith[39;00m [38;5;28;43mopen[39;49m[43m([49m[43muri[49m[43m,[49m[43m [49m[43mmode[49m[43m)[49m [38;5;28;01mas[39;00m file:
+[1;32m    738[0m     [38;5;28;01mreturn[39;00m file[38;5;241m.[39mread()
+
+[0;31mFileNotFoundError[0m: [Errno 2] No such file or directory: '/grp/crds/cache/config/jwst/server_config'
+
+During handling of the above exception, another exception occurred:
+
+[0;31mSystemExit[0m                                Traceback (most recent call last)
+    [0;31m[... skipping hidden 1 frame][0m
+
+Cell [0;32mIn [7], line 21[0m
+[1;32m     19[0m pipe2[38;5;241m.[39msuffix [38;5;241m=[39m [38;5;28;01mNone[39;00m
+[0;32m---> 21[0m calfile [38;5;241m=[39m [43mpipe2[49m[38;5;241;43m.[39;49m[43mrun[49m[43m([49m[43mrampfile[49m[43m)[49m
+[1;32m     23[0m callist[38;5;241m.[39mappend(calfile)
+
+File [0;32m/usr/share/miniconda/lib/python3.9/site-packages/stpipe/step.py:481[0m, in [0;36mStep.run[0;34m(self, *args)[0m
+[1;32m    480[0m [38;5;28;01mif[39;00m [38;5;28mself[39m[38;5;241m.[39mprefetch_references:
+[0;32m--> 481[0m     [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43mprefetch[49m[43m([49m[38;5;241;43m*[39;49m[43margs[49m[43m)[49m
+[1;32m    482[0m [38;5;28;01mtry[39;00m:
+
+File [0;32m/usr/share/miniconda/lib/python3.9/site-packages/stpipe/step.py:598[0m, in [0;36mStep.prefetch[0;34m(self, *args)[0m
+[1;32m    597[0m [38;5;28;01mif[39;00m [38;5;28mlen[39m(args) [38;5;129;01mand[39;00m [38;5;28mlen[39m([38;5;28mself[39m[38;5;241m.[39mreference_file_types) [38;5;129;01mand[39;00m [38;5;129;01mnot[39;00m [38;5;28mself[39m[38;5;241m.[39mskip:
+[0;32m--> 598[0m     [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43m_precache_references[49m[43m([49m[43margs[49m[43m[[49m[38;5;241;43m0[39;49m[43m][49m[43m)[49m
+
+File [0;32m/usr/share/miniconda/lib/python3.9/site-packages/stpipe/pipeline.py:313[0m, in [0;36mPipeline._precache_references[0;34m(self, input_file)[0m
+[1;32m    311[0m     [38;5;28;01mwith[39;00m [38;5;28mself[39m[38;5;241m.[39mopen_model(input_file, asn_n_members[38;5;241m=[39m[38;5;241m1[39m,
+[1;32m    312[0m                         asn_exptypes[38;5;241m=[39m[[38;5;124m"[39m[38;5;124mscience[39m[38;5;124m"[39m]) [38;5;28;01mas[39;00m model:
+[0;32m--> 313[0m         [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43m_precache_references_opened[49m[43m([49m[43mmodel[49m[43m)[49m
+[1;32m    314[0m [38;5;28;01mexcept[39;00m ([38;5;167;01mValueError[39;00m, [38;5;167;01mTypeError[39;00m, [38;5;167;01mIOError[39;00m):
+
+File [0;32m/usr/share/miniconda/lib/python3.9/site-packages/stpipe/pipeline.py:336[0m, in [0;36mPipeline._precache_references_opened[0;34m(self, model_or_container)[0m
+[1;32m    334[0m [38;5;28;01melse[39;00m:
+[1;32m    335[0m     [38;5;66;03m# precache a single model object[39;00m
+[0;32m--> 336[0m     [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43m_precache_references_impl[49m[43m([49m[43mmodel_or_container[49m[43m)[49m
+
+File [0;32m/usr/share/miniconda/lib/python3.9/site-packages/stpipe/pipeline.py:360[0m, in [0;36mPipeline._precache_references_impl[0;34m(self, model)[0m
+[1;32m    358[0m [38;5;28mself[39m[38;5;241m.[39mlog[38;5;241m.[39minfo([38;5;124m"[39m[38;5;124mPrefetching reference files for dataset: [39m[38;5;124m"[39m [38;5;241m+[39m [38;5;28mrepr[39m(model[38;5;241m.[39mmeta[38;5;241m.[39mfilename) [38;5;241m+[39m
+[1;32m    359[0m               [38;5;124m"[39m[38;5;124m reftypes = [39m[38;5;124m"[39m [38;5;241m+[39m [38;5;28mrepr[39m(fetch_types))
+[0;32m--> 360[0m crds_refs [38;5;241m=[39m [43mcrds_client[49m[38;5;241;43m.[39;49m[43mget_multiple_reference_paths[49m[43m([49m[43mmodel[49m[38;5;241;43m.[39;49m[43mget_crds_parameters[49m[43m([49m[43m)[49m[43m,[49m[43m [49m[43mfetch_types[49m[43m,[49m[43m [49m[43mmodel[49m[38;5;241;43m.[39;49m[43mcrds_observatory[49m[43m)[49m
+[1;32m    362[0m ref_path_map [38;5;241m=[39m [38;5;28mdict[39m([38;5;28mlist[39m(crds_refs[38;5;241m.[39mitems()) [38;5;241m+[39m [38;5;28mlist[39m(ovr_refs[38;5;241m.[39mitems()))
+
+File [0;32m/usr/share/miniconda/lib/python3.9/site-packages/stpipe/crds_client.py:55[0m, in [0;36mget_multiple_reference_paths[0;34m(parameters, reference_file_types, observatory)[0m
+[1;32m     54[0m log[38;5;241m.[39mset_log_time([38;5;28;01mTrue[39;00m)
+[0;32m---> 55[0m refpaths [38;5;241m=[39m [43m_get_refpaths[49m[43m([49m[43mparameters[49m[43m,[49m[43m [49m[38;5;28;43mtuple[39;49m[43m([49m[43mreference_file_types[49m[43m)[49m[43m,[49m[43m [49m[43mobservatory[49m[43m)[49m
+[1;32m     56[0m [38;5;28;01mreturn[39;00m refpaths
+
+File [0;32m/usr/share/miniconda/lib/python3.9/site-packages/stpipe/crds_client.py:68[0m, in [0;36m_get_refpaths[0;34m(data_dict, reference_file_types, observatory)[0m
+[1;32m     67[0m [38;5;28;01mwith[39;00m crds_cache_locking[38;5;241m.[39mget_cache_lock():
+[0;32m---> 68[0m     bestrefs [38;5;241m=[39m [43mcrds[49m[38;5;241;43m.[39;49m[43mgetreferences[49m[43m([49m
+[1;32m     69[0m [43m        [49m[43mdata_dict[49m[43m,[49m[43m [49m[43mreftypes[49m[38;5;241;43m=[39;49m[43mreference_file_types[49m[43m,[49m[43m [49m[43mobservatory[49m[38;5;241;43m=[39;49m[43mobservatory[49m[43m)[49m
+[1;32m     70[0m refpaths [38;5;241m=[39m {filetype: filepath [38;5;28;01mif[39;00m [38;5;124m"[39m[38;5;124mN/A[39m[38;5;124m"[39m [38;5;129;01mnot[39;00m [38;5;129;01min[39;00m filepath[38;5;241m.[39mupper() [38;5;28;01melse[39;00m [38;5;124m"[39m[38;5;124mN/A[39m[38;5;124m"[39m
+[1;32m     71[0m             [38;5;28;01mfor[39;00m (filetype, filepath) [38;5;129;01min[39;00m bestrefs[38;5;241m.[39mitems()}
+
+File [0;32m/usr/share/miniconda/lib/python3.9/site-packages/crds/core/heavy_client.py:122[0m, in [0;36mgetreferences[0;34m(parameters, reftypes, context, ignore_cache, observatory, fast)[0m
+[1;32m     83[0m [38;5;124;03m"""[39;00m
+[1;32m     84[0m [38;5;124;03mThis is the top-level get reference call for all of CRDS.  Based on[39;00m
+[1;32m     85[0m [38;5;124;03m`parameters`, getreferences() will download/cache the corresponding best[39;00m
+[0;32m   (...)[0m
+[1;32m    120[0m [38;5;124;03m  cached reference file.[39;00m
+[1;32m    121[0m [38;5;124;03m"""[39;00m
+[0;32m--> 122[0m final_context, bestrefs [38;5;241m=[39m [43m_initial_recommendations[49m[43m([49m[38;5;124;43m"[39;49m[38;5;124;43mgetreferences[39;49m[38;5;124;43m"[39;49m[43m,[49m
+[1;32m    123[0m [43m    [49m[43mparameters[49m[43m,[49m[43m [49m[43mreftypes[49m[43m,[49m[43m [49m[43mcontext[49m[43m,[49m[43m [49m[43mignore_cache[49m[43m,[49m[43m [49m[43mobservatory[49m[43m,[49m[43m [49m[43mfast[49m[43m)[49m
+[1;32m    125[0m [38;5;66;03m# Attempt to cache the recommended references,  which unlike dump_mappings[39;00m
+[1;32m    126[0m [38;5;66;03m# should work without network access if files are already cached.[39;00m
+
+File [0;32m/usr/share/miniconda/lib/python3.9/site-packages/crds/core/heavy_client.py:203[0m, in [0;36m_initial_recommendations[0;34m(name, parameters, reftypes, context, ignore_cache, observatory, fast)[0m
+[1;32m    201[0m     check_context(context)
+[0;32m--> 203[0m mode, final_context [38;5;241m=[39m [43mget_processing_mode[49m[43m([49m[43mobservatory[49m[43m,[49m[43m [49m[43mcontext[49m[43m)[49m
+[1;32m    205[0m log[38;5;241m.[39mverbose([38;5;124m"[39m[38;5;124mFinal effective context is[39m[38;5;124m"[39m, [38;5;28mrepr[39m(final_context))
+
+File [0;32m/usr/share/miniconda/lib/python3.9/site-packages/crds/core/utils.py:306[0m, in [0;36mCachedFunction.__call__[0;34m(self, *args, **keys)[0m
+[1;32m    303[0m [38;5;124;03m"""Compute or fetch func(*args, **keys).  Add the result to the cache.[39;00m
+[1;32m    304[0m [38;5;124;03mreturn func(*args, **keys)[39;00m
+[1;32m    305[0m [38;5;124;03m"""[39;00m
+[0;32m--> 306[0m key, result [38;5;241m=[39m [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43m_readonly[49m[43m([49m[38;5;241;43m*[39;49m[43margs[49m[43m,[49m[43m [49m[38;5;241;43m*[39;49m[38;5;241;43m*[39;49m[43mkeys[49m[43m)[49m
+[1;32m    307[0m [38;5;28mself[39m[38;5;241m.[39mcache[key] [38;5;241m=[39m result
+
+File [0;32m/usr/share/miniconda/lib/python3.9/site-packages/crds/core/utils.py:293[0m, in [0;36mCachedFunction._readonly[0;34m(self, *args, **keys)[0m
+[1;32m    292[0m log[38;5;241m.[39mverbose([38;5;124m"[39m[38;5;124mUncached call[39m[38;5;124m"[39m, [38;5;28mself[39m[38;5;241m.[39muncached[38;5;241m.[39m[38;5;18m__name__[39m, [38;5;28mrepr[39m(key), verbosity[38;5;241m=[39m[38;5;241m80[39m)
+[0;32m--> 293[0m [38;5;28;01mreturn[39;00m key, [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43muncached[49m[43m([49m[38;5;241;43m*[39;49m[43margs[49m[43m,[49m[43m [49m[38;5;241;43m*[39;49m[38;5;241;43m*[39;49m[43mkeys[49m[43m)[49m
+
+File [0;32m/usr/share/miniconda/lib/python3.9/site-packages/crds/core/heavy_client.py:390[0m, in [0;36mget_processing_mode[0;34m(observatory, context)[0m
+[1;32m    387[0m [38;5;124;03m"""Return the processing mode (local, remote) and the .pmap name to be used[39;00m
+[1;32m    388[0m [38;5;124;03mfor best references selections.[39;00m
+[1;32m    389[0m [38;5;124;03m"""[39;00m
+[0;32m--> 390[0m info [38;5;241m=[39m [43mget_config_info[49m[43m([49m[43mobservatory[49m[43m)[49m
+[1;32m    392[0m final_context [38;5;241m=[39m get_final_context(info, context)
+
+File [0;32m/usr/share/miniconda/lib/python3.9/site-packages/crds/core/utils.py:306[0m, in [0;36mCachedFunction.__call__[0;34m(self, *args, **keys)[0m
+[1;32m    303[0m [38;5;124;03m"""Compute or fetch func(*args, **keys).  Add the result to the cache.[39;00m
+[1;32m    304[0m [38;5;124;03mreturn func(*args, **keys)[39;00m
+[1;32m    305[0m [38;5;124;03m"""[39;00m
+[0;32m--> 306[0m key, result [38;5;241m=[39m [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43m_readonly[49m[43m([49m[38;5;241;43m*[39;49m[43margs[49m[43m,[49m[43m [49m[38;5;241;43m*[39;49m[38;5;241;43m*[39;49m[43mkeys[49m[43m)[49m
+[1;32m    307[0m [38;5;28mself[39m[38;5;241m.[39mcache[key] [38;5;241m=[39m result
+
+File [0;32m/usr/share/miniconda/lib/python3.9/site-packages/crds/core/utils.py:293[0m, in [0;36mCachedFunction._readonly[0;34m(self, *args, **keys)[0m
+[1;32m    292[0m log[38;5;241m.[39mverbose([38;5;124m"[39m[38;5;124mUncached call[39m[38;5;124m"[39m, [38;5;28mself[39m[38;5;241m.[39muncached[38;5;241m.[39m[38;5;18m__name__[39m, [38;5;28mrepr[39m(key), verbosity[38;5;241m=[39m[38;5;241m80[39m)
+[0;32m--> 293[0m [38;5;28;01mreturn[39;00m key, [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43muncached[49m[43m([49m[38;5;241;43m*[39;49m[43margs[49m[43m,[49m[43m [49m[38;5;241;43m*[39;49m[38;5;241;43m*[39;49m[43mkeys[49m[43m)[49m
+
+File [0;32m/usr/share/miniconda/lib/python3.9/site-packages/crds/core/heavy_client.py:523[0m, in [0;36mget_config_info[0;34m(observatory)[0m
+[1;32m    522[0m     log[38;5;241m.[39mverbose_warning([38;5;124m"[39m[38;5;124mCouldn[39m[38;5;124m'[39m[38;5;124mt contact CRDS server:[39m[38;5;124m"[39m, srepr(api[38;5;241m.[39mget_crds_server()), [38;5;124m"[39m[38;5;124m:[39m[38;5;124m"[39m, [38;5;28mstr[39m(exc))
+[0;32m--> 523[0m info [38;5;241m=[39m [43mload_server_info[49m[43m([49m[43mobservatory[49m[43m)[49m
+[1;32m    524[0m info[38;5;241m.[39mstatus [38;5;241m=[39m [38;5;124m"[39m[38;5;124mcache[39m[38;5;124m"[39m
+
+File [0;32m/usr/share/miniconda/lib/python3.9/site-packages/crds/core/heavy_client.py:598[0m, in [0;36mload_server_info[0;34m(observatory)[0m
+[1;32m    597[0m info[38;5;241m.[39mstatus [38;5;241m=[39m [38;5;124m"[39m[38;5;124mcache[39m[38;5;124m"[39m
+[0;32m--> 598[0m [38;5;28;01mreturn[39;00m info
+
+File [0;32m/usr/share/miniconda/lib/python3.9/contextlib.py:137[0m, in [0;36m_GeneratorContextManager.__exit__[0;34m(self, typ, value, traceback)[0m
+[1;32m    136[0m [38;5;28;01mtry[39;00m:
+[0;32m--> 137[0m     [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43mgen[49m[38;5;241;43m.[39;49m[43mthrow[49m[43m([49m[43mtyp[49m[43m,[49m[43m [49m[43mvalue[49m[43m,[49m[43m [49m[43mtraceback[49m[43m)[49m
+[1;32m    138[0m [38;5;28;01mexcept[39;00m [38;5;167;01mStopIteration[39;00m [38;5;28;01mas[39;00m exc:
+[1;32m    139[0m     [38;5;66;03m# Suppress StopIteration *unless* it's the same exception that[39;00m
+[1;32m    140[0m     [38;5;66;03m# was passed to throw().  This prevents a StopIteration[39;00m
+[1;32m    141[0m     [38;5;66;03m# raised inside the "with" statement from being suppressed.[39;00m
+
+File [0;32m/usr/share/miniconda/lib/python3.9/site-packages/crds/core/log.py:368[0m, in [0;36mexception_trap_logger.<locals>.func_on_exception[0;34m(*args, **keys)[0m
+[1;32m    367[0m [38;5;28;01mexcept[39;00m [38;5;167;01mException[39;00m [38;5;28;01mas[39;00m exc:
+[0;32m--> 368[0m     reraise [38;5;241m=[39m [43mfunc[49m[43m([49m[38;5;241;43m*[39;49m[43margs[49m[43m [49m[38;5;241;43m+[39;49m[43m [49m[43m([49m[38;5;124;43m"[39;49m[38;5;124;43m:[39;49m[38;5;124;43m"[39;49m[43m,[49m[43m [49m[38;5;28;43mstr[39;49m[43m([49m[43mexc[49m[43m)[49m[43m)[49m[43m,[49m[43m [49m[38;5;241;43m*[39;49m[38;5;241;43m*[39;49m[43mkeys[49m[43m)[49m
+[1;32m    369[0m     [38;5;28;01mif[39;00m [38;5;129;01mnot[39;00m CRDS_EXCEPTION_TRAP:
+[1;32m    370[0m         [38;5;66;03m# In python-2, distinction between raise and "raise something".  raise doesn't[39;00m
+[1;32m    371[0m         [38;5;66;03m# wreck the traceback,  raising a new improved exception does.[39;00m
+
+File [0;32m/usr/share/miniconda/lib/python3.9/site-packages/crds/core/log.py:261[0m, in [0;36mCrdsLogger.fatal_error[0;34m(self, *args, **keys)[0m
+[1;32m    260[0m error([38;5;124m"[39m[38;5;124m(FATAL)[39m[38;5;124m"[39m, [38;5;241m*[39margs, [38;5;241m*[39m[38;5;241m*[39mkeys)
+[0;32m--> 261[0m [43msys[49m[38;5;241;43m.[39;49m[43mexit[49m[43m([49m[38;5;241;43m-[39;49m[38;5;241;43m1[39;49m[43m)[49m
+
+[0;31mSystemExit[0m: -1
+
+During handling of the above exception, another exception occurred:
+
+[0;31mAssertionError[0m                            Traceback (most recent call last)
+    [0;31m[... skipping hidden 1 frame][0m
+
+File [0;32m/usr/share/miniconda/lib/python3.9/site-packages/IPython/core/interactiveshell.py:1987[0m, in [0;36mInteractiveShell.showtraceback[0;34m(self, exc_tuple, filename, tb_offset, exception_only, running_compiled_code)[0m
+[1;32m   1984[0m [38;5;28;01mif[39;00m exception_only:
+[1;32m   1985[0m     stb [38;5;241m=[39m [[38;5;124m'[39m[38;5;124mAn exception has occurred, use [39m[38;5;124m%[39m[38;5;124mtb to see [39m[38;5;124m'[39m
+[1;32m   1986[0m            [38;5;124m'[39m[38;5;124mthe full traceback.[39m[38;5;130;01m\n[39;00m[38;5;124m'[39m]
+[0;32m-> 1987[0m     stb[38;5;241m.[39mextend([38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43mInteractiveTB[49m[38;5;241;43m.[39;49m[43mget_exception_only[49m[43m([49m[43metype[49m[43m,[49m
+[1;32m   1988[0m [43m                                                     [49m[43mvalue[49m[43m)[49m)
+[1;32m   1989[0m [38;5;28;01melse[39;00m:
+[1;32m   1990[0m     [38;5;28;01mtry[39;00m:
+[1;32m   1991[0m         [38;5;66;03m# Exception classes can customise their traceback - we[39;00m
+[1;32m   1992[0m         [38;5;66;03m# use this in IPython.parallel for exceptions occurring[39;00m
+[1;32m   1993[0m         [38;5;66;03m# in the engines. This should return a list of strings.[39;00m
+
+File [0;32m/usr/share/miniconda/lib/python3.9/site-packages/IPython/core/ultratb.py:579[0m, in [0;36mListTB.get_exception_only[0;34m(self, etype, value)[0m
+[1;32m    571[0m [38;5;28;01mdef[39;00m [38;5;21mget_exception_only[39m([38;5;28mself[39m, etype, value):
+[1;32m    572[0m     [38;5;124;03m"""Only print the exception type and message, without a traceback.[39;00m
+[1;32m    573[0m 
+[1;32m    574[0m [38;5;124;03m    Parameters[39;00m
+[0;32m   (...)[0m
+[1;32m    577[0m [38;5;124;03m    value : exception value[39;00m
+[1;32m    578[0m [38;5;124;03m    """[39;00m
+[0;32m--> 579[0m     [38;5;28;01mreturn[39;00m [43mListTB[49m[38;5;241;43m.[39;49m[43mstructured_traceback[49m[43m([49m[38;5;28;43mself[39;49m[43m,[49m[43m [49m[43metype[49m[43m,[49m[43m [49m[43mvalue[49m[43m)[49m
+
+File [0;32m/usr/share/miniconda/lib/python3.9/site-packages/IPython/core/ultratb.py:446[0m, in [0;36mListTB.structured_traceback[0;34m(self, etype, evalue, etb, tb_offset, context)[0m
+[1;32m    443[0m     chained_exc_ids[38;5;241m.[39madd([38;5;28mid[39m(exception[[38;5;241m1[39m]))
+[1;32m    444[0m     chained_exceptions_tb_offset [38;5;241m=[39m [38;5;241m0[39m
+[1;32m    445[0m     out_list [38;5;241m=[39m (
+[0;32m--> 446[0m         [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43mstructured_traceback[49m[43m([49m
+[1;32m    447[0m [43m            [49m[43metype[49m[43m,[49m[43m [49m[43mevalue[49m[43m,[49m[43m [49m[43m([49m[43metb[49m[43m,[49m[43m [49m[43mchained_exc_ids[49m[43m)[49m[43m,[49m
+[1;32m    448[0m [43m            [49m[43mchained_exceptions_tb_offset[49m[43m,[49m[43m [49m[43mcontext[49m[43m)[49m
+[1;32m    449[0m         [38;5;241m+[39m chained_exception_message
+[1;32m    450[0m         [38;5;241m+[39m out_list)
+[1;32m    452[0m [38;5;28;01mreturn[39;00m out_list
+
+File [0;32m/usr/share/miniconda/lib/python3.9/site-packages/IPython/core/ultratb.py:1112[0m, in [0;36mAutoFormattedTB.structured_traceback[0;34m(self, etype, value, tb, tb_offset, number_of_lines_of_context)[0m
+[1;32m   1110[0m [38;5;28;01melse[39;00m:
+[1;32m   1111[0m     [38;5;28mself[39m[38;5;241m.[39mtb [38;5;241m=[39m tb
+[0;32m-> 1112[0m [38;5;28;01mreturn[39;00m [43mFormattedTB[49m[38;5;241;43m.[39;49m[43mstructured_traceback[49m[43m([49m
+[1;32m   1113[0m [43m    [49m[38;5;28;43mself[39;49m[43m,[49m[43m [49m[43metype[49m[43m,[49m[43m [49m[43mvalue[49m[43m,[49m[43m [49m[43mtb[49m[43m,[49m[43m [49m[43mtb_offset[49m[43m,[49m[43m [49m[43mnumber_of_lines_of_context[49m[43m)[49m
+
+File [0;32m/usr/share/miniconda/lib/python3.9/site-packages/IPython/core/ultratb.py:1006[0m, in [0;36mFormattedTB.structured_traceback[0;34m(self, etype, value, tb, tb_offset, number_of_lines_of_context)[0m
+[1;32m   1003[0m mode [38;5;241m=[39m [38;5;28mself[39m[38;5;241m.[39mmode
+[1;32m   1004[0m [38;5;28;01mif[39;00m mode [38;5;129;01min[39;00m [38;5;28mself[39m[38;5;241m.[39mverbose_modes:
+[1;32m   1005[0m     [38;5;66;03m# Verbose modes need a full traceback[39;00m
+[0;32m-> 1006[0m     [38;5;28;01mreturn[39;00m [43mVerboseTB[49m[38;5;241;43m.[39;49m[43mstructured_traceback[49m[43m([49m
+[1;32m   1007[0m [43m        [49m[38;5;28;43mself[39;49m[43m,[49m[43m [49m[43metype[49m[43m,[49m[43m [49m[43mvalue[49m[43m,[49m[43m [49m[43mtb[49m[43m,[49m[43m [49m[43mtb_offset[49m[43m,[49m[43m [49m[43mnumber_of_lines_of_context[49m
+[1;32m   1008[0m [43m    [49m[43m)[49m
+[1;32m   1009[0m [38;5;28;01melif[39;00m mode [38;5;241m==[39m [38;5;124m'[39m[38;5;124mMinimal[39m[38;5;124m'[39m:
+[1;32m   1010[0m     [38;5;28;01mreturn[39;00m ListTB[38;5;241m.[39mget_exception_only([38;5;28mself[39m, etype, value)
+
+File [0;32m/usr/share/miniconda/lib/python3.9/site-packages/IPython/core/ultratb.py:859[0m, in [0;36mVerboseTB.structured_traceback[0;34m(self, etype, evalue, etb, tb_offset, number_of_lines_of_context)[0m
+[1;32m    850[0m [38;5;28;01mdef[39;00m [38;5;21mstructured_traceback[39m(
+[1;32m    851[0m     [38;5;28mself[39m,
+[1;32m    852[0m     etype: [38;5;28mtype[39m,
+[0;32m   (...)[0m
+[1;32m    856[0m     number_of_lines_of_context: [38;5;28mint[39m [38;5;241m=[39m [38;5;241m5[39m,
+[1;32m    857[0m ):
+[1;32m    858[0m     [38;5;124;03m"""Return a nice text document describing the traceback."""[39;00m
+[0;32m--> 859[0m     formatted_exception [38;5;241m=[39m [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43mformat_exception_as_a_whole[49m[43m([49m[43metype[49m[43m,[49m[43m [49m[43mevalue[49m[43m,[49m[43m [49m[43metb[49m[43m,[49m[43m [49m[43mnumber_of_lines_of_context[49m[43m,[49m
+[1;32m    860[0m [43m                                                           [49m[43mtb_offset[49m[43m)[49m
+[1;32m    862[0m     colors [38;5;241m=[39m [38;5;28mself[39m[38;5;241m.[39mColors  [38;5;66;03m# just a shorthand + quicker name lookup[39;00m
+[1;32m    863[0m     colorsnormal [38;5;241m=[39m colors[38;5;241m.[39mNormal  [38;5;66;03m# used a lot[39;00m
+
+File [0;32m/usr/share/miniconda/lib/python3.9/site-packages/IPython/core/ultratb.py:793[0m, in [0;36mVerboseTB.format_exception_as_a_whole[0;34m(self, etype, evalue, etb, number_of_lines_of_context, tb_offset)[0m
+[1;32m    790[0m [38;5;28;01massert[39;00m [38;5;28misinstance[39m(tb_offset, [38;5;28mint[39m)
+[1;32m    791[0m head [38;5;241m=[39m [38;5;28mself[39m[38;5;241m.[39mprepare_header(etype, [38;5;28mself[39m[38;5;241m.[39mlong_header)
+[1;32m    792[0m records [38;5;241m=[39m (
+[0;32m--> 793[0m     [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43mget_records[49m[43m([49m[43metb[49m[43m,[49m[43m [49m[43mnumber_of_lines_of_context[49m[43m,[49m[43m [49m[43mtb_offset[49m[43m)[49m [38;5;28;01mif[39;00m etb [38;5;28;01melse[39;00m []
+[1;32m    794[0m )
+[1;32m    796[0m frames [38;5;241m=[39m []
+[1;32m    797[0m skipped [38;5;241m=[39m [38;5;241m0[39m
+
+File [0;32m/usr/share/miniconda/lib/python3.9/site-packages/IPython/core/ultratb.py:848[0m, in [0;36mVerboseTB.get_records[0;34m(self, etb, number_of_lines_of_context, tb_offset)[0m
+[1;32m    842[0m     formatter [38;5;241m=[39m [38;5;28;01mNone[39;00m
+[1;32m    843[0m options [38;5;241m=[39m stack_data[38;5;241m.[39mOptions(
+[1;32m    844[0m     before[38;5;241m=[39mbefore,
+[1;32m    845[0m     after[38;5;241m=[39mafter,
+[1;32m    846[0m     pygments_formatter[38;5;241m=[39mformatter,
+[1;32m    847[0m )
+[0;32m--> 848[0m [38;5;28;01mreturn[39;00m [38;5;28;43mlist[39;49m[43m([49m[43mstack_data[49m[38;5;241;43m.[39;49m[43mFrameInfo[49m[38;5;241;43m.[39;49m[43mstack_data[49m[43m([49m[43metb[49m[43m,[49m[43m [49m[43moptions[49m[38;5;241;43m=[39;49m[43moptions[49m[43m)[49m[43m)[49m[tb_offset:]
+
+File [0;32m/usr/share/miniconda/lib/python3.9/site-packages/stack_data/core.py:578[0m, in [0;36mFrameInfo.stack_data[0;34m(cls, frame_or_tb, options, collapse_repeated_frames)[0m
+[1;32m    562[0m [38;5;129m@classmethod[39m
+[1;32m    563[0m [38;5;28;01mdef[39;00m [38;5;21mstack_data[39m(
+[1;32m    564[0m         [38;5;28mcls[39m,
+[0;32m   (...)[0m
+[1;32m    568[0m         collapse_repeated_frames: [38;5;28mbool[39m [38;5;241m=[39m [38;5;28;01mTrue[39;00m
+[1;32m    569[0m ) [38;5;241m-[39m[38;5;241m>[39m Iterator[Union[[38;5;124m'[39m[38;5;124mFrameInfo[39m[38;5;124m'[39m, RepeatedFrames]]:
+[1;32m    570[0m     [38;5;124;03m"""[39;00m
+[1;32m    571[0m [38;5;124;03m    An iterator of FrameInfo and RepeatedFrames objects representing[39;00m
+[1;32m    572[0m [38;5;124;03m    a full traceback or stack. Similar consecutive frames are collapsed into RepeatedFrames[39;00m
+[0;32m   (...)[0m
+[1;32m    576[0m [38;5;124;03m    and optionally an Options object to configure.[39;00m
+[1;32m    577[0m [38;5;124;03m    """[39;00m
+[0;32m--> 578[0m     stack [38;5;241m=[39m [38;5;28;43mlist[39;49m[43m([49m[43miter_stack[49m[43m([49m[43mframe_or_tb[49m[43m)[49m[43m)[49m
+[1;32m    580[0m     [38;5;66;03m# Reverse the stack from a frame so that it's in the same order[39;00m
+[1;32m    581[0m     [38;5;66;03m# as the order from a traceback, which is the order of a printed[39;00m
+[1;32m    582[0m     [38;5;66;03m# traceback when read top to bottom (most recent call last)[39;00m
+[1;32m    583[0m     [38;5;28;01mif[39;00m is_frame(frame_or_tb):
+
+File [0;32m/usr/share/miniconda/lib/python3.9/site-packages/stack_data/utils.py:98[0m, in [0;36miter_stack[0;34m(frame_or_tb)[0m
+[1;32m     96[0m [38;5;28;01mwhile[39;00m frame_or_tb:
+[1;32m     97[0m     [38;5;28;01myield[39;00m frame_or_tb
+[0;32m---> 98[0m     [38;5;28;01mif[39;00m [43mis_frame[49m[43m([49m[43mframe_or_tb[49m[43m)[49m:
+[1;32m     99[0m         frame_or_tb [38;5;241m=[39m frame_or_tb[38;5;241m.[39mf_back
+[1;32m    100[0m     [38;5;28;01melse[39;00m:
+
+File [0;32m/usr/share/miniconda/lib/python3.9/site-packages/stack_data/utils.py:91[0m, in [0;36mis_frame[0;34m(frame_or_tb)[0m
+[1;32m     90[0m [38;5;28;01mdef[39;00m [38;5;21mis_frame[39m(frame_or_tb: Union[FrameType, TracebackType]) [38;5;241m-[39m[38;5;241m>[39m [38;5;28mbool[39m:
+[0;32m---> 91[0m     [43massert_[49m[43m([49m[38;5;28;43misinstance[39;49m[43m([49m[43mframe_or_tb[49m[43m,[49m[43m [49m[43m([49m[43mtypes[49m[38;5;241;43m.[39;49m[43mFrameType[49m[43m,[49m[43m [49m[43mtypes[49m[38;5;241;43m.[39;49m[43mTracebackType[49m[43m)[49m[43m)[49m[43m)[49m
+[1;32m     92[0m     [38;5;28;01mreturn[39;00m [38;5;28misinstance[39m(frame_or_tb, (types[38;5;241m.[39mFrameType,))
+
+File [0;32m/usr/share/miniconda/lib/python3.9/site-packages/stack_data/utils.py:172[0m, in [0;36massert_[0;34m(condition, error)[0m
+[1;32m    170[0m [38;5;28;01mif[39;00m [38;5;28misinstance[39m(error, [38;5;28mstr[39m):
+[1;32m    171[0m     error [38;5;241m=[39m [38;5;167;01mAssertionError[39;00m(error)
+[0;32m--> 172[0m [38;5;28;01mraise[39;00m error
+
+[0;31mAssertionError[0m: 
+AssertionError: 
+
