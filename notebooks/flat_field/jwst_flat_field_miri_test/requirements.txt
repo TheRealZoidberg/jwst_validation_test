@@ -1,0 +1,6 @@
+astropy==5.1
+ci_watson==0.6.1
+crds==11.16.3
+jwst==1.4.6
+numpy==1.23.1
+pytest==5.4.3

@@ -1,4 +1,16 @@
+asdf
 astropy
 astroquery
+ci_watson
+crds
+gwcs
+ipython
+ipywidgets
+jwst
 matplotlib
 numpy
+photutils
+pysiaf
+pytest
+requests
+scipy
